@@ -1,0 +1,13 @@
+
+/* ONE empty state, wherever there is nothing to show. A glyph, a sentence and
+   a way out - an empty screen with no way out is a dead end wearing an
+   explanation. */
+.nothing{display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:8px;padding:30px 22px}
+.nothing .nicon{width:46px;height:46px;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;background:var(--accent-soft);
+  color:var(--accent);margin-bottom:2px}
+.nothing .nicon svg{width:22px;height:22px}
+.nothing b{font-size:16px}
+.nothing .note{max-width:52ch;line-height:1.55}
+.nothing .act{margin-top:6px;justify-content:center}

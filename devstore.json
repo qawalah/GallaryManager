@@ -1,0 +1,13 @@
+{
+  "name": "photo-manager",
+  "displayName": "Photo Manager",
+  "description": "Sorts, geotags, rates, tags, culls and de-duplicates your photo library, with every change shown before it is made. Runs on this PC with an icon by the clock, or as a container on the NAS.",
+  "type": "gui",
+  "language": "python",
+  "entry": "windows/PhotoManager.pyw",
+  "version": "4.0.0",
+  "icon": "store/icon.png",
+  "data": ["app/web"],
+  "prepare": "windows/devstore-prepare.ps1",
+  "updateWhileRunning": true
+}

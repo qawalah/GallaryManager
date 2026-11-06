@@ -1,0 +1,121 @@
+# Photo Manager on the Synology.
+#
+# Paste this into Container Manager > Project > Create. Nothing is built: the
+# image is stock Python, the app is the mounted folder, so updating it later is
+# copy the files and hit Restart.
+#
+# ONE photo mount, at the SAME PATH inside the container as it has on the NAS.
+# That is the whole design, and it removes three separate ways to get this wrong:
+#
+#   - No second set of names. The path File Station shows you is the path you
+#     type into Setup. A container path like /photos is a name that exists
+#     nowhere else, and the day it disagrees with ALLOWED_ROOTS the app says
+#     "is not a folder" about a folder that plainly exists.
+#   - No guessing at folder names. Whatever your RAW and previews folders are
+#     actually called inside your home, they are already inside this mount.
+#   - It is the boundary you asked for: this container can see your home folder
+#     and nothing else on the NAS.
+
+services:
+  photo-manager:
+    image: python:3.12-slim
+    container_name: photo-manager
+    restart: unless-stopped
+
+    working_dir: /app
+    # /app inside the container IS the "code" folder mounted below
+    command: ["sh", "/app/nas/start.sh"]
+
+    # Permissions are handled in three places, and all three have to hold or
+    # Synology Drive quietly stops syncing a folder:
+    #
+    #   1. this container starts as root and DROPS to whoever owns your library
+    #      (run.py), so what it writes is yours;
+    #   2. a photograph it rewrites - a rating, a keyword, a colour - keeps the
+    #      owner, mode and ACL it had, because os.replace puts a NEW file there
+    #      (core/perms.py);
+    #   3. anything it creates takes after the thing it belongs to - a sidecar
+    #      after its photograph, a preview after the original.
+    #
+    # If Drive ever goes quiet on a folder anyway, the repair is File Station >
+    # that folder > Properties > Permission > Advanced options > "Make inherited
+    # permissions explicit", with "Apply to this folder, sub-folders and files"
+    # ticked. Tell me if you ever have to do it again - it means something here
+    # is still dropping an ACL.
+    #
+    # NO `user:` LINE. This is deliberate - do not add one back.
+    #
+    # A fixed uid here is a guess, and a wrong guess is silent: everything the
+    # app writes ends up owned by somebody else and you find out weeks later,
+    # when Windows will not let you delete a _Culled folder.
+    #
+    # Started as root, the app reads who owns your library and drops to that
+    # person before it writes anything. The log says who it became. A `user:`
+    # line takes that ability away, because it can no longer drop.
+    #
+    # To force it anyway:  PM_USER: "1027:100"  below, or  PM_USER: "root".
+
+    environment:
+      TZ: Asia/Riyadh
+      PORT: "8080"
+      # The port phones and other computers are told to use when they find the
+      # app on the network. The LEFT-hand number under `ports:` below: change
+      # both together, or discovery sends them to 8080, which only exists
+      # inside this container.
+      PM_PUBLIC_PORT: "8842"
+      PM_DATA: /config
+      # Where the app installs Pillow and its HEIC reader on first start (inside
+      # the config volume, so they survive a rebuild). Set here, not only inside
+      # the app, so a scheduled `docker exec ... python -m app.cli previews
+      # --apply` finds them too; without it that command says it needs Pillow.
+      PYTHONUSERBASE: /config/python
+      # The hard boundary: a folder outside this is refused, and symlinks cannot
+      # sneak past because every path is resolved first. Same path as the volume
+      # below, because the volume mounts it unchanged.
+      ALLOWED_ROOTS: /volume1/homes/YOU
+
+      # A PASSWORD, if you want one. Uncomment both lines and Build.
+      #
+      # Without it, anyone who can reach this port on your network can look at
+      # every photo AND move, cull and re-mirror them - the second half being
+      # the larger exposure, and true long before there was any way to view a
+      # photo through it. One shared password, no accounts to administer.
+      # PM_USERNAME: "photos"
+      # A password can now be set inside the app (Setup > Password), which is
+      # the easier way - changing it there costs a click rather than a rebuild.
+      # Set it HERE instead when you want it decided outside the app: this one
+      # wins, and nobody who gets in can take it off.
+      # PM_PASSWORD: "something only you know"
+
+      # BEHIND A REVERSE PROXY (DSM's, or Tailscale), two optional lines.
+      #
+      # With no password, a change asked for under a name the app does not
+      # know is refused, so a web page elsewhere cannot point its own name at
+      # your NAS and drive the app. Addresses, one-word names and names ending
+      # .local/.lan/.ts.net are known already; a DDNS name is not. Name it here
+      # (commas between several), or set a password, which makes this moot.
+      # PM_HOSTS: "photos.example.synology.me"
+      # The proxy's own address as the app sees it - 172.17.0.1 on Container
+      # Manager's default network. Then the wrong-password lockout counts each
+      # phone on its own (X-Forwarded-For) instead of locking out the proxy,
+      # and so everybody, after one person's eight wrong tries.
+      # PM_TRUSTED_PROXY: "172.17.0.1"
+
+    ports:
+      # host:container. Open http://<your-nas>:8842. Changing 8842? Change
+      # PM_PUBLIC_PORT above to the same number.
+      - "8842:8080"
+
+    volumes:
+      - "/volume1/docker/Photo-Manager/code:/app:ro"
+      - "/volume1/docker/Photo-Manager/config:/config"
+
+      # YOUR HOME FOLDER, mounted at its own path. Everything - Photos, the RAW
+      # tree, the previews tree - is inside it, whatever they are called.
+      - "/volume1/homes/YOU:/volume1/homes/YOU"
+
+      # If a tree lives somewhere else - a shared folder rather than your home -
+      # add it the same way, at its own path, and add that path to
+      # ALLOWED_ROOTS above with a `:` between them. Both lines or neither:
+      # a root that is not mounted is the "is not a folder" error.
+      # - "/volume1/photo/Photos Raw:/volume1/photo/Photos Raw"

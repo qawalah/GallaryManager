@@ -1,0 +1,44 @@
+/* A tool's group, down the right of its page (library/js/22-tool-side.js).
+   The form keeps its own width and the list sits in the space beside it;
+   results take the whole width under both, as they did before. */
+body.shell main > section.withside{display:grid;column-gap:32px;align-items:start;
+  grid-template-columns:minmax(0,1180px) 250px;justify-content:start}
+body.shell main > section.withside > #form{grid-column:1;grid-row:1;min-width:0}
+body.shell main > section.withside > #out{grid-column:1 / -1;grid-row:2;min-width:0}
+/* Not sticky: results run the full width under it, and a list that stayed on
+   screen while they scrolled would sit on top of them. */
+/* 4.0: an index in the margin rather than a second card. A hairline keeps it
+   apart from the form; the group's name heads it in the group's own ink. */
+#toolside{grid-column:2;grid-row:1;background:transparent;border:0;
+  border-left:1px solid var(--line);border-radius:0;padding:2px 0 12px 16px;box-shadow:none}
+#toolside[hidden]{display:none}
+.sidehead{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 6px;
+  padding:6px 8px;border:0;border-radius:var(--r-ctl);background:transparent;
+  color:var(--ink);font:inherit;font-size:var(--t-l);font-weight:700;text-align:left;cursor:pointer}
+.sidehead:hover{background:var(--wash)}
+/* The group's mark in the group's ink, without a tinted square round it. */
+.sidehead .ring{display:flex;flex:0 0 auto;align-items:center;justify-content:center;
+  background:transparent;color:var(--dim)}
+.sidehead .ring svg{width:18px;height:18px}
+.sidehead.blue .ring{color:var(--tone-blue)}
+.sidehead.grey .ring{color:var(--tone-grey)}
+.sidehead.teal .ring{color:var(--tone-teal)}
+.sidehead.orange .ring{color:var(--tone-orange)}
+.sidehead.purple .ring{color:var(--tone-purple)}
+.sidelist{display:flex;flex-direction:column;gap:1px}
+.siderow{display:flex;align-items:center;gap:10px;width:100%;margin:0;
+  padding:9px 10px;min-height:38px;border:0;border-radius:var(--r-ctl);background:transparent;
+  color:var(--dim);font:inherit;font-size:var(--t-m);text-align:left;cursor:pointer}
+.siderow svg{width:16px;height:16px;flex:0 0 16px}
+.siderow:hover{background:var(--wash);color:var(--ink)}
+.siderow.on{background:var(--accent-soft);color:var(--ink);font-weight:700}
+.siderow.on svg{color:var(--sec,var(--ink))}
+.siderow.sub{padding-left:34px;font-size:13px}
+.sidesub{margin:14px 10px 4px;font-size:var(--t-xs);font-weight:700;color:var(--dim);
+  letter-spacing:.04em}
+/* Narrower than a form and a list side by side: the list goes under the form,
+   and under the results when there are any, so they are never pushed down. */
+@media (max-width:1060px){
+  body.shell main > section.withside{display:block}
+  #toolside{margin-top:18px;border-left:0;border-top:1px solid var(--line);padding:12px 0 0}
+}

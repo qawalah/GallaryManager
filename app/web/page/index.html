@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<!-- viewport-fit=cover lets the page reach under a notch and a home indicator;
+     the safe-area insets in the stylesheet are what keep the header and the
+     picker's buttons out from under them. Without both halves, "installed to
+     the home screen" means a title hidden behind a camera. -->
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Photo Manager</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0f0f0e">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Photo Manager">
+<!-- The service worker keeps only a page carrying this as the offline shell,
+     never the sign-in page that answers the same address without a ticket. -->
+<meta name="pm-shell" content="app">
+<link rel="preload" href="font/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>{{STYLE}}</style>
+<script>
+/* Before the first paint, so choosing Light never means watching the page load
+   dark and then correct itself. Dark until somebody chooses: the photographs
+   are the brightest thing on the page that way (4.0). Auto is still a choice. */
+try{ var h = document.documentElement, t = localStorage.getItem("pm-theme") || "dark";
+     if (t === "light" || t === "dark") h.setAttribute("data-theme", t);
+     var dk = t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+     h.setAttribute("data-mode", dk ? "dark" : "light");
+     h.setAttribute("data-palette", localStorage.getItem("pm-palette") || "classic");
+     h.setAttribute("data-accent", localStorage.getItem("pm-accent") || "ink");
+     h.setAttribute("data-chrome", localStorage.getItem("pm-chrome") || "plain"); }
+catch(e){}
+</script>
+</head><body>
+{{ICONS}}
+<a class="skiplink" href="#stage" id="skiplink">Skip to the page</a>
+<div id="said" class="sronly" role="status" aria-live="polite"></div>
+<header>
+  <button id="menu" type="button" title="Tools" aria-label="Tools"></button>
+  <button id="back" type="button" hidden title="Back (Alt and left arrow)"
+    aria-label="Back"></button>
+  <h1>Photo Manager</h1>
+  <span id="live" tabindex="0" role="button" data-tip="Reading the app...">
+    <span id="dot"></span><span id="stamp"></span></span>
+  <button id="autobar" type="button" data-tip="Automation" data-tipnoclick>
+    <span id="autodot"></span><span class="autolab">Flows</span><span id="autosays"></span></button>
+  <span id="apart"></span>
+  <button id="signout" type="button" hidden title="Sign out of this browser">
+  </button>
+  <button id="quit" type="button" hidden title="Stop Photo Manager on this PC">
+  </button>
+  <button id="reload" type="button" title="Reload page" aria-label="Reload page">
+  </button>
+  <button id="theme" type="button" title="Appearance">
+  </button>
+</header>
+<div id="lookpop" hidden></div>
+<div id="trouble" hidden></div>
+<div id="autonews" hidden></div>
+<div id="running" hidden></div>
+<div id="scrim"></div>
+<div id="bottom" role="navigation" aria-label="Where to go"></div>
+<div id="shell">
+  <nav id="rail" aria-label="Library"></nav>
+  <section id="stage"></section>
+  <main>
+    <section>
+      <div class="card" id="form"><em class="note">Loading...</em></div>
+      <div id="out"></div>
+      <nav id="toolside" hidden></nav>
+    </section>
+  </main>
+</div>
+<div id="gspot" hidden></div>
+<div id="guidebox" hidden role="dialog" aria-modal="true" aria-labelledby="gtitle">
+  <div class="gcard">
+    <div class="guidehead"><span class="note" id="guidecount"></span>
+      <button type="button" class="ghost" id="gclose" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cross"/></svg></button></div>
+    <h2 id="gtitle"></h2>
+    <div id="gbody"></div>
+    <button type="button" class="glink" id="gopen" hidden>Open it</button>
+    <div class="gfoot">
+      <div id="gdots"></div>
+      <span style="flex:1"></span>
+      <button type="button" class="ghost" id="gprev">Back</button>
+      <button type="button" id="gnext">Next</button>
+    </div>
+  </div>
+</div>
+<script>const GUIDE = {{GUIDE_JSON}};
+const LOOKS = {{LOOKS_JSON}};
+const STRINGS = {{STRINGS_JSON}};
+const WORDING = /*wording*/{};</script>
+<script>{{SCRIPT}}</script>
+</body></html>

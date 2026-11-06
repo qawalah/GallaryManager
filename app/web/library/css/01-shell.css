@@ -1,0 +1,386 @@
+
+/* ===============================================================   3.0 - the library shell
+   ===============================================================
+   First, the rule that stops a whole family of bugs this app has now hit three
+   times: an author `display:flex` beats the browser's own `[hidden]` rule, so
+   `el.hidden = true` on anything styled with a display quietly does nothing.
+   Each time it looked like a different bug - a menu that matched everything, a
+   line saying "nothing matches" over a full list, an empty blue bar across the
+   home screen - and each time it was this. Said once, here. */
+[hidden]{display:none !important}
+
+/* The five section inks (4.0). Each group of tools in core/families.py has a
+   tone, and in the catalogue that tone is an ink: the band over a tool's page,
+   its group's heading, the rule under the step you are on. They are the only
+   colours on the page besides the photographs, so each one was chosen to read
+   at 4.5:1 or better as text on both stocks, light and dark. Blue is its own
+   ink now rather than the accent, because the accent is the page's own ink. */
+:root{
+  --rail:256px;
+  --tone-blue:#2450d6; --tone-teal:#0d7656; --tone-orange:#9a5b00;
+  --tone-purple:#6a42c9; --tone-grey:#67635c;
+  --tone-blue-soft:color-mix(in srgb,var(--tone-blue) 12%,var(--card));
+  --tone-teal-soft:color-mix(in srgb,var(--tone-teal) 12%,var(--card));
+  --tone-orange-soft:color-mix(in srgb,var(--tone-orange) 12%,var(--card));
+  --tone-purple-soft:color-mix(in srgb,var(--tone-purple) 12%,var(--card));
+  --tone-grey-soft:color-mix(in srgb,var(--tone-grey) 12%,var(--card));
+  --tile-gap:4px;
+}
+/* Twice, exactly as the base palette is: once inside the media query for Auto,
+   once on the attribute the button sets. A selector list cannot contain an
+   @media, which is the kind of thing that silently drops the whole rule. The
+   soft tints follow on their own, being mixed from these. */
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){
+  --tone-blue:#7a9bff; --tone-teal:#45c79f; --tone-orange:#f2b33d;
+  --tone-purple:#b89cff; --tone-grey:#aaa69e;}}
+html[data-theme="dark"]{
+  --tone-blue:#7a9bff; --tone-teal:#45c79f; --tone-orange:#f2b33d;
+  --tone-purple:#b89cff; --tone-grey:#aaa69e;}
+
+/* The shell is the page's frame from the start; what it SHOWS only changes
+   once the library screens are up. Hidden the other way round - a shell that
+   starts at display:none would blank the whole app for as long as the first
+   fetch takes, and a blank app reads as a broken one. */
+#shell{display:flex;min-height:calc(100vh - var(--head))}
+#rail,#stage{display:none}
+body.shell #rail{display:flex}
+body.shell #stage{display:block}
+body.shell #bottom{display:none}
+
+/* ----------------------------------------------------------------- the rail */
+/* Full height even when what is in it is short, so its foot sits at the
+   bottom of the window. That came from the 2.x sidebar's `nav` rule until the
+   sidebar went; it is said here now, where the rail is. */
+#rail{width:var(--rail);flex:0 0 var(--rail);background:var(--card);
+  border-right:1px solid var(--line);position:sticky;top:var(--head);align-self:flex-start;
+  min-height:calc(100vh - var(--head));max-height:calc(100vh - var(--head));overflow-y:auto;
+  padding:14px 0 4px;display:flex;flex-direction:column;gap:1px}
+/* A heading in the rail is a running head: small, in the page's own ink and
+   spaced, not shouted in capitals. */
+.railsec{padding:20px 22px 8px;font-size:var(--t-xs);font-weight:700;color:var(--dim);
+  letter-spacing:.04em}
+.railrow{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:0 8px;
+  min-height:40px;border-radius:var(--r-ctl);color:var(--ink);text-decoration:none;
+  font-size:var(--t-m);cursor:pointer;border:0;background:transparent;width:calc(100% - 16px);
+  text-align:left;font-weight:500}
+.railrow:hover{background:var(--wash)}
+.railrow,.shot img,.bigtile,.cat,.albumcard,.placecard{
+  transition:background-color var(--t-fast),border-color var(--t-fast),color var(--t-fast),
+    box-shadow var(--t-fast),transform var(--t-mid) var(--ease)}
+.railrow svg{width:19px;height:19px;flex:0 0 19px;color:var(--dim)}
+/* Where you are is told by weight and a panel of the page's own ink, never by
+   a colour on a colour: the accent on its tint was 3.9:1. */
+.railrow.on{background:var(--accent-soft);color:var(--ink);font-weight:700}
+.railrow.on svg{color:var(--ink)}
+/* A tool group carries its section ink in its mark, so the rail is the key
+   to the colours the pages use. */
+.railrow[data-tone] svg{color:var(--tone,var(--dim))}
+.railrow[data-tone="blue"]{--tone:var(--tone-blue)}
+.railrow[data-tone="teal"]{--tone:var(--tone-teal)}
+.railrow[data-tone="orange"]{--tone:var(--tone-orange)}
+.railrow[data-tone="purple"]{--tone:var(--tone-purple)}
+.railrow[data-tone="grey"]{--tone:var(--tone-grey)}
+.railrow .count{margin-left:auto;font-size:var(--t-xs);color:var(--dim);font-weight:500;
+  font-variant-numeric:tabular-nums}
+.railrow.on .count{color:var(--ink)}
+/* Settings stands apart from the tool groups by space, not by a heading over
+   a single group. */
+.railgap{height:12px;flex:0 0 12px}
+#railfoot{margin-top:auto;padding:14px 18px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--dim);display:flex;flex-direction:column;gap:6px}
+/* Help is something you reach for once, so it is a quiet line at the foot
+   rather than two more rows the size of Photos. */
+.railhelp{display:flex;gap:4px;margin:6px 0 0 -8px;flex-wrap:wrap}
+.railhelp button{display:inline-flex;align-items:center;gap:6px;margin:0;
+  padding:5px 8px;font-size:13px;font-weight:500}
+.railhelp svg{width:14px;height:14px}
+.railbar{height:5px;border-radius:var(--r-ctl);background:var(--line);overflow:hidden}
+.railbar i{display:block;height:100%;background:var(--accent)}
+
+/* ----------------------------------------------------------- the content area */
+/* No cap on the width: on a big monitor the screens fill the window instead
+   of stopping at 1500px with a third of it left empty. The grids inside size
+   their own columns, so wider means more columns, not longer lines. */
+#stage{flex:1;min-width:0;padding:32px 40px 72px;max-width:none}
+/* A screen's title is the title of a catalogue section: big, heavy and a
+   little wide, with the line about it underneath in the page's quieter ink. */
+.phead{display:flex;align-items:flex-end;gap:16px;margin:0 0 24px;flex-wrap:wrap}
+.phead h2{margin:0;font-size:var(--t-3xl);font-weight:800;font-stretch:110%;
+  letter-spacing:-.03em;line-height:1.02;display:flex;align-items:center;gap:12px}
+.phead .sub{color:var(--dim);font-size:var(--t-m);margin-top:8px;max-width:62ch}
+.phead .spacer{flex:1}
+.vtools{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+/* The search boxes on Photos and Tools sit in a row of pill buttons. Left to
+   the browser they came out square-cornered and two pixels tall of padding,
+   which read as something unfinished next to the chips beside them. */
+.vtools input[type=search]{border:1px solid var(--line);background:var(--card);
+  color:var(--ink);border-radius:var(--r-pill);padding:7px 14px;margin:0;
+  font:inherit;font-size:14px}
+.vtools input[type=search]::placeholder{color:var(--dim)}
+.vtools input[type=search]:hover{border-color:var(--accent)}
+.vtools input[type=search]:focus{outline:2px solid var(--accent);outline-offset:-1px}
+
+/* the pill filters along the top of the grid */
+.fchips{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
+.fchip{border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:var(--r-pill);padding:0 14px;min-height:var(--chip-h);box-sizing:border-box;
+  font-size:var(--chip-fs);cursor:pointer;margin:0;
+  display:inline-flex;align-items:center;gap:7px;font-weight:500}
+.fchip:hover{border-color:var(--accent)}
+.fchip.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600}
+.fchip .n{opacity:.7;font-size:12px}
+/* A filter that opens a list says so with a chevron drawn in its own ink. */
+.fchip.drop::after{content:"";width:5px;height:5px;margin:-3px 0 0 2px;
+  border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);opacity:.7}
+
+/* ------------------------------------------------------------------ the grid */
+#grid{display:flex;gap:0;align-items:flex-start}
+#tiles{flex:1;min-width:0}
+.monthrow{display:flex;align-items:baseline;gap:12px;margin:28px 0 10px;
+  position:sticky;top:var(--head);background:var(--bg);padding:10px 2px 8px;z-index:6;
+  border-bottom:1px solid var(--line)}
+.monthrow b{font-size:var(--t-xl);font-weight:750;letter-spacing:-.015em}
+.monthrow span{font-size:13px;color:var(--dim)}
+.monthrow button{margin:0 0 0 auto;padding:3px 10px;font-size:12px;
+  background:transparent;color:var(--dim);border:1px solid var(--line)}
+.monthrow button:hover{color:var(--accent);border-color:var(--accent)}
+/* Thumbnails grow with the window as well as multiplying: 148px on a laptop,
+   up to 240px on a large screen, so a 2560px window is not forty postage
+   stamps across. */
+.shots{display:grid;gap:var(--tile-gap);
+  grid-template-columns:repeat(auto-fill,minmax(clamp(140px,9vw,240px),1fr))}
+.shot{position:relative;aspect-ratio:1;border-radius:var(--r-ctl);overflow:hidden;
+  background:var(--line);cursor:pointer;display:block}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .18s ease-out}
+.shot:hover img{transform:scale(1.035)}
+.shot:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shot .tick{position:absolute;top:6px;left:6px;width:22px;height:22px;
+  border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.25);
+  display:none;align-items:center;justify-content:center;z-index:2}
+.shot:hover .tick,.shot.picked .tick,body.picking .shot .tick{display:flex}
+.shot.picked .tick{background:var(--accent);border-color:#fff}
+.shot .tick svg{width:14px;height:14px;color:#fff;opacity:0}
+.shot.picked .tick svg{opacity:1}
+.shot.picked img{transform:scale(.88);border-radius:var(--r-ctl)}
+.shot .marks{position:absolute;left:0;right:0;bottom:0;padding:16px 7px 5px;
+  display:flex;align-items:center;gap:5px;font-size:12px;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.58));pointer-events:none}
+.shot .marks .st{letter-spacing:-1px}
+.shot .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85)}
+.shot .vid{position:absolute;top:7px;right:7px;background:rgba(0,0,0,.55);
+  color:#fff;border-radius:var(--r-ctl);padding:1px 6px;font-size:12px;font-weight:600}
+.shot.gone{opacity:.35}
+.shot.nopic{background:var(--wash);border:1px solid var(--line)}
+.nopicmark{position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;color:var(--dim)}
+.nopicmark svg{width:30%;height:30%}
+/* the year rail down the right-hand edge */
+#scrub{width:72px;flex:0 0 72px;position:sticky;top:calc(var(--head) + 11px);align-self:flex-start;
+  max-height:calc(100vh - 120px);overflow-y:auto;padding:4px 0 4px 10px;
+  font-size:12px;color:var(--dim);scrollbar-width:thin}
+#scrub .yr{font-weight:700;color:var(--ink);margin:9px 0 2px;font-size:12px}
+#scrub button{display:block;width:100%;text-align:left;background:transparent;
+  border:0;color:var(--dim);padding:2px 4px;margin:0;font-size:12px;
+  border-radius:var(--r-ctl);cursor:pointer}
+#scrub button:hover{color:var(--accent);background:var(--accent-soft)}
+#scrub button.on{color:var(--accent);font-weight:650}
+
+/* ---------------------------------------------------------- the selection bar */
+#picked{position:sticky;top:calc(var(--head) + 8px);z-index:9;display:none;align-items:center;
+  gap:9px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-ctl);
+  padding:9px 12px;margin:0 0 12px;box-shadow:var(--shadow-pop);
+  flex-wrap:wrap}
+body.picking #picked{display:flex}
+#picked b{font-size:14px}
+#picked .spacer{flex:1}
+#picked button{margin:0}
+.act-rate{--pill:var(--warn)} .act-geo{--pill:var(--tone-teal)}
+.act-org{--pill:var(--tone-blue)} .act-dev{--pill:var(--tone-purple)}
+.pillbtn{display:inline-flex;align-items:center;gap:7px;border-radius:var(--r-ctl);
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  padding:7px 13px;font-size:14px;font-weight:600;cursor:pointer;margin:0}
+.pillbtn svg{width:16px;height:16px;color:var(--pill,var(--dim))}
+.pillbtn:hover{border-color:var(--pill,var(--accent));color:var(--pill,var(--accent))}
+.pillbtn:hover svg{color:inherit}
+
+/* ------------------------------------------------------------------- the home */
+/* 4.0: four facts printed in a ruled row, like the figures on a catalogue's
+   title page, rather than four white boxes with a wash of colour each. In
+   ink only: the section inks say which group of tools you are in, and Home
+   is in none of them. The figure first, then its label, as a wall label
+   reads. */
+.bigtiles{display:grid;gap:0 28px;margin:8px 0 8px;
+  grid-template-columns:repeat(auto-fit,minmax(176px,1fr))}
+.bigtile{background:transparent;border:0;border-top:1px solid var(--ink);
+  border-radius:var(--r-card);padding:16px 0 18px;display:flex;flex-direction:column;gap:4px;
+  box-shadow:var(--shadow-card);position:relative}
+.card .bigtile{box-shadow:none}
+.bigtile .k{font-size:var(--t-s);color:var(--ink);display:flex;align-items:center;gap:8px;
+  font-weight:650}
+.bigtile .k svg{display:none}
+.bigtile .v{order:-1;font-size:var(--t-3xl);font-weight:750;letter-spacing:-.03em;line-height:1.05;
+  font-variant-numeric:tabular-nums;color:var(--ink);margin-bottom:6px}
+.bigtile .n{font-size:var(--t-s);color:var(--dim)}
+.strip{display:grid;gap:4px;
+  grid-template-columns:repeat(auto-fill,minmax(clamp(104px,7vw,180px),1fr));
+  margin-top:4px}
+.strip .shot{border-radius:var(--r-ctl)}
+/* `:not([hidden])` rather than a bare display rule: an author `display:flex`
+   beats the browser's own [hidden] rule, and the bar sat there empty and blue
+   over a library that had finished reading hours ago. */
+.indexing:not([hidden]){display:flex;align-items:center;gap:11px;background:var(--accent-soft);
+  border:1px solid var(--accent);border-radius:var(--r-ctl);padding:10px 14px;
+  margin-bottom:14px;font-size:14px}
+.indexing .ibar{flex:1;height:6px;border-radius:var(--r-ctl);background:rgba(0,0,0,.09);
+  overflow:hidden;min-width:90px}
+.indexing .ibar i{display:block;height:100%;background:var(--accent);width:0}
+
+/* ----------------------------------------------------------------- the places */
+#placemap{height:min(62vh,560px);border-radius:var(--r-ctl);overflow:hidden;
+  border:1px solid var(--line);background:var(--card);position:relative}
+.placelist{display:grid;gap:10px;margin-top:14px;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.placecard{display:flex;gap:11px;align-items:center;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--r-ctl);padding:9px 11px;cursor:pointer;
+  box-shadow:var(--shadow-card);
+  text-align:left;color:var(--ink);margin:0;font:inherit}
+.placecard:hover{border-color:var(--accent);transform:translateY(-1px)}
+.placecard img{width:52px;height:52px;border-radius:var(--r-ctl);object-fit:cover;
+  background:var(--line);flex:0 0 52px}
+.placecard b{display:block;font-size:14px;font-weight:600}
+.placecard span{font-size:12px;color:var(--dim)}
+
+/* ----------------------------------------------------------------- the albums */
+.albums{display:grid;gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.albumcard{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;
+  background:var(--card);cursor:pointer;text-align:left;padding:0;margin:0;
+  box-shadow:var(--shadow-card);
+  color:var(--ink);font:inherit;display:block}
+.albumcard:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-pop)}
+/* `display:block` on both, and not by accident: these are SPANs inside a
+   button (a button may not contain a div), and `aspect-ratio` does not apply to
+   an inline box - so the cover collapsed and took the title with it. */
+.albumcard .cover{display:block;aspect-ratio:4/3;background:var(--line);
+  position:relative;overflow:hidden}
+.albumcard .who{display:block}
+.albumcard .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.albumcard .cover::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--wash)}
+.albumcard .cover .tag{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);
+  color:#fff;border-radius:var(--r-ctl);padding:2px 8px;font-size:12px}
+.albumcard .who{padding:10px 12px;display:block}
+.albumcard .who b{display:block;font-size:14px;font-weight:650}
+.albumcard .who span{font-size:12px;color:var(--dim)}
+
+/* ------------------------------------------------------------------ the tools */
+/* The Tools screen is a contents page. A group of tools is a section of the
+   catalogue: a band in its own ink across the top, its name, a line about
+   it, and its tools as ruled entries under it. Printed on the page, not
+   boxed: three bordered cards side by side were the card grid this look
+   replaced. */
+.cats{display:grid;gap:40px 36px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.cat{background:transparent;border:0;border-radius:var(--r-card);padding:20px 0 4px;
+  box-shadow:inset 0 4px 0 var(--tone,var(--ink))}
+.cat.blue{--tone:var(--tone-blue)} .cat.teal{--tone:var(--tone-teal)}
+.cat.orange{--tone:var(--tone-orange)} .cat.purple{--tone:var(--tone-purple)}
+.cat.grey{--tone:var(--tone-grey)}
+.cat .top{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.cat .ring{display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  background:transparent}
+.cat .ring svg{width:20px;height:20px}
+.cat h3{margin:0;font-size:var(--t-2xl);font-weight:750;font-stretch:106%;letter-spacing:-.02em}
+.cat .why{font-size:var(--t-m);color:var(--dim);margin:0 0 14px}
+.cat .list{display:flex;flex-wrap:wrap;gap:6px}
+.cat .list button{margin:0;padding:6px 11px;font-size:13px;border-radius:var(--r-ctl);
+  background:var(--wash);color:var(--ink);border:1px solid transparent;font-weight:500}
+.cat .list button:hover{border-color:var(--accent);color:var(--accent)}
+.cat .ring{color:var(--tone,var(--dim))}
+
+/* the viewer panel's tabs */
+.dtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:12px 0 10px}
+.dtabs button{margin:0;background:transparent;color:var(--dim);font-weight:600;
+  border-radius:var(--r-ctl) var(--r-ctl) 0 0;padding:7px 11px;font-size:13px;
+  border-bottom:2px solid transparent}
+.dtabs button.on{color:var(--accent);border-bottom-color:var(--accent)}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px}
+.facts div:nth-child(odd){color:var(--dim)}
+.rel{display:flex;align-items:center;gap:10px;padding:7px 0;
+  border-bottom:1px solid var(--line);font-size:13px}
+.rel .what{width:92px;flex:0 0 92px;color:var(--dim)}
+.rel .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.dstars{display:flex;gap:3px;margin:8px 0 2px}
+.dstars button{margin:0;padding:2px;background:transparent;border:0;cursor:pointer;
+  color:var(--dim);font-size:20px;line-height:1}
+.dstars button.on{color:var(--warn)}
+.dcols{display:flex;gap:7px;margin:8px 0 4px}
+.dcols button{width:23px;height:23px;border-radius:50%;margin:0;padding:0;
+  border:2px solid var(--line);cursor:pointer}
+.dcols button.on{outline:2px solid var(--ink);outline-offset:2px}
+.dmini{height:168px;border-radius:var(--r-ctl);overflow:hidden;border:1px solid var(--line);
+  margin-top:8px}
+
+/* ------------------------------------------------------------------- the phone */
+@media (max-width:860px){
+  #rail{position:fixed;top:0;left:0;bottom:0;width:82vw;max-width:320px;z-index:60;
+    transform:translateX(-101%);transition:transform .18s ease-out;
+    min-height:0;max-height:none;padding-top:env(safe-area-inset-top);
+    /* Said outright: top and bottom alone left it as tall as what was in it,
+       so with a group opened the end of the list was below the screen and the
+       drawer could not be scrolled to it. */
+    height:100vh;height:100dvh}
+  body.drawer #rail{transform:none;box-shadow:2px 0 22px rgba(0,0,0,.3)}
+  body.guiding #rail{padding-bottom:60vh}
+  body.shell #shell{display:block}
+  #stage{padding:16px 16px 92px;max-width:none}
+  #scrub{display:none}
+  .shots{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:3px}
+  .phead{margin-bottom:16px}
+  .phead h2{font-size:var(--t-2xl)}
+  body.shell #bottom{display:flex}
+  #picked{padding:8px 10px}
+  #picked .pillbtn{padding:7px 10px;font-size:13px}
+}
+
+/* Reload page and Appearance are icons at every width, as they already were
+   on a phone. They were "Refresh" in the header beside "Refresh" on Home: two
+   different things with one name, which is why one is Reload page and the
+   other Re-read library now. Both keep their title for a pointer and a screen
+   reader. */
+#reload span,#theme span{display:none}
+#reload,#theme{padding:0 9px}
+
+/* The dashboard on Home is a section of the page, not a card holding cards:
+   a heading in the page's own type, and its cards straight underneath. */
+.homesec{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--ink)}
+.homesec h3{margin:0;font-size:var(--t-xl);font-weight:750;letter-spacing:-.015em}
+#homecharts .boardbar button{padding:6px 12px;font-size:13px;
+  border-radius:var(--r-pill);display:inline-flex;align-items:center;gap:6px}
+#homecharts .boardbar svg{width:15px;height:15px}
+
+/* On a phone the filters are one row you swipe along, and the search box has
+   a row of its own - wrapped, they were two rows of chips under two rows of
+   tools, and the first photograph started halfway down the screen. */
+@media (max-width:860px){
+  .vtools input[type=search]{flex:1 1 100%;width:auto !important}
+  .fchips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+    margin-left:-12px;margin-right:-12px;padding:0 12px 2px}
+  .fchips::-webkit-scrollbar{display:none}
+  .fchips .fchip{flex:0 0 auto}
+}
+/* A card's title, a line about it, and its one action at the far end. */
+.cardhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.cardhead .fchip{margin-left:auto;padding:5px 12px;font-size:13px}
+/* The foot's one button keeps its own width rather than stretching across. */
+#railfoot .fchip{align-self:flex-start;padding:5px 12px;font-size:13px}
+
+/* Open Setup and Build a sample library, where nothing is indexed yet. */
+.firststeps{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+#railfoot .firststeps .fchip{padding:5px 12px;font-size:13px}
+
+/* The notice switch in the rail's foot: it came from the old sidebar's foot,
+   where it was a line of its own under the buttons. */
+#railfoot .railnotice{display:flex;align-items:center;gap:7px;margin:8px 0 0}

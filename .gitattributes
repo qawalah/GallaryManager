@@ -1,0 +1,15 @@
+# Text files are stored with LF. The page's files in app/web are read into the
+# exact bytes the browser gets, so they must not change with the checkout.
+* text=auto eol=lf
+
+# cmd.exe misreads labels and `goto` in a batch file with LF endings.
+*.bat text eol=crlf
+
+*.jpg binary
+*.heic binary
+*.png binary
+*.ico binary
+*.whl binary
+*.mp4 binary
+*.webm binary
+*.woff2 binary

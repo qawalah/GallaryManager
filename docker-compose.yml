@@ -1,0 +1,27 @@
+# Photo Manager on the Synology, installed by DevStore. Paste into Container
+# Manager > Project > Create. The image is published privately to ghcr.io by
+# the Release workflow and kept current by Watchtower (DevStore docs/nas-setup.md).
+#
+# Change YOU to your DSM user in the two places it appears. The photo folder is
+# mounted at the SAME path inside the container as on the NAS, and ALLOWED_ROOTS
+# names it. Both lines or neither (see nas/docker-compose.yml for the long
+# explanation, password and reverse-proxy options, which work the same here).
+services:
+  photo-manager:
+    image: ghcr.io/qawalah/photo-manager:latest
+    pull_policy: always
+    container_name: photo-manager
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    environment:
+      TZ: Asia/Riyadh
+      PORT: "8080"
+      PM_PUBLIC_PORT: "8842"
+      PM_DATA: /config
+      ALLOWED_ROOTS: /volume1/homes/YOU
+    ports:
+      - "8842:8080"
+    volumes:
+      - "./data:/config"
+      - "/volume1/homes/YOU:/volume1/homes/YOU"

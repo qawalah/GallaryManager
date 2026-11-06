@@ -1,0 +1,16 @@
+
+/* the map, when it is one you can go and look around */
+#pmmap.dragging{cursor:grabbing}
+#placemap .pmmap{cursor:grab}
+.pmpin{position:absolute;transform:translate(-50%,-50%);margin:0;
+  min-width:30px;height:30px;padding:0 9px;border-radius:999px;
+  background:var(--accent);color:var(--on-accent);border:2px solid #fff;font-size:12px;
+  font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:2}
+.pmpin:hover{background:var(--ink)}
+.pmzoom{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;
+  gap:5px;z-index:3}
+.pmzoom button{width:34px;height:34px;margin:0;padding:0;border-radius:var(--r-ctl);
+  background:var(--card);color:var(--ink);border:1px solid var(--line);
+  font-size:20px;line-height:1;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.pmzoom button:hover{border-color:var(--accent);color:var(--accent)}

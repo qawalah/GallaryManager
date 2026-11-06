@@ -1,0 +1,79 @@
+
+/* ------------------------------------------------- 3.1: the tools, in lists */
+.railrow.fam .twist{margin-left:auto;color:var(--dim);font-size:16px;
+  transition:transform .15s;line-height:1}
+.railrow.fam.open .twist{transform:rotate(90deg)}
+.railkids{padding:2px 0 6px}
+.railrow.kid{font-size:14px;padding:7px 18px 7px 30px;margin:0 8px 0 16px;
+  color:var(--dim)}
+.railrow.kid svg{width:16px;height:16px;flex-basis:16px}
+.railrow.kid.on{color:var(--accent);background:var(--accent-soft)}
+/* A feature in a list: its glyph, its name, and the one line it is for, as an
+   entry on a contents page, ruled off from the next (4.0). */
+.cat .list{display:grid;gap:0 36px;grid-template-columns:1fr}
+/* auto-fit, not auto-fill: a group of four on a wide window stretches its four
+   across the card instead of keeping empty columns for tools that are not
+   there, which left a blank strip down the right of the card. */
+.cats.one .cat .list{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.feat{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;
+  margin:0;padding:12px 4px;border-radius:0;background:transparent;
+  border:0;border-bottom:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}
+/* A row, not a box. Under the pointer it takes the wash and its name goes
+   to the group's ink. */
+/* Said again under .cat .list, whose plain-button rule (01-shell.css) would
+   otherwise give the entry a box's padding and an invisible border. */
+.cat .list .feat{background:transparent;border:0;border-bottom:1px solid var(--line);
+  border-radius:0;padding:12px 4px}
+.feat:hover,.cat .list .feat:hover{background:var(--wash)}
+.feat:hover .ftext b{color:var(--tone,var(--ink))}
+.feat .fic{flex:0 0 18px;width:18px;height:20px;display:flex;align-items:center;
+  justify-content:center;background:transparent}
+.feat .fic svg{width:16px;height:16px;color:var(--dim)}
+.feat:hover .fic svg{color:var(--tone,var(--ink))}
+.feat .ftext{min-width:0;display:flex;flex-direction:column;gap:2px}
+.feat .ftext b{font-size:var(--t-l);font-weight:650}
+.feat .ftext span{font-size:var(--t-s);color:var(--dim);line-height:1.45}
+.cat .top .fchip{margin-left:auto}
+
+/* the timeline/folders switch */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-ctl);
+  overflow:hidden;background:var(--card)}
+.seg button{margin:0;border:0;border-radius:0;background:transparent;
+  color:var(--dim);font-size:13px;font-weight:600;padding:7px 11px;
+  display:inline-flex;align-items:center;gap:6px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button svg{width:15px;height:15px}
+.seg button.on{background:var(--accent-soft);color:var(--accent)}
+
+/* the filter panel over the grid */
+.filtgrid{display:grid;gap:9px 14px;margin-top:11px;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.filtgrid label{display:block;margin:0;font-size:12px;color:var(--dim);
+  font-weight:600}
+.filtgrid input,.filtgrid select{width:100%;margin-top:3px;font-weight:400;
+  color:var(--ink)}
+.filtgrid .fnote{display:block;margin-top:3px;font-size:12px;font-weight:400;
+  line-height:1.35}
+
+/* people */
+.faces{display:grid;gap:13px;
+  grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+.face{border:0;background:transparent;margin:0;padding:0;cursor:pointer;
+  color:var(--ink);font:inherit;text-align:center}
+.face .ring{width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;
+  background:var(--line);display:block}
+.face .ring img{width:100%;height:100%;object-fit:cover}
+.face b{display:block;font-size:14px;font-weight:600;margin-top:7px}
+.face span{font-size:12px;color:var(--dim)}
+.face:hover .ring{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-width:860px){
+  .seg button span{display:none}
+  .cats.one .cat .list{grid-template-columns:1fr}
+}
+/* the NAS line: one line, a button for each of its tabs */
+.featgroup{cursor:default}
+.feat .ftext .featchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.featchips .fchip{padding:4px 11px;font-size:13px}
+.featchips .fchip svg{width:14px;height:14px}
+.cat .list .featgroup{background:transparent;border-radius:0;padding:12px 4px;
+  border:0;border-bottom:1px solid var(--line)}

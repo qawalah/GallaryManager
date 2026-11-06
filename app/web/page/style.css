@@ -1,0 +1,1732 @@
+
+/* The typeface, served by the app itself: no page here asks the internet for
+   anything. Archivo is one variable file with every weight and width in it,
+   and its numerals line up in columns, which a page of counts needs. Split by
+   script so a page in English never downloads the accented half. */
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;
+  font-stretch:62% 125%;font-display:swap;src:url("font/archivo-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,
+    U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;
+  font-stretch:62% 125%;font-display:swap;src:url("font/archivo-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,
+    U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,
+    U+2C60-2C7F,U+A720-A7FF}
+
+/* Three states, not two. "Auto" follows the machine, which is right until it
+   is not - his NAS reports dark all day - so an explicit choice has to be able
+   to beat it. That is why the dark palette appears twice: once inside the media
+   query for Auto, and once on an html[data-theme] the button sets. The light
+   palette on :root is the base both fall back to.
+
+   4.0, the catalogue. The page is printed stock: white with black ink in the
+   light, black with bone ink in the dark, divided by hairline rules rather
+   than boxed by shadows. In the light the ground and the cards are the same
+   white, so a card is told by its hairline; anything that needs a fill on a
+   card (a field's row, a code word, a row under the pointer) takes `--wash`,
+   a breath of the ink on the stock, rather than the ground's colour. The only colours on it are the photographs and the
+   five section inks (library/css/01-shell.css), so a primary action is
+   printed in the page's own ink. The blue-grey it replaced is the Original
+   theme, one click away under Appearance. */
+:root{color-scheme:light;
+  --bg:#ffffff; --card:#ffffff; --ink:#151514; --dim:#5d5a54; --line:#dddad3;
+  --accent:#151514; --accent-soft:#ebeae6;
+  --wash:color-mix(in srgb,var(--ink) 5%,var(--card));
+  /* What is written ON the accent: a primary button's label. White here; in
+     the dark the accent is light, and white on it was 2.6:1. */
+  --on-accent:#fff;
+  --warn:#9a6b00; --bad:#b3261e; --good:#1c7c3c;
+  /* The five colour labels, once: the grid, the menus and the viewer all read
+     these, so a yellow is the same yellow everywhere. */
+  --label-red:#e5484d; --label-yellow:#f5c518; --label-green:#30a46c;
+  --label-blue:#3e63dd; --label-purple:#8e4ec6;
+  /* THE SHAPES, once.
+     A card was 10px here, 12px there and 13px on the Tools screen, which is not
+     a thing anybody can see one at a time and is exactly what makes an app feel
+     assembled rather than designed. Three radii and one padding, named. In the
+     catalogue everything is cut square, like a print on a wall: a card, a
+     control and a chip alike. What sets a filter apart is that it fills with
+     ink when it is on, not its shape. */
+  --r-card:2px; --r-ctl:2px; --r-pill:2px; --pad-card:20px 22px;
+  /* ONE CHIP. The header's Flows pill, a value chip on a form and a filter
+     pill over the grid were three heights, three radii and three sizes of
+     type. They share the shape; what differs is the role - a filter lights
+     up, a value has a cross, a status has a dot and, when pressing it opens
+     something, a chevron that says so. */
+  --chip-h:36px; --chip-fs:13px;
+  /* How tall the header is, for everything that sticks under it: the rail,
+     the month rows, the selection bar. Measured once here rather than
+     guessed in five places, three of which had it wrong. */
+  --head:57px;
+  /* Depth. A card sits on the page by its hairline alone; only what floats
+     over the page, a menu or a bar, casts anything. */
+  --shadow-card:none;
+  --shadow-pop:0 18px 40px -12px rgba(20,18,14,.28),0 0 0 1px rgba(20,18,14,.06);
+  /* THE TYPE, once: one face, eight sizes, and nothing between them. The
+     scale is 12 13 14 16 20 28 40 64; a size that is not on it is a size
+     somebody guessed. */
+  --font:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --t-xs:12px; --t-s:13px; --t-m:14px; --t-l:16px; --t-xl:20px;
+  --t-2xl:28px; --t-3xl:40px; --t-4xl:64px;
+  /* THE MOTION, once. Things arrive quickly and settle slowly, like a page
+     being turned and laid flat, and never bounce. Off entirely for anybody
+     who has asked the machine for less motion (the last rule in this file). */
+  --ease:cubic-bezier(.16,1,.3,1); --t-fast:.16s; --t-mid:.28s; --t-slow:.48s;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;
+  --bg:#0f0f0e; --card:#181817; --ink:#f1efe9; --dim:#a8a49c; --line:#2e2d2a;
+  --accent:#f1efe9; --accent-soft:#2b2a27; --on-accent:#121211;
+  --warn:#d9a441; --bad:#ef6d63; --good:#63c98a;
+  --shadow-card:none;
+  --shadow-pop:0 18px 44px -10px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);}}
+html[data-theme="dark"]{color-scheme:dark;
+  --bg:#0f0f0e; --card:#181817; --ink:#f1efe9; --dim:#a8a49c; --line:#2e2d2a;
+  --accent:#f1efe9; --accent-soft:#2b2a27; --on-accent:#121211;
+  --warn:#d9a441; --bad:#ef6d63; --good:#63c98a;
+  --shadow-card:none;
+  --shadow-pop:0 18px 44px -10px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);}
+/* The chart colours.
+
+   Eight categorical slots in a fixed order - a series keeps its colour whatever
+   else is on screen, and the ORDER is the colour-blind safety: these eight were
+   checked pair by pair against this app's own surfaces (white, and #1b1e24)
+   rather than eyeballed, and the dark column is the same eight hues stepped for
+   the dark surface, not an automatic flip of the light ones.
+
+   Three of the light steps sit under 3:1 against white, so every chart here
+   carries its values as text as well - the colour is never the only thing
+   saying what a slice is. The blue ramp underneath is for magnitude: one hue,
+   more is darker, which is the safe default for anything ordered. */
+:root{
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --q1:#cde2fb; --q2:#9ec5f4; --q3:#6da7ec; --q4:#3987e5;
+  --q5:#256abf; --q6:#184f95; --q7:#0d366b;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --q1:#0d366b; --q2:#104281; --q3:#184f95; --q4:#256abf;
+  --q5:#2a78d6; --q6:#3987e5; --q7:#6da7ec;}}
+html[data-theme="dark"]{
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --q1:#0d366b; --q2:#104281; --q3:#184f95; --q4:#256abf;
+  --q5:#2a78d6; --q6:#3987e5; --q7:#6da7ec;}
+html[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+/* The parts of the page the browser draws itself still carry the palette:
+   what you select, the caret, the scrollbars, the ring round what has focus. */
+html{scrollbar-color:color-mix(in srgb,var(--dim) 38%,transparent) transparent;
+  accent-color:var(--accent)}
+::selection{background:color-mix(in srgb,var(--sec,var(--accent)) 30%,transparent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+::placeholder{color:var(--dim);opacity:1}
+body{margin:0;background:var(--bg);color:var(--ink);caret-color:var(--accent);
+  font:var(--t-m)/1.55 var(--font);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+/* Every count on the page lines up in columns: a table of 1,204 and 87 reads
+   as numbers, not as a ragged edge. */
+td,th,.count,.v,b,.outcome b,#stamp{font-variant-numeric:tabular-nums}
+/* Things you press take the page's face, not the browser's own. */
+button,input,select,textarea{font-family:inherit}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+svg.ic{width:19px;height:19px;flex:0 0 19px}
+/* An icon inside a button that is not laid out as a row sits on the words'
+   line rather than above it. */
+button svg.ic{vertical-align:-4px}
+
+/* One row, always. It used to wrap, so Refresh and the theme button dropped to
+   a second line whenever the allowed-folders sentence was long - which made the
+   header a different height on different machines and pushed the whole app
+   down. The sentence is the only elastic thing in it and truncates instead. */
+header{padding:10px 18px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;flex-wrap:nowrap;
+  /* It stays at the top while the page scrolls, at every width: the one
+     status worth a glance and the way back should never be a scroll away.
+     Solid stock, like a running head (4.0): a frosted bar let the words
+     scrolling under it show through its own. A soft shadow once something
+     has scrolled - see body.scrolled. */
+  position:sticky;top:0;z-index:30;background:var(--card);
+  transition:box-shadow .2s}
+body.scrolled header{box-shadow:0 8px 24px -14px rgba(16,24,40,.35)}
+html[data-mode="dark"] body.scrolled header{box-shadow:0 8px 24px -12px rgba(0,0,0,.7)}
+/* The name, then the one status worth a glance, then everything else hard
+   right. A row of controls floating in the middle of a wide screen reads as
+   unfinished - at 1600px there was a hand's width of nothing after them. */
+header #live{margin-right:auto}
+/* The name is set like a catalogue's masthead: wide, heavy, small. */
+h1{font-size:var(--t-l);margin:0;font-weight:800;font-stretch:118%;letter-spacing:-.01em;
+  flex:0 0 auto}
+/* The elastic one, and the first to give up its room: it is reference, and
+   everything to the right of it is either a control or the one status worth
+   reading at a glance. */
+.note{color:var(--dim);font-size:13px}
+/* The one status worth a glance, and no more than a glance.
+   It used to read "code 16 Sep 16:50 · up 0s" - two facts nobody needs
+   continuously, in a row already competing for width, and the second of them
+   changing every second. Now: a dot and a word. The dates are in the bubble,
+   which is where a fact you want twice a month belongs. */
+#live{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 12px;
+  font-size:13px;font-weight:600;color:var(--dim);border-radius:var(--r-ctl);
+  border:1px solid var(--line);background:var(--wash);
+  flex:0 0 auto;white-space:nowrap;cursor:default}
+#live.on{background:var(--accent-soft)}
+#dot{width:9px;height:9px;border-radius:50%;background:var(--good);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 22%,transparent)}
+#apart{display:flex;gap:6px}
+#dot.gone{background:var(--bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--bad) 22%,transparent)}
+#stamp{font-variant-numeric:tabular-nums}
+
+/* EVERY control in the header, one definition.
+   There were four - `.apart`, `#reload`, `#theme` and the pill - each with its
+   own padding, font size and corner radius, so History sat a pixel or two off
+   its neighbours and the row read as things that had been added one at a time.
+   Which is what had happened. One rule, one height, one radius; the only thing
+   a button chooses for itself is its icon. */
+header button{margin:0;display:inline-flex;align-items:center;gap:6px;
+  height:36px;padding:0 12px;font:inherit;font-size:13px;font-weight:600;
+  line-height:1;border-radius:var(--r-ctl);cursor:pointer;white-space:nowrap;
+  border:1px solid transparent;background:transparent;color:var(--dim)}
+header button:hover{color:var(--accent);border-color:var(--line);
+  background:color-mix(in srgb,currentColor 9%,transparent)}
+header button.on{color:var(--accent);border-color:var(--accent);
+  background:var(--accent-soft)}
+header button .ic{flex:0 0 auto}
+#reload:hover{color:var(--ink);border-color:var(--accent)}
+/* A strip, not another row of navigation - it sits directly above the sidebar
+   and would otherwise read as one more menu entry. */
+#running{border-bottom:1px solid var(--line);background:var(--accent-soft);
+  padding:7px 18px;display:flex;flex-direction:column;gap:5px}
+/* display:flex beats the browser's own [hidden] rule, so an empty bar left a
+   strip of colour under the header with nothing in it. */
+#running[hidden], #trouble[hidden], .opt[hidden]{display:none}
+#running .job{display:flex;align-items:center;gap:10px;font-size:13px;
+  cursor:pointer;padding:3px 0}
+#running .job:hover .jname{color:var(--accent)}
+#running .jname{font-weight:600;display:flex;align-items:center;gap:7px;
+  min-width:190px}
+.opt.locked{opacity:.55}
+.opt.locked input, .opt.locked select{cursor:not-allowed}
+/* Three states that have to be told apart at a glance, and a hue difference on
+   its own does not do it - not on a dim monitor, not in the dark theme, and not
+   for anyone who sees red and green as the same colour. So each state differs
+   in SHAPE and in WORD as well: off is a hollow ring on a plain background, on
+   is a filled dot on a tinted one, running is a filled dot that pulses inside a
+   solid pill. The word beside it says the same thing again. */
+/* The status chip. Calm, and the same shape in all three states.
+   The previous two attempts both painted the whole pill - first accent blue by
+   accident, then green or blue on purpose - and a filled block of colour in a
+   header is loud, fights the theme, and made the WORD harder to read rather
+   than easier. A status is not a button and should not look like one.
+   So: one neutral chip, and the colour is carried by the DOT and the WORD
+   only. That reads at a glance, survives both themes, and does not shout. */
+#autobar{display:inline-flex;align-items:center;gap:8px;height:var(--chip-h);
+  padding:0 12px;border:1px solid var(--line);border-radius:var(--r-pill);
+  background:var(--wash);color:var(--ink);font:inherit;font-size:var(--chip-fs);
+  font-weight:500;white-space:nowrap;cursor:pointer;margin:0;
+  max-width:340px;overflow:hidden}
+#autobar:hover{border-color:var(--accent)}
+/* It opens Automation, which a status alone would not say. */
+#autobar::after{content:"";width:6px;height:6px;flex:0 0 6px;margin:0 2px 0 -1px;
+  border:solid var(--dim);border-width:0 1.5px 1.5px 0;transform:rotate(-45deg)}
+#autobar b{font-weight:750;letter-spacing:.3px;color:var(--dim)}
+#autobar .autolab{color:var(--dim);font-weight:600}
+#autobar #autosays span{color:var(--dim);font-variant-numeric:tabular-nums}
+#autobar #autosays{overflow:hidden;text-overflow:ellipsis}
+/* OFF: a hollow ring - nothing is filled in because nothing is happening. */
+#autodot{width:9px;height:9px;border-radius:50%;background:transparent;
+  border:2px solid var(--dim);box-sizing:border-box;flex:0 0 9px}
+/* ON: filled green, and the word goes green with it. */
+#autobar.on b{color:var(--good)}
+#autobar.on #autodot{background:var(--good);border-color:var(--good);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 20%,transparent)}
+/* RUNNING: accent, moving, and a hairline of tint so the eye lands on it. */
+#autobar.busy{border-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#autobar.busy b{color:var(--accent)}
+#autobar.busy #autodot{background:var(--accent);border-color:var(--accent);
+  animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.byauto{font-size:12px;text-transform:uppercase;letter-spacing:.5px;
+  border:1px solid var(--accent);color:var(--accent);border-radius:var(--r-pill);
+  padding:1px 6px;margin-left:7px;font-weight:700}
+/* `[hidden]` is a plain attribute selector and loses to an id, so an element
+   given `display` here would show as an empty box when hidden. */
+#autonews[hidden],#running[hidden],#trouble[hidden]{display:none}
+/* Same trap, same fix, and worth a general rule this time: every header
+   control has a display of its own, and an id or class with a display rule
+   beats the [hidden] attribute - so "hidden" Sign out was on screen on an app
+   with no password at all. */
+header [hidden]{display:none !important}
+#autonews{display:flex;align-items:center;gap:9px;margin:0 0 12px;
+  padding:8px 13px;border:1px solid var(--accent);border-radius:var(--r-ctl);
+  background:var(--accent-soft);font-size:13px}
+#autonews button{margin-left:auto;padding:3px 10px;font-size:12px}
+#running .jbar{flex:1;height:6px;border-radius:var(--r-ctl);background:var(--wash);
+  border:1px solid var(--line);overflow:hidden;min-width:80px}
+#running .jbar i{display:block;height:100%;background:var(--accent);width:0;
+  transition:width .25s}
+#running .jbar.guess i{width:35%;animation:slide 1.4s ease-in-out infinite}
+@keyframes slide{0%{margin-left:-35%}100%{margin-left:100%}}
+#running .jnote{color:var(--dim);white-space:nowrap;font-variant-numeric:tabular-nums}
+#running .jnow{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;max-width:34ch;font-family:ui-monospace,Consolas,monospace;
+  font-size:12px}
+/* Something the app cannot reach is a warning, and is tinted like one: in
+   the catalogue the accent is the page's own ink, so its tint said nothing. */
+#trouble{margin:0;padding:12px 18px;background:color-mix(in srgb,var(--warn) 14%,var(--card));
+  border-bottom:1px solid color-mix(in srgb,var(--warn) 45%,var(--line));color:var(--ink);
+  font-size:14px}
+#trouble b{color:var(--bad)}
+/* #reload and #theme are header buttons and take the rule above. */
+main{display:flex;align-items:stretch;flex-wrap:wrap}
+
+
+section{flex:1;padding:18px 20px;min-width:340px;max-width:1100px}
+/* ============================ THE SIX ROLES A CONTROL CAN HAVE ==============
+   Every button in this app is exactly one of these. A feature that wants a
+   seventh kind of button is a feature that has not said which of these it
+   means - and `tests/test_design.py` fails when a new one appears.
+
+     PRIMARY      a plain <button>. The one thing this screen is for. One per
+                  screen, and it carries the real verb: "Move 412 files".
+     SECONDARY    .ghost. A real action, not the main one: Cancel, Check again,
+                  Browse.
+     QUIET        .quiet. Text, no box. Something you may never press: "show
+                  the ones it skipped".
+     DESTRUCTIVE  .danger. Red, and only where something cannot be undone.
+     FILTER       .fchip. A pill that narrows what is on screen, and lights up
+                  when it is on. Never performs an action.
+     CONTEXTUAL   .pillbtn. Acts on what is selected right now, and lives in
+                  the bar that appears with a selection.
+
+   Everything else - the rail, the viewer's glass buttons, the menus, the marks
+   in the tree - is a surface rather than a button role, and each is defined
+   exactly once in its own place. */
+.card{background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-card);padding:var(--pad-card);margin-bottom:16px;
+  box-shadow:var(--shadow-card)}
+h2{margin:0 0 4px;font-size:var(--t-l);font-weight:700;display:flex;align-items:center;gap:9px;
+  letter-spacing:-.005em}
+/* A tool's name is the title of its page, set at the size of a section in a
+   catalogue, with the band of its group's ink above it (14-catalogue.css). */
+#form>h2{font-size:var(--t-2xl);font-weight:750;font-stretch:106%;letter-spacing:-.02em;
+  line-height:1.15;gap:12px;margin-bottom:6px}
+#form>h2>svg{width:24px;height:24px;color:var(--sec,var(--dim))}
+
+/* ------------------------------------------------- before, and after, a run */
+.changing{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:14px;
+  align-items:baseline}
+.changing div:nth-child(odd){color:var(--dim)}
+.changing .mono{font:13px/1.5 ui-monospace,Consolas,monospace;word-break:break-all}
+/* Red is for the irreversible, and never on its own: the card is outlined, the
+   heading carries a warning mark, and the button is the red one. */
+.card.risky{border-color:var(--bad);box-shadow:inset 0 4px 0 var(--bad)}
+.card.risky>b{color:var(--bad);display:flex;align-items:center;gap:7px}
+.outcome{display:grid;gap:12px 22px;margin-top:14px;
+  grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}
+.outcome>div{border:0;border-top:1px solid var(--line);border-radius:0;padding:10px 0 0;
+  background:transparent;display:flex;flex-direction:column;gap:4px}
+.outcome>div span{display:flex;align-items:center;gap:6px;font-size:12px;
+  color:var(--dim)}
+.outcome>div b{font-size:var(--t-2xl);font-weight:700;line-height:1.05;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+.outcome>div svg{width:15px;height:15px;flex-basis:15px}
+.outcome>div.good b{color:var(--good)}
+.outcome>div.bad{border-top:2px solid var(--bad)} .outcome>div.bad b{color:var(--bad)}
+.outcome>div.warn b{color:var(--warn)}
+
+/* ------------------------------------------------------- the shape of a feature
+
+   The strip, the sentence, and the one Advanced. Each is one line of screen and
+   each answers a question the page used to leave to inference: where am I in
+   this, what is this for, and where did the rest of the settings go. */
+/* 4.0: four columns under one rule, like the running heads of a catalogue.
+   Each step's own rule fills in as the run reaches it, in the ink of the
+   tool's group, so the eye follows a line across rather than hunting for a
+   tinted box. Never colour alone: the step you are on is also the bold one,
+   and a step you have finished carries a tick drawn beside its number. */
+.steps{display:flex;list-style:none;margin:18px 0 4px;padding:0;gap:4px}
+.steps li{flex:1 1 0;display:flex;align-items:baseline;gap:8px;padding:12px 2px 2px;
+  font-size:var(--t-s);color:var(--dim);min-width:0;position:relative;
+  border-top:1px solid var(--line);transition:color var(--t-mid) var(--ease)}
+.steps li::before{content:"";position:absolute;left:0;right:0;top:-2px;height:3px;
+  background:var(--sec,var(--ink));transform:scaleX(0);transform-origin:left center;
+  transition:transform var(--t-slow) var(--ease),background-color var(--t-mid)}
+.steps li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.steps li b{flex:0 0 auto;font-size:var(--t-s);font-weight:700;color:var(--dim);
+  font-variant-numeric:tabular-nums}
+.steps li.now{color:var(--ink);font-weight:650}
+.steps li.now b{color:var(--ink)}
+.steps li.now::before{transform:scaleX(1)}
+.steps li.done{color:var(--ink)}
+.steps li.done::before{transform:scaleX(1);background:color-mix(in srgb,var(--ink) 30%,transparent)}
+.steps li.done b::after{content:"";display:inline-block;width:4px;height:8px;margin:0 0 1px 6px;
+  border:solid var(--good);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.pickwhy{font-weight:500;color:var(--dim);font-size:13px}
+details.fold.adv>div>fieldset:first-child{margin-top:4px}
+
+/* A group of settings is a heading and a rule, not a box. Every form already
+   sits in a card, so a bordered box per group was a card inside a card, and a
+   long form like Setup read as a stack of frames rather than one page. */
+fieldset{border:0;border-top:1px solid var(--line);border-radius:0;
+  margin:30px 0 0;padding:8px 0 0;min-width:0}
+/* Group headings and fold rows in sentence case, all of them: capitals are
+   slower to read and flatten RAW and XMP into the words around them, and the
+   More settings row was the one heading that was not shouting. */
+legend{padding:0 12px 0 0;font-weight:700;font-size:var(--t-m);color:var(--ink)}
+/* The same goes for a folded group: a rule and a heading with a twist, so a
+   form with three of them is three lines, not three grey boxes stacked with a
+   gap between each. The run button closes the stack with one more rule. */
+details.fold{border:0;border-top:1px solid var(--line);border-radius:0;margin:14px 0 0;
+  padding:0;background:transparent}
+details.fold+details.fold{margin-top:0}
+details.fold>summary{cursor:pointer;padding:13px 0;min-height:44px;font-weight:650;
+  font-size:var(--t-m);color:var(--dim);list-style:none;display:flex;align-items:center;gap:10px}
+details.fold>summary:hover,details.fold[open]>summary{color:var(--ink)}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:"";width:6px;height:6px;flex:0 0 6px;margin:0 2px;
+  border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(-45deg);
+  transition:transform var(--t-mid) var(--ease)}
+details.fold[open]>summary::before{transform:rotate(45deg)}
+details.fold>div{padding-bottom:16px}
+
+label{display:block;margin:16px 0 6px;font-weight:600}
+.lab{display:flex;align-items:center;gap:8px;margin:16px 0 6px;font-weight:600}
+.row-flag .lab{margin:0;font-weight:500}
+input[type=text],input[type=password],select,input[type=number]{width:100%;padding:9px 12px;
+  min-height:40px;border-radius:var(--r-ctl);border:1px solid var(--line);background:var(--wash);
+  color:var(--ink);font:inherit;transition:border-color var(--t-fast)}
+input[type=text]:hover,input[type=password]:hover,select:hover,input[type=number]:hover{
+  border-color:color-mix(in srgb,var(--ink) 35%,var(--line))}
+/* A control is as wide as the answer it takes. A box for "60" stretched across
+   a 1200px card reads as a mistake, and a path is the one thing that needs the
+   whole width - which is why the box beside a Browse button keeps it. */
+input[type=text]{max-width:640px}
+select{max-width:560px}
+input[type=password]{max-width:320px}
+input[type=number]{max-width:220px}
+.withbtn input{max-width:none}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.withbtn{display:flex;gap:7px}
+.withbtn.locked input{opacity:.62;cursor:not-allowed}
+.withbtn.locked button{opacity:.45;cursor:not-allowed;pointer-events:none}
+.withbtn input{flex:1}
+.withbtn button{margin:0;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.row-flag{display:flex;gap:9px;align-items:flex-start;margin:12px 0}
+.opt.locked{opacity:.45}
+#flowsum{margin:12px 0 4px}
+.sumhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chain{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:10px 0}
+.blk{flex:1 1 150px;min-width:150px;border:1px solid var(--line);border-radius:var(--r-ctl);
+  padding:8px 10px;display:flex;flex-direction:column;gap:3px;position:relative}
+.blkn{position:absolute;top:-8px;left:9px;background:var(--card);font-size:12px;
+  font-weight:700;color:var(--dim);padding:0 5px;border:1px solid var(--line);
+  border-radius:var(--r-ctl);line-height:15px}
+.blkname{display:flex;align-items:center;gap:6px;font-weight:650;font-size:13px;
+  margin-top:2px}
+.blkwatch{font-size:12px;color:var(--dim)}
+.blkdo{font-size:12px;font-weight:650}
+.blkarrow{align-self:center;color:var(--dim);font-size:16px;line-height:1}
+.blk.runs{border-color:var(--good)} .blk.runs .blkdo{color:var(--good)}
+.blk.reports .blkdo{color:var(--dim)}
+.blk.waiting{border-color:var(--warn)} .blk.waiting .blkdo{color:var(--warn)}
+.blk.off{opacity:.5;border-style:dashed}
+.blk.unset,.blk.gone{border-color:var(--bad)}
+.blk.unset .blkdo,.blk.gone .blkdo{color:var(--bad)}
+/* Running or not, and never by colour alone - the ring fills in, the word
+   changes, and the tooltip gives the reason. */
+.flight{display:inline-flex;align-items:center;gap:6px;font-size:12px;
+  font-weight:800;letter-spacing:.4px;border:1px solid var(--line);
+  border-radius:var(--r-pill);padding:2px 9px;color:var(--dim);white-space:nowrap}
+.fdot{width:8px;height:8px;border-radius:50%;background:transparent;
+  border:2px solid currentColor;box-sizing:border-box}
+.flight.on{color:var(--good);border-color:var(--good);
+  background:color-mix(in srgb,var(--good) 12%,transparent)}
+.flight.on .fdot{background:currentColor}
+.flight.busy{color:var(--on-accent);background:var(--accent);border-color:var(--accent)}
+.flight.busy .fdot{background:#fff;animation:pulse 1.1s ease-in-out infinite}
+.flight.dsm{color:var(--warn);border-color:var(--warn)}
+.flight.dsm .fdot{background:currentColor}
+.stepcard{border:1px solid var(--line);border-radius:var(--r-ctl);padding:10px 12px;
+  margin:8px 0;background:var(--card2,transparent)}
+.stepcard.off{opacity:.55}
+.steprow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.stepn{display:inline-flex;align-items:center;justify-content:center;
+  min-width:22px;height:22px;border-radius:var(--r-ctl);border:1px solid var(--line);
+  font-size:12px;font-weight:600}
+.steptitle{font-weight:600}
+.stepacts{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.stepacts button{padding:3px 8px;font-size:12px}
+.stepopts{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.stepopt{margin:0 0 12px}
+.stepopt input[type=text],.stepopt input[type=number],.stepopt select{width:100%}
+@media (max-width:860px){.stepacts{margin-left:0;width:100%}}
+.opt.locked input,.opt.locked select,.opt.locked button{cursor:not-allowed}
+#lockednote{display:flex;gap:8px;align-items:center;margin:10px 0 0;padding:9px 12px;
+  border:1px solid var(--warn,#c47f17);border-radius:var(--r-ctl);
+  background:rgba(196,127,23,.10);font-size:13px}
+.row-flag input{margin-top:3px}
+
+.info{border:1px solid color-mix(in srgb,var(--dim) 55%,var(--line));background:transparent;
+  color:var(--dim);width:20px;height:20px;border-radius:50%;font-size:12px;font-weight:700;
+  line-height:1;cursor:help;padding:0;margin:0;flex:0 0 20px;position:relative;
+  display:inline-flex;align-items:center;justify-content:center;font-style:italic}
+/* Seen at 20px, hit at 44: the reach is invisible and wider than the mark. */
+.info::after{content:"";position:absolute;inset:-12px}
+.info:hover,.info.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+/* Help is a BUBBLE, not a panel that pushes the form down.
+   It used to expand in place, and the arithmetic of that is what made it wrong:
+   most options here have two sentences explaining a trap, so a form with twelve
+   of them opened is four screens of prose with the controls scattered through
+   it. You cannot compare two settings that are now a page apart, and you stop
+   opening any of them. A bubble costs nothing to open and nothing to close.
+   `position:fixed` so no card's overflow can clip it, and clamped to the
+   viewport in JS so it can never push the page sideways on a phone. */
+#tip{position:fixed;z-index:120;max-width:min(360px,calc(100vw - 24px));
+  padding:12px 14px;border-radius:var(--r-ctl);font-size:var(--t-m);line-height:1.5;
+  background:var(--ink);color:var(--bg);box-shadow:0 8px 26px rgba(0,0,0,.3);
+  pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s,transform .12s}
+#tip.on{opacity:1;transform:none}
+#tip[hidden]{display:none}
+.fromsetup{font-weight:400;color:var(--dim);font-size:12px}
+
+/* A view of the same answer, not a setting: a row of chips where the one you
+   are looking at is obvious and the others are plainly available. Defined after
+   the plain button rule it has to beat. */
+.viewtabs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 12px}
+.viewtabs button{margin:0;padding:6px 11px;font-size:13px;border-radius:var(--r-pill);
+  background:var(--wash);color:var(--dim);border:1px solid var(--line);
+  cursor:pointer;font-weight:500}
+.viewtabs button:hover{color:var(--ink);border-color:var(--dim)}
+.viewtabs button.on{background:var(--accent-soft);color:var(--accent);
+  border-color:var(--accent);font-weight:650}
+button{background:var(--accent);color:var(--on-accent);border:0;border-radius:var(--r-ctl);
+  padding:10px 18px;font:inherit;font-weight:650;letter-spacing:.005em;
+  cursor:pointer;margin-top:14px}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+button.quiet{background:transparent;color:var(--dim);border:0;font-weight:600;
+  padding:7px 9px;text-decoration:underline;text-underline-offset:3px}
+button.quiet:hover{color:var(--accent)}
+button.danger{background:var(--bad)}
+button[disabled]{opacity:.5;cursor:default}
+.act{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+details.fold+.act{border-top:1px solid var(--line);padding-top:14px;margin-top:0}
+.act button{margin-top:0}
+
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);
+  vertical-align:top}
+th{color:var(--dim);font-weight:600;font-size:var(--t-xs);letter-spacing:.02em}
+tr.approx td{color:var(--warn)}
+.stats{display:grid;grid-template-columns:auto 1fr;gap:3px 16px;font-size:14px}
+th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+th.sortable:hover{color:var(--accent)}
+.rootline{margin-top:4px}
+.rootline code{background:var(--accent-soft);padding:1px 5px;border-radius:var(--r-ctl)}
+.stats div:nth-child(odd){color:var(--dim)}
+.bad{color:var(--bad)} .good{color:var(--good)} .warn{color:var(--warn)}
+.scroll{max-height:58vh;overflow:auto;border:1px solid var(--line);border-radius:var(--r-ctl)}
+pre{white-space:pre-wrap;font:13px/1.5 ui-monospace,Consolas,monospace;margin:0}
+.tag{display:inline-block;font-size:12px;padding:2px 7px;border-radius:var(--r-pill);
+  border:1px solid var(--line);color:var(--dim);margin-left:8px;font-weight:500}
+.bar{height:8px;border-radius:var(--r-ctl);background:var(--wash);border:1px solid var(--line);
+  overflow:hidden;margin:10px 0 6px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.mono{font:13px/1.5 ui-monospace,Consolas,monospace;color:var(--dim);
+  overflow-wrap:anywhere}
+
+/* The header row sticks, and the THEAD is what sticks - not the cells.
+   A table cell cannot be lifted out of the table's own painting order by
+   z-index, so a sticky `th` kept its place but every row scrolled straight
+   over the words in it. Sticking the row group works, and needs
+   border-collapse:separate so each cell still draws its own line. */
+table.tree{font-size:13px;border-collapse:separate;border-spacing:0}
+table.tree thead{position:sticky;top:0;z-index:3;background:var(--card)}
+table.tree th{background:var(--card);
+  font-size:12px;text-transform:uppercase;letter-spacing:.4px;
+  box-shadow:inset 0 -1px var(--line)}
+table.tree td{padding:5px 8px;white-space:nowrap}
+table.tree tbody tr:hover{background:var(--wash)}
+.same{color:var(--dim);font-style:italic}
+tr.ghead{background:var(--wash);cursor:pointer}
+tr.ghead:hover{background:var(--accent-soft)}
+tr.ghead td{font-weight:600;border-bottom:1px solid var(--line)}
+tr.ghead .gnote{font-weight:400;color:var(--dim);display:block;margin-top:2px}
+tr.ghead .gcount{font-weight:400;color:var(--dim);margin-left:6px}
+tr.ghead .gtwist{display:inline-block;width:14px;color:var(--dim)}
+tr.ghead .gact{margin-left:0;font-size:12px;padding:3px 8px;margin-top:4px}
+td.gacts{white-space:normal}
+.rowmark{display:inline-block;width:15px;color:var(--dim)}
+tr.did .rowmark:before{content:"\2713";color:var(--good);font-weight:700}
+tr.didnt .rowmark:before{content:"\2715";color:var(--bad);font-weight:700}
+tr.doing .rowmark:before{content:"\25b8";color:var(--accent)}
+tr.doing{background:var(--accent-soft)}
+.twist{width:16px;display:inline-block;text-align:center;cursor:pointer;
+  color:var(--dim);user-select:none}
+.leafpad{width:16px;display:inline-block}
+.fname{display:inline-flex;align-items:center;gap:7px}
+.fname svg{color:var(--dim)}
+.num{text-align:right;font-variant-numeric:tabular-nums;color:var(--dim)}
+.num b{color:var(--ink);font-weight:600}
+.pip{display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:var(--r-ctl);font-size:12px;line-height:1;
+  border:1px solid transparent}
+.pip.all{background:#d8f0e0;color:#12653a;border-color:#b6e2c6}
+.pip.some{background:#fdeecd;color:#7a5300;border-color:#f4dca6}
+.pip.none{background:#fadbd8;color:#8c231c;border-color:#f2c2bd}
+.pip.empty{color:var(--line)}
+/* A <button> so it can be clicked and reached by keyboard, but the app's own
+   button styling would paint it accent-blue - which is exactly the colour the
+   marks use to mean something. Reset it back to a pip and let the state classes
+   colour it. */
+button.pip{font:inherit;font-size:12px;line-height:1;padding:0;margin:0;
+  cursor:pointer;background:transparent;color:inherit;
+  border:1px solid transparent;box-shadow:none}
+button.pip:hover{outline:2px solid var(--accent);outline-offset:1px}
+button.pip.empty{cursor:default}
+button.pip.empty:hover{outline:none}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){
+  .pip.all{background:#123524;color:#79d9a3;border-color:#1d5138}
+  .pip.some{background:#3a2e12;color:#e3b558;border-color:#57431a}
+  .pip.none{background:#3d1c19;color:#f08d84;border-color:#5c2a25}
+  .pip.empty{color:#333842}
+}}
+html[data-theme="dark"]{
+  .pip.all{background:#123524;color:#79d9a3;border-color:#1d5138}
+  .pip.some{background:#3a2e12;color:#e3b558;border-color:#57431a}
+  .pip.none{background:#3d1c19;color:#f08d84;border-color:#5c2a25}
+  .pip.empty{color:#333842}
+}
+.twists{float:right;display:inline-flex;gap:3px}
+.twists button{background:transparent;border:1px solid transparent;color:var(--dim);
+  padding:3px 5px;margin:0;border-radius:var(--r-ctl);cursor:pointer;line-height:0}
+.twists button:hover:not(:disabled){color:var(--accent);border-color:var(--line);
+  background:var(--wash)}
+.twists button:disabled{opacity:.3;cursor:default}
+.twists svg{width:17px;height:17px}
+/* the one twist with words on it */
+.twists button.colpick{line-height:1.3;font-size:13px;padding:4px 9px;
+  display:inline-flex;align-items:center;gap:6px;border-color:var(--line)}
+.twists button.colpick svg{width:15px;height:15px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--dim);
+  margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+/* A series switched off is struck through rather than faded: faded was
+   2.6:1 and read as a rendering fault. */
+.legend .faded{text-decoration:line-through;text-decoration-thickness:1px}
+a.fgo{color:inherit;text-decoration:none;border-bottom:1px dotted var(--line)}
+a.fgo.branch{font-weight:640}
+/* Only there to hold up the folders that DID match the filter - shown, because
+   a child with nothing above it reads as an orphan, but not pretending to be
+   an answer. */
+tr.scaffold td{opacity:.55}
+tr.scaffold .pip{opacity:.5}
+a.fgo:hover{color:var(--accent);border-bottom-color:var(--accent)}
+/* Above #menuscrim (44), like every other menu. At z-index 20 the glass that
+   catches the tap that closes a menu would have been in front of the menu
+   itself, and every item in it dead. */
+.fmenu{position:absolute;z-index:46;background:var(--card);border-radius:var(--r-ctl);
+  border:1px solid var(--line);box-shadow:0 12px 34px rgba(0,0,0,.2);
+  padding:5px;min-width:260px;max-width:min(94vw,360px);
+  display:flex;flex-direction:column;max-height:min(70vh,560px)}
+.fmenu .mpath{font:12px/1.4 ui-monospace,Consolas,monospace;color:var(--dim);
+  padding:8px 11px 9px;border-bottom:1px solid var(--line);
+  overflow-wrap:anywhere;flex:0 0 auto}
+/* The list scrolls, the folder it is about does not. Forty features in a menu
+   that cannot scroll is a menu whose bottom half does not exist on a phone. */
+.fmenulist{overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;padding:4px 0;min-height:0}
+.fmenu button{display:flex;align-items:center;gap:11px;width:100%;margin:0;
+  background:transparent;color:var(--ink);font-weight:500;text-align:left;
+  padding:10px 11px;border-radius:var(--r-ctl);font-size:14px;line-height:1.25}
+.fmenu button:hover{background:var(--accent-soft);color:var(--accent)}
+.fmenu svg{width:20px;height:20px;flex:none;color:var(--dim)}
+.fmenu button:hover svg{color:var(--accent)}
+/* first tier: a feature, with the count of what is under it */
+.fmenu button.tier1{font-weight:640}
+.fmenu button.tier1 .twisty{margin-left:auto;color:var(--dim);font-size:12px;
+  font-weight:500}
+/* second tier: its tabs, indented under it and only there when it is open */
+.fmenu button.tier2{padding-left:40px;font-size:14px;font-weight:500}
+.fmenu button.tier2 svg{width:17px;height:17px}
+.fmenu .mnote{color:var(--dim);font-size:12px;padding:2px 12px 8px}
+
+
+/* ---------------------------------------------------------- the file manager */
+.fmwrap{display:grid;grid-template-columns:1fr;gap:10px}
+.fmwrap.two{grid-template-columns:1fr 1fr}
+.fmpane{border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--card);
+  display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.fmwrap.two .fmpane.on{border-color:var(--accent)}
+.fmbody{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+.fmbody.sided{grid-template-columns:minmax(0,1fr) 274px}
+.fmtop{display:flex;align-items:center;gap:5px;padding:7px 9px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.fmtop button{margin:0;padding:5px 8px}
+/* Where you are, in the same shape as the crumbs over the folder wall - one
+   idea, one look, wherever it appears. */
+/* Where you are needs room to be an address. Squeezed between a Back button, a
+   search box and three menus it collapsed to one letter and an ellipsis, which
+   is worse than no crumbs at all - so below the width where all of it fits on
+   one line, the crumbs take a line of their own. */
+.fmwhere{flex:1 1 20ch;min-width:16ch;display:flex;align-items:center;gap:2px;
+  overflow:hidden}
+.fmwhere .crumb{margin:0;padding:4px 8px;border:0;background:transparent;
+  color:var(--ink);border-radius:var(--r-ctl);font-weight:600;font-size:13px;max-width:18ch;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fmwhere .crumb:hover{background:var(--wash);color:var(--accent)}
+.fmwhere .crumb.on{color:var(--accent)}
+.fmwhere .sep{color:var(--dim);font-size:12px}
+.fmsearch{margin:0;padding:5px 9px;width:13ch;min-width:9ch;font-size:13px;
+  border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--wash);
+  color:var(--ink)}
+.fmsearch:focus{outline:2px solid var(--accent);outline-offset:-1px}
+/* ONE line about the folder, and a light. The eleven figures are behind it. */
+.fmhealth{display:flex;align-items:center;gap:8px;padding:7px 10px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.fmhealth .light{width:9px;height:9px;border-radius:50%;flex:none;
+  background:var(--good)}
+.fmhealth .light.warn{background:var(--warn)}
+.fmhealth .light.bad{background:var(--bad)}
+.fmhealth .hsaid{font-size:13px;font-weight:600}
+.fmhealth .hwrong{font-size:13px;color:var(--warn)}
+.fmhealth .quiet{margin:0 0 0 auto;padding:2px 4px;font-size:12px}
+.fmmarks{display:flex;align-items:center;gap:5px;min-width:0;flex:0 0 auto}
+/* ---------------------------------------------------------------- the charts */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px 22px;margin-top:4px}
+.tile2{border:0;border-top:1px solid var(--line);border-radius:0;padding:12px 0 2px;
+  background:transparent;min-width:0}
+.tile2 .tval{font-size:var(--t-2xl);font-weight:700;letter-spacing:-.02em;line-height:1.1;
+  font-variant-numeric:tabular-nums}
+.tile2 .tlab{font-size:13px;font-weight:600;color:var(--ink);margin-top:2px}
+.tile2 .tnote{font-size:12px;color:var(--dim);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meters{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:8px 18px;margin-top:14px}
+.meter .mtop{display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.meter .mtop b{font-variant-numeric:tabular-nums}
+.mtrack{height:8px;border-radius:var(--r-pill);background:var(--q1);overflow:hidden;
+  margin-top:4px}
+.mfill{height:100%;border-radius:var(--r-pill);background:var(--q5)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:18px 26px;margin-top:16px}
+/* ---- arranging the dashboard
+
+   The widgets keep their own shape while you arrange them: an editor that
+   replaces every chart with a grey box is an editor in which you are choosing
+   between names, and the whole reason to do this on the dashboard rather than
+   in Setup is that you can see what you are choosing. */
+/* A folded criteria group says what it is and how much of it is filled in, and
+   one that carries something is marked so a glance down the column finds it. */
+.gfold>summary{font-weight:600}
+.gfold .gcount{font-weight:600;color:var(--accent);font-size:12px}
+.gfold.has>summary{color:var(--accent)}
+.boardbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.boardbar select{margin:0;padding:6px 9px;font-size:13px}
+.boardbar button{margin:0}
+.boardbar button.on{border-color:var(--accent);color:var(--accent);
+  background:var(--accent-soft)}
+.arranging .tile2,.arranging .chart,.arranging .meter{position:relative;
+  padding-top:34px;
+  border-style:dashed;border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.arranging .meter{border:1px dashed color-mix(in srgb,var(--accent) 45%,var(--line));
+  border-radius:var(--r-ctl);padding:34px 10px 8px}
+.wtools{position:absolute;top:4px;right:4px;display:flex;gap:2px;z-index:2}
+.wbtn{margin:0;width:26px;height:26px;padding:0;font-size:13px;line-height:1;
+  border-radius:var(--r-ctl);background:var(--card);border:1px solid var(--line);
+  color:var(--ink);cursor:pointer}
+.wbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.wbtn:disabled{opacity:.35;cursor:default}
+.wbtn.wdrop:hover{border-color:var(--bad);color:var(--bad)}
+.offlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));
+  gap:8px;margin-top:10px}
+/* `color:var(--ink)` on purpose. A plain <button> in this app is blue with
+   white text, so turning the background transparent and stopping there gives
+   white words on a white card - the same mistake the page dropdowns were making
+   from the other direction. */
+.offw{display:flex;align-items:center;gap:8px;margin:0;padding:9px 11px;
+  text-align:left;border:1px dashed var(--line);border-radius:var(--r-ctl);
+  background:transparent;color:var(--ink);font-weight:600;
+  cursor:pointer;min-width:0}
+.offw:hover{border-style:solid;border-color:var(--accent);background:var(--accent-soft)}
+.offplus{font-weight:700;color:var(--accent);flex:0 0 auto}
+/* Wrapping, not an ellipsis. "Photographs by month" and "Photographs by day of
+   the week" both clipped to "Photographs..." - two buttons that looked
+   identical and did different things. */
+.offname{flex:1;min-width:0;line-height:1.3}
+.offkind{font-size:12px;color:var(--dim);flex:0 0 auto}
+/* ---- the two Setup editors that are about a tab rather than about a row */
+.bandset{border:1px solid var(--line);border-radius:var(--r-ctl);padding:10px 12px;
+  background:var(--card);margin-bottom:10px}
+.bandset h4{margin:0 0 2px;font-size:14px}
+.bandhow{font-size:12px;color:var(--dim)}
+/* Tall enough for the longest built-in set (shutter, eight bands) without a
+   scrollbar: a table you have to scroll to read is a table you edit blind. */
+.bandset textarea{width:100%;box-sizing:border-box;margin:8px 0 0;min-height:210px;
+  font:13px/1.6 ui-monospace,monospace;resize:vertical}
+.bandacts{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.bandacts button{margin:0;padding:6px 11px;font-size:13px}
+.bandwhy{font-size:13px;color:var(--bad);min-height:1.2em}
+.bandwhy.good{color:var(--good)}
+.bandsets{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+  gap:10px}
+.brdrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:9px 0;
+  border-bottom:1px solid var(--line)}
+.brdrow:last-child{border-bottom:0}
+.brdname{font-weight:650;flex:0 0 auto}
+.brdwhat{color:var(--dim);font-size:13px;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brdrow button{margin:0;padding:4px 10px;font-size:13px}
+.brdnow{font-size:12px;font-weight:700;color:var(--good);white-space:nowrap}
+.chart{border:0;border-top:1px solid var(--line);border-radius:0;padding:12px 0 4px;
+  background:transparent;min-width:0}
+.chart h4{margin:0 0 2px;font-size:14px}
+.chart .cnote{font-size:12px;color:var(--dim);margin-bottom:8px;line-height:1.35}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.bars{display:flex;flex-direction:column;gap:5px;margin-top:2px}
+.brow{display:grid;grid-template-columns:minmax(0,9.5em) 1fr auto;gap:8px;
+  align-items:center;font-size:12px}
+.blab{color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btrack{height:11px;border-radius:var(--r-pill);background:var(--q1);overflow:hidden;
+  min-width:20px}
+.bfill{display:block;height:100%;border-radius:var(--r-pill);background:var(--q5);
+  min-width:3px}
+.bval{font-variant-numeric:tabular-nums;font-size:12px;white-space:nowrap}
+.brow:hover .bfill{background:var(--q6)}
+.brow.go{cursor:pointer;border-radius:var(--r-ctl);margin:0 -4px;padding:0 4px}
+.brow.go:hover{background:var(--accent-soft)}
+.brow.go:hover .blab{color:var(--accent)}
+.clegend span.go{cursor:pointer;border-radius:var(--r-ctl);padding:1px 4px;margin:-1px -4px}
+.clegend span.go:hover{background:var(--accent-soft);color:var(--accent)}
+.cbar.go{cursor:pointer}
+.cmore{margin:8px 0 0;padding:3px 10px;font-size:12px;border-radius:var(--r-pill)}
+.heat .cell.go{cursor:pointer}
+.cbar{transition:opacity .12s ease}
+.chart:hover .cbar{opacity:.72}
+.cbar:hover{opacity:1}
+.clegend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:12px}
+.clegend span{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.cdotc{width:10px;height:10px;border-radius:var(--r-ctl);flex:none}
+.clegend b{font-variant-numeric:tabular-nums;font-weight:600}
+.clegend .cshare{color:var(--dim)}
+.ctext{fill:var(--dim);font-size:12px}
+.cvalue{fill:var(--ink);font-size:12px;font-weight:600;
+  font-variant-numeric:tabular-nums}
+.heat{border-collapse:separate;border-spacing:2px;font-size:12px}
+.heat th{background:transparent;font-weight:600;color:var(--dim);
+  text-transform:none;letter-spacing:0;box-shadow:none;padding:2px 4px;
+  white-space:nowrap}
+.heat th.down{text-align:right;max-width:14ch;overflow:hidden;
+  text-overflow:ellipsis}
+.heat td{padding:0;border:0;text-align:center}
+.heat .cell{display:block;border-radius:var(--r-ctl);min-width:34px;padding:7px 4px;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.heat .cell.on{color:#fff}
+.heat .cell.zero{color:var(--dim);background:var(--wash)}
+.heatwrap{overflow:auto;max-height:60vh}
+.heatkey{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;
+  color:var(--dim)}
+.heatkey i{width:22px;height:10px;border-radius:var(--r-ctl);display:inline-block}
+.kept{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px;
+  padding:8px 10px;border:1px solid var(--line);border-radius:var(--r-ctl);
+  background:var(--card)}
+.kept b{font-size:13px;margin-right:4px}
+.keptone{display:inline-flex;align-items:center}
+.keptone button.ghost{margin:0;padding:4px 10px;font-size:13px;
+  border-radius:var(--r-pill) 0 0 var(--r-pill);border-right:0}
+.keptx{margin:0;padding:4px 8px;font-size:13px;border-radius:0 var(--r-pill) var(--r-pill) 0;
+  background:transparent;border:1px solid var(--line);color:var(--dim)}
+.keptx:hover{color:var(--bad);border-color:var(--bad)}
+.kept .keptadd{margin:0;padding:4px 10px;font-size:13px;border-radius:var(--r-pill)}
+.camname{margin:0;padding:5px 8px;font-size:13px;width:100%;max-width:22rem}
+.camhow{white-space:nowrap}
+.pickrow{display:flex;gap:6px;align-items:center}
+.pickrow input{flex:1;min-width:0}
+.pickbtn{margin:0;padding:6px 10px;font-size:13px;white-space:nowrap;flex:0 0 auto}
+.fmweigh{font-size:12px;color:var(--dim)}
+button.fmweigh.ask{margin:0;padding:1px 7px;border-radius:var(--r-pill);font-size:12px;
+  background:transparent;border:1px dashed var(--line);color:var(--dim)}
+button.fmweigh.ask:hover{border-style:solid;border-color:var(--accent);color:var(--accent)}
+.fmweigh.done{color:var(--ink)}
+.fmstars{color:var(--accent);font-size:12px;letter-spacing:.5px}
+.fmtags{color:var(--dim);font-size:12px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;max-width:12ch}
+.fmstat{display:flex;flex-wrap:wrap;gap:5px;padding:7px 9px;border-bottom:1px solid var(--line)}
+.fmchip{font-size:12px;font-weight:600;color:var(--dim);background:var(--wash);
+  border:1px solid var(--line);border-radius:var(--r-pill);padding:2px 9px;white-space:nowrap}
+.fmchip.good{color:var(--good);border-color:color-mix(in srgb,var(--good) 40%,var(--line))}
+.fmchip.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,var(--line))}
+.fmlist{max-height:min(58vh,520px);overflow:auto}
+.fmrow{display:flex;align-items:center;gap:9px;padding:5px 9px;cursor:default;
+  border-bottom:1px solid var(--line)}
+.fmrow:last-child{border-bottom:0}
+.fmrow:hover{background:var(--wash)}
+.fmrow.on{background:var(--accent-soft)}
+.fmrow{cursor:pointer}
+/* The same tick as the grid in Photos, in the same place, meaning the same
+   thing - so "picked" looks like one idea across the app. It appears when
+   picking is on, or when this row is one of the picked. */
+.fmrow .tick,.fmgrid .tile .tick{flex:0 0 auto;width:20px;height:20px;border-radius:var(--r-ctl);
+  border:1.5px solid var(--line);background:var(--card);color:transparent;
+  display:none;align-items:center;justify-content:center;cursor:pointer}
+.fmpane.picking .fmrow .tick,.fmrow.on .tick{display:inline-flex}
+.fmpane.picking .fmgrid .tile .tick,.fmgrid .tile.on .tick{display:inline-flex}
+.fmrow.on .tick,.fmgrid .tile.on .tick{background:var(--accent);border-color:var(--accent);
+  color:#fff}
+.fmrow .tick svg,.fmgrid .tile .tick svg{width:13px;height:13px}
+.fmgrid .tile .pic{position:relative}
+.fmgrid .tile .tick{position:absolute;top:6px;left:6px;z-index:2}
+.fmrow .th{width:28px;height:28px;margin:0}
+.fmic{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
+  color:var(--dim);flex:0 0 28px}
+.fmic svg{width:18px;height:18px}
+.fmname{flex:1;min-width:0;font-size:14px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.fmrow:hover .fmname{color:var(--accent)}
+.fmsize{flex:0 0 auto;width:72px;text-align:right}
+.fmwhen{flex:0 0 auto;width:112px;text-align:right}
+/* ITS OWN SHAPE, IN PIXELS, not the Photos grid's.
+   The tiles inherited `.tile`, whose picture box takes its height from
+   `aspect-ratio` - and in a folder of eighty entries inside a scrolling pane,
+   that height came out as nothing. Eighty rounded bars twenty pixels tall,
+   each holding a horizontal slice of a photograph, with the name clipped away
+   by the tile's own `overflow:hidden`. It looked like a rendering fault
+   because it was one.
+
+   So nothing here is derived. The picture box is a NUMBER OF PIXELS tall, the
+   rows are sized by their content and never stretched to fill anything, and
+   the tile has a floor of its own - three independent reasons the box cannot
+   collapse, where there used to be one reason it could. */
+.fmgrid{padding:10px;max-height:min(58vh,520px);overflow:auto;
+  grid-template-columns:repeat(auto-fill,minmax(172px,1fr));
+  grid-auto-rows:max-content;align-content:start}
+.fmgrid .tile{min-height:168px;align-self:start}
+.fmgrid .tile .pic{aspect-ratio:auto;height:126px;min-height:126px;flex:0 0 126px;
+  background:var(--wash);overflow:hidden}
+.fmgrid .tile img{width:100%;height:126px;object-fit:cover;display:block}
+.fmgrid .tile .nopic{font-size:12px;color:var(--dim)}
+.fmgrid .tile figcaption{min-height:38px}
+.fmgrid .tile.on{outline:2px solid var(--accent);outline-offset:-2px}
+@media (max-width:860px){
+  .fmgrid{grid-template-columns:repeat(auto-fill,minmax(124px,1fr))}
+  .fmgrid .tile{min-height:134px}
+  .fmgrid .tile .pic{height:96px;min-height:96px;flex:0 0 96px}
+  .fmgrid .tile img{height:96px}
+}
+.fmbig{color:var(--dim)}
+.fmbig svg{width:34px;height:34px}
+.fmempty{padding:22px;text-align:center;color:var(--dim)}
+.fmempty.bad{color:var(--bad)}
+.fmmore{padding:6px 10px 0}
+.fmfoot{display:flex;justify-content:space-between;gap:8px;padding:6px 10px;
+  border-top:1px solid var(--line)}
+/* The act bar: only there when something is picked, and it says what. */
+.fmact{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-top:10px;
+  padding:8px 10px;border:1px solid var(--accent);border-radius:var(--r-card);
+  background:var(--card);position:sticky;bottom:0;z-index:5;
+  box-shadow:0 6px 18px rgba(0,0,0,.10)}
+.fmact button{margin:0}
+.fmact .fmcount{font-weight:650;font-size:13px;margin-right:2px}
+.fmact .quiet{margin-left:auto}
+.fmcheck{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim)}
+/* Where these go: the same question on a phone and on a desk. */
+.surebox.sheet{width:min(560px,94vw);text-align:left}
+.sheettop{display:flex;align-items:center;gap:6px;margin:8px 0;padding-bottom:8px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sheettop .fmwhere{flex-wrap:wrap;overflow:visible}
+.sheettop .crumb{max-width:22ch}
+.sheettop button{margin:0;padding:5px 8px}
+.sheetlist{max-height:min(44vh,360px);overflow:auto;border:1px solid var(--line);
+  border-radius:var(--r-ctl)}
+.sheetrow{display:flex;align-items:center;gap:9px;width:100%;margin:0;padding:8px 10px;
+  border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);
+  font:inherit;font-size:14px;text-align:left;border-radius:0}
+.sheetrow:last-child{border-bottom:0}
+.sheetrow:hover{background:var(--wash);color:var(--accent)}
+.sheetrow .sname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+/* What is known about what is picked, beside it rather than three taps away. */
+.fminfo{border:1px solid var(--line);border-radius:var(--r-card);background:var(--card);
+  padding:12px;min-width:0;position:sticky;top:calc(var(--head) + 10px)}
+.fminfo .ihead{font-weight:700;font-size:14px;margin-bottom:8px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.fminfo .ipic{width:100%;border-radius:var(--r-ctl);margin-bottom:9px;display:block}
+.fminfo .ifact{display:flex;gap:8px;justify-content:space-between;padding:4px 0;
+  border-bottom:1px solid var(--line);font-size:13px}
+.fminfo .ifact:last-of-type{border-bottom:0}
+.fminfo .ifact span{color:var(--dim);flex:none}
+.fminfo .ifact b{min-width:0;text-align:right;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-weight:600}
+.fminfo .iact{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.fminfo .iact button{margin:0}
+.vgap{display:inline-block;width:16px}
+.mline{height:1px;background:var(--line);margin:4px 0}
+/* the power rename table */
+/* Which folder is being renamed, at the top of the editor where the question
+   is asked - not in a box a scroll away under it. */
+.rnwhere{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:9px;
+  padding-bottom:9px;border-bottom:1px solid var(--line)}
+.rnwhere button{margin:0}
+.rnpath{display:inline-flex;align-items:center;gap:2px;flex-wrap:wrap}
+.rncrumb{margin:0;padding:4px 9px;background:var(--wash);border:1px solid var(--line);
+  border-radius:var(--r-ctl);font-size:13px;color:var(--ink);cursor:pointer}
+.rncrumb:hover{border-color:var(--accent);color:var(--accent)}
+.rncrumb.on{background:var(--accent-soft);border-color:var(--accent);
+  color:var(--accent);font-weight:650}
+.rnin{margin:0 0 0 6px;padding:0 7px;background:transparent;border:1px solid var(--line);
+  border-radius:var(--r-ctl);color:var(--dim);font-size:14px;line-height:1.5;cursor:pointer}
+.rnin:hover{border-color:var(--accent);color:var(--accent)}
+.rntop{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.rntop button{margin:0}
+.rngroup{display:inline-flex;gap:4px;align-items:center;font-size:13px;color:var(--dim)}
+.rngroup button{padding:3px 10px;font-size:13px;border-radius:var(--r-pill)}
+.rngroup button.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.rntools{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:10px;margin-bottom:10px}
+.rntool{border:1px solid var(--line);border-radius:var(--r-ctl);padding:8px 10px;
+  background:var(--card);min-width:0}
+.rntool b{font-size:13px;display:block;margin-bottom:6px}
+.rnline{display:flex;gap:6px;align-items:center;min-width:0}
+.rnline.wrap{flex-wrap:wrap}
+.rnline input,.rnline select{margin:0;min-width:0;flex:1 1 4rem}
+.rnline button{margin:0;flex:0 0 auto}
+.rntool .note{display:block;margin-top:5px;font-size:12px;line-height:1.35}
+.rnscope{margin:-4px 0 8px}
+.rntable{width:100%}
+.rntable th{white-space:nowrap}
+.rnwas{white-space:nowrap;display:flex;align-items:center;gap:6px}
+.rnic svg{width:15px;height:15px;color:var(--dim)}
+.rnold{overflow:hidden;text-overflow:ellipsis;max-width:22ch}
+.rnbox{width:100%;margin:0;padding:4px 7px;font-size:13px}
+.rnrow.edited .rnbox{border-color:var(--accent);background:var(--accent-soft)}
+.rnrow.bad .rnbox{border-color:var(--bad)}
+.rnrow.bad .rnwhy{color:var(--bad)}
+.rnwhy button{margin:0;padding:2px 8px;font-size:12px}
+.rnbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  justify-content:space-between;margin-top:10px;padding:8px 10px;
+  border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--card);
+  position:sticky;bottom:0;z-index:5}
+.rnbar button{margin:0}
+/* The page's own dropdown.
+
+   It used to borrow the viewer's `.vpop`, which is a dark box with a palette
+   nailed to it - and `.vpop` is declared later in this file, so on a light
+   theme the box stayed #1d1f24 while the text went back to var(--ink) #1b1e23.
+   Contrast 1.0:1: a menu that was there, and opened, and could not be read at
+   all. Every "▾" on the page was affected. It has its own class now and is
+   themed like every other surface. */
+.pmenu{position:fixed;z-index:46;min-width:210px;max-width:20rem;box-shadow:var(--shadow-pop);
+  max-height:min(60vh,420px);overflow:auto;
+  background:var(--card);color:var(--ink);border:1px solid var(--line);
+  border-radius:var(--r-card);padding:6px;box-shadow:0 18px 44px rgba(0,0,0,.24);
+  animation:pm-rise .16s ease both}
+.pmenu .vopt{color:var(--ink);min-height:40px;font-size:14px}
+.pmenu .vopt:hover,.pmenu .vopt:focus-visible{background:var(--accent-soft)}
+.pmenu .vopt.on{background:var(--accent-soft)}
+.pmenu .vcheck{color:var(--accent)}
+.pmenu .vdim{color:var(--dim);font-variant-numeric:tabular-nums;font-size:12px}
+.pmenu .note{display:block;white-space:normal;font-size:12px;line-height:1.35;
+  color:var(--dim)}
+.pmenu .mnote{padding:6px 12px 8px;font-size:12px;color:var(--dim)}
+.pmenu .mhead{padding:7px 12px 4px;font-size:12px;text-transform:uppercase;
+  letter-spacing:.5px;color:var(--dim)}
+/* A tap on empty background does not always reach a document click listener on
+   iOS, so a menu that only listened for that could not be shut by tapping the
+   page. Every page menu now lays down a sheet of glass behind itself, and the
+   glass catches the tap. */
+#menuscrim{position:fixed;inset:0;z-index:44;background:transparent}
+.fmfind{padding:6px}
+.fmfind input{width:100%}
+.fmjob{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 10px;
+  border:1px solid var(--accent);border-radius:var(--r-ctl);background:var(--accent-soft)}
+.fmjob .jbar{flex:1}
+.surebox input[type=text]{width:100%;margin:0 0 14px}
+@media (max-width:860px){
+  /* A floating menu pinned to whatever you tapped is a desk idea. On a phone
+     it becomes a sheet at the bottom, full width, where a thumb already is -
+     and the inline left/top the opener works out has to be overruled.
+
+     Every page menu gets this, not just this one. The value pickers used to
+     keep their computed left/top AND pick up half a sheet's styling, so they
+     came out as a full-height strip pinned under the button - which is what
+     "the drop down does not work on mobile" looked like. */
+  .fmenu,.pmenu{position:fixed !important;left:8px !important;right:8px !important;
+    top:auto !important;bottom:calc(66px + env(safe-area-inset-bottom)) !important;
+    z-index:45;
+    max-width:none;min-width:0;max-height:72vh}
+  .fmenu button,.pmenu .vopt{padding:12px 12px;font-size:16px}
+  .pmenu .vopt{min-height:48px}
+  .fmenu button.tier2{padding-left:44px}
+  /* Dimmed on a phone, where a sheet needs to read as a layer over the page. */
+  #menuscrim{background:rgba(0,0,0,.34)}
+  .fmwrap.two{grid-template-columns:1fr}
+  .fmbody.sided{grid-template-columns:1fr}
+  .fmwhen{display:none}
+  /* Where you are gets a row of its own: squeezed in beside three buttons it
+     collapsed to one letter and a slash, which is not an address. */
+  .fmwhere{order:8;flex:1 0 100%;overflow-x:auto;flex-wrap:nowrap}
+  .fmwhere .crumb{max-width:14ch;flex:none}
+  .fmsearch{width:100%;order:9}
+  .fmact{gap:6px;padding:7px 8px}
+  .fmact button{padding:8px 10px;font-size:13px}
+  .fmact .quiet{margin-left:0}
+  .fmlist{max-height:none}
+  /* A finger needs a row it can hit without aiming. */
+  .fmrow{padding:9px 10px}
+  .fmrow .tick{width:24px;height:24px}
+  /* Both of these are sticky at the bottom of their card, and the fixed nav bar
+     is 58px of screen they knew nothing about - so their buttons sat behind it. */
+  .fmact,.rnbar{bottom:calc(58px + env(safe-area-inset-bottom))}
+}
+
+/* ---------------------------------------------------------------- the viewer */
+body.viewing{overflow:hidden}
+.viewer{position:fixed;inset:0;z-index:80;background:rgba(8,9,11,var(--vfade,1));
+  color:#f4f5f7;display:flex;flex-direction:column;animation:pm-fade .18s ease both;
+  -webkit-user-select:none;user-select:none;touch-action:none}
+.vstage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;cursor:grab}
+.vstage img{max-width:100%;max-height:100%;object-fit:contain;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1), opacity .22s ease}
+.vstage img.in-right{transform:translateX(40px);opacity:0}
+.vstage img.in-left{transform:translateX(-40px);opacity:0}
+.vstage img.in{opacity:0}
+.vstage img.settled{transform:none;opacity:1}
+.vstage img.gone{opacity:.25;transform:scale(.94)}
+.vnopic{color:#aab;font-size:14px;max-width:min(520px,80vw);text-align:center;
+  line-height:1.5}
+/* a clip, sized like the picture it stands in for */
+#vvid{width:100%;height:100%;object-fit:contain;background:#000;outline:none}
+.vtop,.vbottom{position:absolute;left:0;right:0;z-index:2;transition:opacity .2s ease, transform .2s ease}
+.vtop{top:0;display:flex;align-items:center;gap:8px;
+  padding:calc(env(safe-area-inset-top) + 10px) 12px 26px;
+  background:linear-gradient(rgba(0,0,0,.62), rgba(0,0,0,0))}
+.vbottom{bottom:0;padding:34px 12px calc(env(safe-area-inset-bottom) + 14px);
+  background:linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.72));
+  display:flex;flex-direction:column;align-items:center;gap:10px}
+.viewer:not(.chrome) .vtop{opacity:0;transform:translateY(-12px);pointer-events:none}
+.viewer:not(.chrome) .vbottom{opacity:0;transform:translateY(12px);pointer-events:none}
+.viewer:not(.chrome) .vnav{opacity:0;pointer-events:none}
+.vtitle{flex:1;min-width:0;text-align:center;font-size:14px;font-weight:600}
+.vtitle #vname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vdim{color:rgba(244,245,247,.66);font-size:12px;font-weight:400;white-space:nowrap}
+.viewer button{color:inherit}
+.vbtn{width:44px;height:44px;border-radius:50%;border:0;margin:0;padding:0;
+  background:rgba(255,255,255,.12);display:inline-flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;backdrop-filter:blur(6px)}
+.vbtn svg{width:20px;height:20px}
+.vbtn:hover{background:rgba(255,255,255,.22)}
+.vdanger:hover{background:rgba(229,72,77,.85)}
+.vnav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:48px;height:72px;
+  border:0;margin:0;border-radius:var(--r-ctl);background:rgba(255,255,255,.08);font-size:34px;
+  cursor:pointer;transition:opacity .2s ease, background .15s ease}
+.vnav:hover{background:rgba(255,255,255,.2)}
+.vprev{left:10px}.vnext{right:10px}
+.vnav[hidden]{display:none}
+.vstars{display:flex;gap:4px}
+.viewer .vstar{width:48px;height:48px;border:0;margin:0;padding:0;background:transparent;
+  font-size:34px;line-height:1;color:rgba(255,255,255,.34);cursor:pointer;
+  text-shadow:0 1px 6px rgba(0,0,0,.5);transition:color .12s ease, transform .12s ease}
+.viewer .vstar.on{color:#ffc53d}
+.vstar:hover{transform:scale(1.12)}
+.vstar.pop{animation:pm-pop .28s ease}
+.vrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.vmenu{position:relative}
+.vpill{height:42px;margin:0;padding:0 16px;border-radius:var(--r-pill);border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.12);display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(6px)}
+.vpill svg{width:16px;height:16px}
+.vpill:hover{background:rgba(255,255,255,.22)}
+.vcaret{opacity:.7;font-size:12px}
+.cdot.c-none{background:transparent;border:1.5px dashed rgba(255,255,255,.6)}
+.vchips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:860px}
+.vchips:empty{display:none}
+.vchip{margin:0;height:30px;padding:0 10px;border-radius:var(--r-pill);border:0;font-size:13px;
+  background:rgba(255,255,255,.16);cursor:pointer}
+.vchip span{opacity:.7;margin-left:3px}
+.vchip:hover{background:rgba(229,72,77,.8)}
+.vpop{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);min-width:240px;
+  max-height:min(60vh,420px);overflow:auto;background:#1d1f24;border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--r-card);padding:6px;box-shadow:0 14px 40px rgba(0,0,0,.5);z-index:5;
+  animation:pm-rise .16s ease both}
+.vtop .vpop{bottom:auto;top:52px}
+.vpop.vright{left:auto;right:0;transform:none}
+.vpop[hidden]{display:none}
+.vopt{display:flex;align-items:center;gap:10px;width:100%;margin:0;min-height:44px;padding:0 12px;
+  border:0;border-radius:var(--r-ctl);background:transparent;font-size:16px;text-align:left;cursor:pointer;
+  text-decoration:none;color:inherit}
+.vopt:hover{background:rgba(255,255,255,.08)}
+.vopt.on{background:rgba(255,197,61,.14)}
+.vopt kbd{font:12px ui-monospace,monospace;opacity:.55;border:1px solid rgba(255,255,255,.25);
+  border-radius:var(--r-ctl);padding:1px 5px}
+.vgrow{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vcheck{width:18px;color:#ffc53d;font-weight:700}
+/* ---- the two overlays: the histogram and how it was exposed
+
+   Both sit over the picture, out of the way of the stars at the bottom and the
+   title at the top, and both go with the rest of the chrome when the picture is
+   tapped - you asked to see the photograph, not the numbers on it. */
+.vhist{position:absolute;right:12px;top:64px;z-index:6;
+  background:rgba(12,13,16,.72);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-ctl);padding:8px 8px 6px;cursor:pointer;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.vhist[hidden]{display:none}
+.vhist canvas{display:block;width:256px;height:110px}
+.vhistfoot{display:flex;justify-content:space-between;gap:10px;margin-top:5px;
+  font-size:12px;color:rgba(244,245,247,.62)}
+#vhistclip{color:#ffc53d;text-align:right;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.vshot{position:absolute;left:12px;top:64px;z-index:6;max-width:min(60vw,420px);
+  background:rgba(12,13,16,.72);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-ctl);padding:8px 12px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.vshot[hidden]{display:none}
+/* How close in you are. Only there while you are closer than the screen. */
+.vzoom{position:absolute;left:50%;transform:translateX(-50%);bottom:84px;z-index:6;
+  background:rgba(12,13,16,.72);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-pill);padding:3px 11px;font-size:12px;font-weight:600;
+  font-variant-numeric:tabular-nums;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.vzoom[hidden]{display:none}
+/* The keys, as a card you can open over anything. */
+.surebox.keyscard{width:min(560px,94vw);text-align:left;max-height:86vh;overflow:auto;
+  padding-top:0}
+.keystop{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:10px;
+  justify-content:space-between;background:var(--card);padding:14px 0 8px}
+.keystop h3{margin:0}
+.keystop button{margin:0}
+.keygroup{margin:10px 0}
+.keygroup > b{display:block;font-size:12px;text-transform:uppercase;
+  letter-spacing:.6px;color:var(--dim);margin-bottom:5px}
+.keyrow{display:flex;align-items:baseline;gap:10px;padding:3px 0;font-size:14px}
+.keyrow kbd{flex:0 0 7.5rem;font:inherit;font-size:13px;font-weight:650;
+  background:var(--wash);border:1px solid var(--line);border-radius:var(--r-ctl);
+  padding:2px 7px;text-align:center}
+/* Zoomed in, the picture is dragged rather than swiped, and it must not be
+   smoothed back to the middle while a finger is on it.
+
+   The element keeps its fitted size and is SCALED - so when the file itself
+   arrives, the same element is drawing from six thousand pixels instead of two
+   thousand and the picture simply gets sharper, with nothing moving. */
+.viewer.zoomed .vstage img{transition:none}
+.viewer.zoomed .vstage{overflow:hidden;touch-action:none}
+.vshotline{font-size:16px;font-weight:650;letter-spacing:.2px;
+  font-variant-numeric:tabular-nums}
+.vshotrest{font-size:12px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.vsep{opacity:.45;padding:0 2px}
+.vbtn.on{background:rgba(255,255,255,.22);color:#fff}
+/* hidden with the rest of the chrome when the picture is tapped */
+.viewer:not(.chrome) .vhist,.viewer:not(.chrome) .vshot{opacity:0;pointer-events:none}
+.vhist,.vshot{transition:opacity .16s ease}
+@media (max-width:860px){
+  /* Stacked rather than side by side: 390px of screen has room for one of
+     them across the top, and the other under it, and for neither of them to
+     sit on top of the photograph's middle. */
+  .vshot{left:8px;right:8px;top:56px;max-width:none;padding:7px 10px}
+  .vhist{right:8px;top:56px;padding:6px 6px 4px}
+  .viewer:not(.shotoff) .vhist{top:118px}
+  .vhist canvas{width:168px;height:74px}
+  .vshotline{font-size:14px}
+  .vshotrest{font-size:12px}
+}
+/* the action list: sections, and the facts it can read about one photograph */
+.vhead{font-size:12px;text-transform:uppercase;letter-spacing:.5px;
+  color:rgba(244,245,247,.5);padding:9px 12px 4px}
+.vfacts{padding:2px 12px 8px;font-size:13px}
+.vfact{display:flex;gap:10px;justify-content:space-between;padding:3px 0;
+  border-bottom:1px solid rgba(255,255,255,.07)}
+.vfact:last-child{border-bottom:0}
+.vfact span{color:rgba(244,245,247,.6);flex:0 0 auto}
+.vfact b{font-weight:600;text-align:right;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;min-width:0}
+.vtop .vpop.vright{max-width:min(92vw,340px)}
+.vplus{width:18px;font-weight:700;color:#7fb3ff}
+.vtags input{width:100%;box-sizing:border-box;margin:2px 0 6px;height:42px;border-radius:var(--r-ctl);
+  border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:inherit;
+  padding:0 12px;font-size:16px}
+.vpath{padding:6px 12px;word-break:break-all;font-family:ui-monospace,monospace;font-size:12px}
+.vkeys{padding:4px 12px 8px}
+.pagetoast{position:fixed;z-index:95;color:#f4f5f7;
+  top:calc(env(safe-area-inset-top) + 64px)}
+.vtoast{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 72px);transform:translateX(-50%);
+  z-index:6;background:#2a2d33;border:1px solid rgba(255,255,255,.14);border-radius:var(--r-card);
+  padding:8px 8px 8px 16px;display:flex;align-items:center;gap:12px;font-size:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);max-width:calc(100vw - 32px)}
+.vtoast[hidden]{display:none}
+.vtoast.show{animation:pm-rise .2s ease both}
+.vtoast button{margin:0;height:32px;padding:0 14px;border-radius:var(--r-pill);border:0;
+  background:#ffc53d;color:#1d1f24 !important;font-weight:700;cursor:pointer}
+.viewer.saving .vtitle #vname::after{content:" ·";animation:pm-fade .6s ease infinite alternate}
+@media (max-width:860px), (pointer:coarse){
+  .vnav{display:none}
+  /* Seven round buttons leave a phone no room for a file name: the count
+     stays, the name is one tap away on the details panel. The buttons give
+     up four pixels each so that the count has somewhere to be. */
+  .vtitle #vname{display:none}
+  .vtop{gap:6px;padding-left:10px;padding-right:10px}
+  .vtop .vbtn{width:40px;height:40px}
+  .vpop:not(.vright){position:fixed;left:0;right:0;bottom:0;transform:none;min-width:0;
+    max-height:62vh;border-radius:var(--r-card) var(--r-card) 0 0;padding:10px 10px calc(env(safe-area-inset-bottom) + 12px)}
+  .vtop .vpop.vright{position:fixed;left:0;right:0;top:auto;bottom:0;border-radius:var(--r-card) var(--r-card) 0 0;
+    padding:10px 10px calc(env(safe-area-inset-bottom) + 12px)}
+  .vstar{width:52px;height:52px;font-size:38px}
+}
+@media (prefers-reduced-motion: reduce){
+  .vstage img,.vtop,.vbottom{transition:none}
+}
+
+/* thumbnails: in tables, the picture grid, and the one beside the pointer */
+img.th{width:34px;height:34px;object-fit:cover;border-radius:var(--r-ctl);margin-right:8px;
+  vertical-align:middle;cursor:zoom-in;background:var(--line)}
+#hoverpeek{position:fixed;z-index:60;width:360px;height:auto;max-height:320px;object-fit:contain;border-radius:var(--r-ctl);
+  box-shadow:0 8px 28px rgba(0,0,0,.28);pointer-events:none;background:#000}
+#hoverpeek[hidden]{display:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+.tile{margin:0;cursor:zoom-in;border-radius:var(--r-ctl);overflow:hidden;background:var(--wash);
+  border:1px solid var(--line);transition:transform .15s ease, box-shadow .15s ease}
+.tile:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.tile .pic{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:var(--line)}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.nopic{color:var(--dim);font-size:12px;padding:20px;text-align:center}
+.tile figcaption{padding:6px 8px;font-size:12px;min-width:0}
+.gname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
+.gtags{color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+/* a settings group that is about a colour, wearing it */
+.cswatch{width:12px;height:12px;border-radius:var(--r-ctl);display:inline-block;
+  vertical-align:-1px;margin-right:7px;box-shadow:0 0 0 1px rgba(0,0,0,.12) inset}
+/* Banded across the top in its colour, the way a label sits on a print's
+   mount, rather than striped down its side. */
+fieldset.tinted{border:1px solid var(--line);border-top-width:4px;
+  border-radius:var(--r-ctl);padding:2px 16px 16px}
+fieldset.t-red{border-top-color:var(--label-red)}
+fieldset.t-yellow{border-top-color:var(--label-yellow)}
+fieldset.t-green{border-top-color:var(--label-green)}
+fieldset.t-blue{border-top-color:var(--label-blue)}
+fieldset.t-purple{border-top-color:var(--label-purple)}
+.c-red{background:var(--label-red)}.c-yellow{background:var(--label-yellow)}
+.c-green{background:var(--label-green)}
+.c-blue{background:var(--label-blue)}.c-purple{background:var(--label-purple)}
+@media (max-width:860px){.grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:7px}}
+/* Above the phone chrome, not under it. At z-index 9 this sat below the fixed
+   bottom bar (40) and the sticky header (30), so on a phone - where the picker
+   goes full screen - the nav bar was painted over the last folder rows and over
+   "Use this folder", and swallowed the taps meant for them. A modal that covers
+   the screen has to cover the furniture too. */
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;
+  align-items:center;justify-content:center;padding:20px;z-index:55}
+.peek{background:var(--card);border-radius:var(--r-ctl);max-width:min(1100px,94vw);
+  max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.peek img{max-width:100%;max-height:78vh;object-fit:contain;background:#000;
+  display:block}
+.peek .foot{display:flex;align-items:center;gap:10px;padding:11px 14px;
+  border-top:1px solid var(--line)}
+.peek .mono{font-family:ui-monospace,Consolas,monospace;font-size:12px;
+  color:var(--dim);overflow-wrap:anywhere}
+.pick{background:var(--card);border-radius:var(--r-ctl);width:min(620px,100%);
+  max-height:80vh;display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid var(--line)}
+.pick h3{margin:0;padding:14px 16px;font-size:14px;border-bottom:1px solid var(--line)}
+.pick .at{padding:9px 16px;border-bottom:1px solid var(--line);
+  font:13px/1.5 ui-monospace,Consolas,monospace;color:var(--dim);
+  overflow-wrap:anywhere;background:var(--wash)}
+.pick ul{list-style:none;margin:0;padding:6px 0;overflow:auto;flex:1}
+.pick li{padding:0}
+.pick li button.afile{color:var(--dim)}
+.pick li button.afile.chosen{color:var(--accent);background:var(--accent-soft);
+  font-weight:650}
+.pick li button{width:100%;text-align:left;background:transparent;color:var(--ink);
+  font-weight:500;margin:0;border-radius:0;padding:9px 16px;
+  display:flex;align-items:center;gap:9px}
+.pick li button:hover{background:var(--accent-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px 4px 12px;
+  min-height:var(--chip-h);box-sizing:border-box;
+  border:1px solid var(--line);border-radius:var(--r-pill);background:var(--wash);
+  font-size:var(--chip-fs);overflow-wrap:anywhere}
+.chip svg{width:15px;height:15px;color:var(--dim)}
+.chip button{background:transparent;border:0;color:var(--dim);cursor:pointer;
+  padding:0 3px;margin:0;font-size:16px;line-height:1}
+.chip button:hover{color:var(--bad)}
+.pick li button.off{color:var(--dim)}
+.pick .sysfold summary{padding:11px 16px;cursor:pointer;color:var(--dim);
+  font-size:13px;list-style:none}
+.pick .sysfold summary::-webkit-details-marker{display:none}
+.pick .sysfold summary::before{content:"\25B8";display:inline-block;width:15px;
+  transition:transform .15s}
+.pick .sysfold[open] summary::before{transform:rotate(90deg)}
+.pick .sysfold summary:hover{color:var(--ink)}
+.pick .sysfold ul{list-style:none;margin:0;padding:0}
+.pick .at.warn{color:var(--warn)}
+.pick .at.bad{color:var(--bad)}
+.pick li button svg{color:var(--dim)}
+.pick .foot{padding:12px 16px;border-top:1px solid var(--line);
+  display:flex;gap:10px;justify-content:flex-end}
+.pick .foot button{margin:0}
+/* ------------------------------------------------------------ a vertical screen
+
+   Not a shrunken desktop. Three things change shape rather than size, because
+   scaling them down leaves each one technically present and practically
+   unusable:
+
+   - THE SIDEBAR. Thirteen features in a horizontal scroller is a list you have
+     to swipe through to read, and you cannot see where you are. It becomes a
+     drawer: off screen until you ask for it, full height, one tap to anywhere.
+   - THE TABLES. Seven columns in 390 pixels is four characters each. Each row
+     becomes a small card with the column name beside every value - the same
+     cells, read downwards.
+   - THE PICKER. A dialog sized for a mouse is a dialog you cannot hit. Full
+     screen, with targets you can reach with a thumb.
+
+   And one thing that is not about layout at all: every input gets 16px text,
+   because iOS Safari zooms the whole page in when you focus anything smaller
+   and then leaves you scrolled sideways in a form you were halfway through. */
+@media (max-width:860px){
+  html{-webkit-text-size-adjust:100%}
+  body{padding-bottom:env(safe-area-inset-bottom)}
+  /* One row, and it stays one row. Three rows of chrome above the thing you
+     opened the app to look at is most of a phone screen gone before anything
+     has been said. Everything that is reference rather than navigation moves
+     into the drawer; everything that stays loses its words and keeps its icon. */
+  :root{--head:calc(61px + env(safe-area-inset-top))}
+  header{padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));
+    gap:6px;flex-wrap:nowrap;overflow:hidden}
+  /* The name goes. It is on the launcher icon, it is at the top of the drawer,
+     and on a 390px header it was crowding out the one thing worth reading
+     there - whether the automation is running. */
+  header h1{display:none}
+  #live{display:none}
+  /* The hamburger is gone from here: the bar along the bottom already has
+     "More", and a 390px screen offering the same destination twice is how you
+     end up with a header nobody reads. What is left is the app's own state and
+     the app's own controls. */
+  #menu{display:none}
+  #autobar{flex:1 1 auto;min-width:0;overflow:hidden;font-size:var(--t-xs);
+    padding:3px 10px;justify-content:center;height:44px}
+  /* The word is the state; the sentence after it is the detail, and the detail
+     is what there is no room for. */
+  #autobar #autosays{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #apart,#reload,#theme,#signout,#quit{flex:0 0 auto}
+  /* Sign out kept its word here while everything beside it was an icon, so a
+     locked phone got one button twice the width of the rest of the row. */
+  #apart button span,#reload span,#theme span,#signout span,
+  #quit span{display:none}
+  #apart button,#reload,#theme,#signout,#quit{padding:6px 10px;margin-top:0;
+    height:44px;min-width:44px;justify-content:center}
+
+  main{display:block}
+  section{flex:none;padding:12px 13px;min-width:0;max-width:none;width:auto}
+
+  #scrim{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:50;
+    opacity:0;pointer-events:none;transition:opacity .18s}
+  body.drawer #scrim{opacity:1;pointer-events:auto}
+
+  /* Forms: one column, and big enough to hit. */
+  .card{padding:13px 14px}
+  input[type=text],input[type=number],select,textarea{width:100%;font-size:16px}
+  .withbtn{flex-wrap:wrap}
+  .withbtn input{flex:1 1 100%}
+  button{padding:10px 14px;font-size:var(--t-m)}
+  /* The buttons that carry a run's verb are a thumb's width tall. */
+  .act button,.withbtn button{min-height:44px}
+  .act{gap:8px}
+  .act button{flex:1 1 auto;justify-content:center}
+  /* Four labels do not fit across 390px. The numbers do, and the step you are
+     actually on keeps its words - which is the one you need to read. */
+  /* All four keep their words on a phone, set small and allowed to wrap:
+     a bare 2, 3 and 4 told nobody what was coming. */
+  .steps li{padding:10px 0 2px;flex-direction:column;gap:2px;font-size:var(--t-xs)}
+  .steps li span{white-space:normal;line-height:1.25}
+
+  /* Rows as cards. `stack` is put on the table by the code that knows how many
+     columns there are, so a two-column table stays a table. */
+  table.stack{display:block}
+  table.stack thead{display:none}
+  table.stack tbody{display:block}
+  table.stack tr{display:block;border:1px solid var(--line);border-radius:var(--r-ctl);
+    padding:8px 10px;margin:0 0 8px}
+  table.stack tr.ghead{background:var(--accent-soft)}
+  table.stack td{display:flex;gap:10px;border:0;padding:3px 0;
+    align-items:flex-start}
+  table.stack td:empty{display:none}
+  table.stack td::before{content:attr(data-h);flex:0 0 38%;color:var(--dim);
+    font-size:12px;text-transform:uppercase;letter-spacing:.3px;
+    padding-top:2px}
+  table.stack td:first-child{font-weight:650;font-size:14px}
+  table.stack td:first-child::before{content:none}
+  .scroll{overflow-x:visible}
+
+  /* The picker, full screen. The veil's own padding is what was keeping it
+     forty pixels narrow, which is the whole difference between a dialog and a
+     screen. */
+  .veil{padding:0;align-items:stretch}
+  .veil .pick{width:100%;max-width:none;height:100%;max-height:none;
+    border-radius:0;display:flex;flex-direction:column}
+  .veil .peek{max-width:100%;max-height:100%;border-radius:0}
+  .veil .pick ul{flex:1;max-height:none}
+  .veil .pick li button{padding:13px 15px;font-size:16px}
+  .veil .pick .foot{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+
+  /* A flow's name gets the row to itself. Sharing it with a light, a Run and a
+     Remove squeezed "Developing loop" down to "Deve". */
+  .card > .lab{flex-wrap:wrap}
+  .card > .lab > input[type=text]{flex:1 1 100%;max-width:none}
+
+  /* The chain reads downwards, so the arrows point downwards. */
+  .chain{flex-direction:column;align-items:stretch}
+  .blkarrow{transform:rotate(90deg);margin:-2px 0}
+  .stepacts{margin-left:0;width:100%}
+  #running .job{flex-wrap:wrap}
+  .stats{grid-template-columns:1fr auto}
+}
+@media (min-width:861px){
+  #menu,#scrim{display:none}
+}
+
+/* The map: a window onto tiles, with dots on top. A plain background under
+   the tiles so that with no internet the dots still read as a map of where
+   things are relative to each other. */
+.pmmap{position:relative;height:320px;margin-top:10px;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--r-ctl);
+  background:color-mix(in srgb,var(--accent) 6%,var(--bg))}
+.pmmap img{position:absolute;width:256px;height:256px;user-select:none}
+.pmdot{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;
+  border-radius:50%;background:var(--accent);border:2px solid #fff;
+  box-shadow:0 1px 4px rgba(0,0,0,.4)}
+@media (max-width:860px){ .pmmap{height:240px} }
+
+
+
+/* folder patterns */
+.patbox{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
+.patex{margin:6px 0 4px;font-size:13px;min-height:20px}
+.patex b{font-weight:650}
+.patex b span{color:var(--dim);font-weight:400}
+.patex.bad{color:var(--bad)}
+.patvars{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 8px}
+.patvar{margin:0;padding:3px 8px;border-radius:var(--r-ctl);border:1px solid var(--line);
+  background:var(--wash);color:var(--ink);font:13px ui-monospace,SFMono-Regular,Menlo,monospace;
+  cursor:pointer}
+.patvar:hover{border-color:var(--accent);color:var(--accent)}
+.patkeep{display:flex;gap:6px;align-items:center}
+.patkeep input{flex:1;min-width:0}
+.patkeep button{margin:0}
+.patkept{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.patkept:empty{display:none}
+.patchip{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-pill);overflow:hidden}
+.patchip button{margin:0;border:0;border-radius:0;background:var(--wash);padding:4px 10px;
+  font-size:13px;color:var(--ink)}
+.patchip .patx{padding:4px 8px;color:var(--dim)}
+.patchip .patx:hover{color:var(--bad)}
+
+
+.job.jdone{border-color:color-mix(in srgb,var(--good) 40%,var(--line));cursor:pointer}
+.job.jdone .jwhat{color:var(--good);font-weight:650}
+.job.jfail .jwhat{color:var(--bad)}
+.job.jfail{border-color:color-mix(in srgb,var(--bad) 40%,var(--line))}
+
+/* automation: every flow, switches, confirm */
+.sumflow{border:1px solid var(--line);border-radius:var(--r-ctl);padding:10px 12px;margin:0 0 10px;
+  background:var(--card)}
+.sumflow.folded .sumhead{margin:0}
+.sumhead .fold, .card .fold{margin:0;padding:2px 8px;min-width:30px;font-size:13px}
+.switch{display:inline-flex;align-items:center;gap:7px;cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch span{width:38px;height:22px;border-radius:var(--r-ctl);background:var(--line);position:relative;
+  transition:background .15s}
+.switch span::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;
+  border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.switch input:checked + span{background:var(--good)}
+.switch input:checked + span::after{transform:translateX(16px)}
+.switch input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.switch em{font-style:normal;font-size:13px;font-weight:650;color:var(--dim);min-width:22px}
+.flowfoldall{display:flex;gap:6px;justify-content:flex-end;margin:0 0 8px}
+.flowfoldall button{margin:0}
+.card.flowfolded{padding-top:10px;padding-bottom:10px}
+.sure{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.4);display:flex;
+  align-items:center;justify-content:center;padding:16px;animation:pm-fade .15s ease both}
+.surebox{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:18px 18px 14px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);
+  animation:pm-rise .18s ease both}
+.surebox h3{margin:0 0 6px;font-size:16px}
+.surebox p{margin:0 0 14px;color:var(--dim);line-height:1.5}
+.surebox .act{justify-content:flex-end}
+
+/* Between a phone and a desk - a phone held sideways, a small tablet - the
+   header keeps its icons and drops their words, so the automation pill is
+   never the thing that gets cut off. */
+@media (min-width:861px) and (max-width:1060px){
+  #apart button span,#reload span,#theme span,#signout span,
+  #quit span{display:none}
+  #apart button,#reload,#theme,#signout,#quit{padding:0 9px}
+}
+
+/* the bar along the bottom of a phone, under your thumb. 860px, the width at
+   which the sidebar folds into a drawer: at 720 a window between the two had
+   no sidebar and an unstyled bar - five blue buttons across the top. */
+#bottom{display:none}
+@media (max-width:860px){
+  #bottom{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:var(--card);border-top:1px solid var(--line);
+    padding:4px 2px calc(4px + env(safe-area-inset-bottom));gap:2px}
+  #bottom button{flex:1;margin:0;display:flex;flex-direction:column;align-items:center;
+    gap:2px;padding:6px 2px;background:transparent;border:0;color:var(--dim);
+    font-size:12px;font-weight:600}
+  #bottom button.on{color:var(--accent)}
+  #bottom svg{width:21px;height:21px}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom))}
+  #lookpop{bottom:auto}
+}
+/* ---------------------------------------------------------------- appearance */
+#lookpop{position:fixed;top:56px;right:12px;z-index:70;width:320px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:12px 14px 14px;box-shadow:0 16px 44px rgba(0,0,0,.24);
+  animation:pm-rise .16s ease both}
+#lookpop[hidden]{display:none}
+.lookhead{font-weight:700;margin-bottom:4px}
+.looklab{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);
+  margin:10px 0 6px;font-weight:650}
+.lookmode{display:flex;gap:4px;background:var(--wash);border:1px solid var(--line);
+  border-radius:var(--r-ctl);padding:3px}
+.lookmode button{flex:1;margin:0;display:inline-flex;align-items:center;justify-content:center;
+  gap:6px;padding:6px 8px;border:0;border-radius:var(--r-ctl);background:transparent;color:var(--dim);
+  font-weight:600;font-size:13px}
+.lookmode button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.lookmode svg{width:16px;height:16px;flex-basis:16px}
+.lookpal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.lookpal button{margin:0;padding:4px;border:1.5px solid transparent;border-radius:var(--r-ctl);
+  background:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:12px;color:var(--dim)}
+.lookpal button.on{border-color:var(--accent);color:var(--ink)}
+.palsw{display:block;position:relative;width:44px;height:32px;border-radius:var(--r-ctl);overflow:hidden;
+  border:1px solid var(--line)}
+.palsw i{position:absolute;left:7px;top:7px;right:7px;bottom:0;border-radius:4px 4px 0 0;
+  border:1px solid}
+.palsw b{position:absolute;left:12px;top:13px;width:18px;height:3px;border-radius:2px}
+/* The frame swatch: a bar across the top of a page, which is the thing being
+   chosen. Drawn from the live variables, so it shows what you would get rather
+   than a picture of what it once was. */
+.chrsw{display:block;width:44px;height:32px;border-radius:var(--r-ctl);overflow:hidden;
+  border:1px solid var(--line);background:var(--card);position:relative}
+.chrsw::before{content:"";position:absolute;left:0;right:0;top:0;height:11px;
+  background:var(--card);border-bottom:1px solid var(--line)}
+.chrsw.chr-tinted::before{background:color-mix(in srgb,var(--accent) 12%,var(--card))}
+.chrsw.chr-deep::before{background:color-mix(in srgb,var(--accent) 80%,#0b1020)}
+.chrsw.chr-contrast::before{background:var(--ink)}
+.chrsw.chr-paper::before{background:var(--bg)}
+.lookacc{display:flex;gap:8px;flex-wrap:wrap}
+.lookacc button{margin:0;padding:0;width:28px;height:28px;border-radius:50%;
+  background:var(--sw);border:2px solid var(--card);box-shadow:0 0 0 1px var(--line)}
+.lookacc button.on{box-shadow:0 0 0 2px var(--ink)}
+@media (max-width:860px){
+  #lookpop{left:10px;right:10px;width:auto;top:calc(56px + env(safe-area-inset-top))}
+}
+
+/* ---------------------------------------------------------------- the guide */
+#guidebox{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;
+  justify-content:flex-start;padding:16px 16px 68px;
+  background:color-mix(in srgb,#000 22%,transparent)}
+#guidebox[hidden]{display:none}
+.gcard{width:100%;max-width:400px;background:var(--bg);color:var(--ink);
+  border:1px solid var(--line);border-radius:var(--r-card);padding:16px 18px 14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.gcard.turn{animation:pm-rise .22s cubic-bezier(.2,.7,.3,1) both}
+.guidehead{display:flex;align-items:center;justify-content:space-between}
+.guidehead button{height:28px;padding:0 9px;font-size:20px;line-height:1}
+/* An h2, being the dialog's own title under the page's h1. */
+.gcard h2{margin:6px 0 8px;font-size:var(--t-xl);font-weight:750;letter-spacing:-.015em}
+.gcard p{margin:0 0 8px;line-height:1.55}
+.gfoot{display:flex;align-items:center;gap:8px;margin-top:12px}
+#gdots{display:flex;gap:3px;flex-wrap:wrap;max-width:220px}
+.gdot{width:7px;height:7px;padding:0;border-radius:50%;border:0;
+  background:var(--line);cursor:pointer}
+.gdot.on{background:var(--accent)}
+@media (max-width:860px){
+  #guidebox{padding:12px 12px 64px;justify-content:center}
+  /* "4 of 21" is at the top of the card already, and twenty-one dots beside
+     two buttons did not fit a phone - they wrapped into a second row. */
+  #gdots{display:none}
+}
+
+
+/* guide: the picture, the ring round what a page is about, the small link */
+.gart{margin:4px -4px 10px;border-radius:var(--r-ctl);background:var(--card);
+  border:1px solid var(--line);padding:8px 6px 4px}
+.gart svg{display:block;width:100%;height:auto}
+.gart .k{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.gart .a{fill:var(--accent)}
+.gart .as{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}
+.gart .i{fill:var(--ink)} .gart .d{fill:var(--dim)}
+.gart .gl{fill:var(--line)} .gart .g{fill:var(--good)}
+.gart .y{fill:#f5b400} .gart .r{fill:#e5484d}
+.gart .ln{fill:none;stroke:var(--dim);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.gart .al{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gart .dash{stroke-dasharray:4 4}
+.gart .gl2{fill:none;stroke:var(--line);stroke-width:8}
+.gart .gg{fill:none;stroke:var(--good);stroke-width:8;stroke-linecap:round}
+.gart text{font:600 9.5px system-ui,sans-serif;fill:var(--dim)}
+.gart text.i{fill:var(--ink)} .gart text.on{fill:#fff;font-size:12px}
+#gspot{position:fixed;z-index:61;border-radius:var(--r-ctl);pointer-events:none;
+  border:2px solid var(--accent);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent),
+             0 0 0 100vmax rgba(0,0,0,.42);
+  transition:left .28s cubic-bezier(.2,.8,.2,1),top .28s cubic-bezier(.2,.8,.2,1),
+             width .28s ease,height .28s ease;
+  animation:gpulse 1.6s ease-in-out infinite}
+#gspot[hidden]{display:none}
+@keyframes gpulse{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 12%,transparent),
+  0 0 0 100vmax rgba(0,0,0,.42)}}
+#guidebox{z-index:62}
+#guidebox.spotting{background:transparent}
+#guidebox.spotting .gcard{position:fixed}
+.glink{margin:2px 0 0;padding:4px 0;border:0;background:transparent;color:var(--accent);
+  font-weight:650;font-size:13px;cursor:pointer}
+.glink:hover{text-decoration:underline}
+#gprev,#gnext{padding:6px 12px;font-size:13px}
+@media (max-width:860px){
+  #guidebox.spotting .gcard{position:relative;left:auto !important;top:auto !important}
+  #guidebox{align-items:flex-end}
+}
+@media (prefers-reduced-motion: reduce){ #gspot{transition:none;animation:none} }
+
+/* ---------------------------------------------------------------- motion
+   Movement that says something, and only that. A card rising into place says
+   "this is new"; a tab crossfading says "same place, different page"; rows
+   arriving a beat apart say "the list is still coming". Nothing loops, nothing
+   bounces, and nothing that is redrawn on a timer is animated - the running
+   strip and the progress bar update in place, because a card that re-enters
+   every 700 ms is a card that flickers. Short, too: a quarter of a second is
+   long enough to be seen and short enough never to be waited for. */
+@keyframes pm-rise{from{opacity:0;transform:translateY(8px)}
+                   to{opacity:1;transform:none}}
+@keyframes pm-fade{from{opacity:0}to{opacity:1}}
+@keyframes pm-pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+#out > .card{animation:pm-rise var(--t-mid) var(--ease) both}
+#out > .card:nth-child(2){animation-delay:.05s}
+#out > .card:nth-child(3){animation-delay:.1s}
+#out > .card:nth-child(n+4){animation-delay:.15s}
+#form > h2{animation:pm-fade .18s ease-out both}
+#form > .opt, #form > fieldset, #form > details{animation:pm-rise .22s ease-out both}
+#out table tr{animation:pm-fade .2s ease-out both}
+#out table tr:nth-child(n+2){animation-delay:.02s}
+#out table tr:nth-child(n+6){animation-delay:.05s}
+#out table tr:nth-child(n+12){animation-delay:.08s}
+.chip{animation:pm-pop .16s ease-out both}
+/* Opacity only for dialogs: something that is MEASURED the moment it
+   opens - the picker is sized to the screen - must not be scaled while
+   it is measured. */
+.veil > *{animation:pm-fade .18s ease-out both}
+header button, .chip button, button{
+  transition:background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast),
+             box-shadow var(--t-fast), transform .08s}
+button:active:not(:disabled){transform:translateY(1px)}
+.bar i{transition:width .3s ease-out}
+#trouble:not([hidden]), #autonews:not([hidden]){animation:pm-rise .22s ease-out both}
+/* Somebody who has asked their machine for less motion gets none - not "less",
+   none. It is a setting people turn on because movement makes them unwell. */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{animation:none !important;transition:none !important}
+}

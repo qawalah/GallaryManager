@@ -1,0 +1,1059 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T22:52:29Z",
+  "title": "Design System: Photo Manager",
+  "extensions": {
+    "colorMeta": {
+      "accent-dark": {
+        "role": "primary",
+        "displayName": "Printed Ink (bone)",
+        "canonical": "#f1efe9",
+        "cssVar": "--accent",
+        "oklch": "oklch(95.2% 0.008 91.5)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#252420",
+          "#41403b",
+          "#5f5d58",
+          "#7f7d78",
+          "#a09e99",
+          "#c6c4be",
+          "#f0eee8"
+        ],
+        "mode": "dark (default)"
+      },
+      "accent-light": {
+        "role": "primary",
+        "displayName": "Printed Ink (black)",
+        "canonical": "#151514",
+        "cssVar": "--accent",
+        "oklch": "oklch(19.5% 0.002 106.6)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242423",
+          "#40403f",
+          "#5e5e5c",
+          "#7d7d7c",
+          "#9e9e9d",
+          "#c4c4c3",
+          "#eeeeed"
+        ],
+        "mode": "light"
+      },
+      "on-accent-dark": {
+        "role": "primary",
+        "displayName": "On Ink (black, on bone)",
+        "canonical": "#121211",
+        "cssVar": "--on-accent",
+        "oklch": "oklch(18.2% 0.002 106.6)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242423",
+          "#40403f",
+          "#5e5e5c",
+          "#7d7d7c",
+          "#9e9e9d",
+          "#c4c4c3",
+          "#eeeeed"
+        ],
+        "mode": "dark (default)"
+      },
+      "on-accent-light": {
+        "role": "primary",
+        "displayName": "On Ink (white, on black)",
+        "canonical": "#ffffff",
+        "cssVar": "--on-accent",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ],
+        "mode": "light"
+      },
+      "tone-blue-dark": {
+        "role": "secondary",
+        "displayName": "Organize Cobalt (dark stock)",
+        "canonical": "#7a9bff",
+        "cssVar": "--tone-blue",
+        "oklch": "oklch(70.9% 0.151 268.6)",
+        "tonalRamp": [
+          "#030034",
+          "#0c0e6b",
+          "#20338e",
+          "#3b54b2",
+          "#5876d6",
+          "#7798fc",
+          "#acc2ff",
+          "#e8eeff"
+        ],
+        "mode": "dark (default)"
+      },
+      "tone-blue-light": {
+        "role": "secondary",
+        "displayName": "Organize Cobalt (white stock)",
+        "canonical": "#2450d6",
+        "cssVar": "--tone-blue",
+        "oklch": "oklch(49.2% 0.211 265.1)",
+        "tonalRamp": [
+          "#010036",
+          "#030078",
+          "#0924ac",
+          "#214cd2",
+          "#3e70f8",
+          "#6e9aff",
+          "#a8c4ff",
+          "#e7efff"
+        ],
+        "mode": "light"
+      },
+      "tone-teal-dark": {
+        "role": "secondary",
+        "displayName": "Metadata Viridian (dark stock)",
+        "canonical": "#45c79f",
+        "cssVar": "--tone-teal",
+        "oklch": "oklch(74.8% 0.128 168.8)",
+        "tonalRamp": [
+          "#000f09",
+          "#002c1f",
+          "#004c39",
+          "#006f54",
+          "#009371",
+          "#30b790",
+          "#60dfb5",
+          "#bfffe6"
+        ],
+        "mode": "dark (default)"
+      },
+      "tone-teal-light": {
+        "role": "secondary",
+        "displayName": "Metadata Viridian (white stock)",
+        "canonical": "#0d7656",
+        "cssVar": "--tone-teal",
+        "oklch": "oklch(50.3% 0.102 165.5)",
+        "tonalRamp": [
+          "#000f08",
+          "#002c1e",
+          "#004c36",
+          "#006f50",
+          "#34906f",
+          "#59b38f",
+          "#80d9b4",
+          "#c0ffe3"
+        ],
+        "mode": "light"
+      },
+      "tone-orange-dark": {
+        "role": "secondary",
+        "displayName": "Review Ochre (dark stock)",
+        "canonical": "#f2b33d",
+        "cssVar": "--tone-orange",
+        "oklch": "oklch(80.6% 0.147 79.0)",
+        "tonalRamp": [
+          "#120900",
+          "#322000",
+          "#553a00",
+          "#7b5600",
+          "#a47300",
+          "#ce9200",
+          "#f7b843",
+          "#ffecce"
+        ],
+        "mode": "dark (default)"
+      },
+      "tone-orange-light": {
+        "role": "secondary",
+        "displayName": "Review Ochre (white stock)",
+        "canonical": "#9a5b00",
+        "cssVar": "--tone-orange",
+        "oklch": "oklch(53.1% 0.119 65.1)",
+        "tonalRamp": [
+          "#150800",
+          "#371d00",
+          "#5d3500",
+          "#864f00",
+          "#ad6c20",
+          "#d18e47",
+          "#f9b46d",
+          "#ffead8"
+        ],
+        "mode": "light"
+      },
+      "tone-purple-dark": {
+        "role": "secondary",
+        "displayName": "Develop Violet (dark stock)",
+        "canonical": "#b89cff",
+        "cssVar": "--tone-purple",
+        "oklch": "oklch(75.6% 0.141 295.9)",
+        "tonalRamp": [
+          "#100029",
+          "#2e005e",
+          "#492880",
+          "#6648a3",
+          "#8669c7",
+          "#a78aec",
+          "#c9b7ff",
+          "#f0ebff"
+        ],
+        "mode": "dark (default)"
+      },
+      "tone-purple-light": {
+        "role": "secondary",
+        "displayName": "Develop Violet (white stock)",
+        "canonical": "#6a42c9",
+        "cssVar": "--tone-purple",
+        "oklch": "oklch(50.3% 0.198 291.2)",
+        "tonalRamp": [
+          "#0e002b",
+          "#2a0063",
+          "#480d9c",
+          "#643ac1",
+          "#825ee7",
+          "#a187ff",
+          "#c4b9ff",
+          "#eeecff"
+        ],
+        "mode": "light"
+      },
+      "tone-grey-dark": {
+        "role": "secondary",
+        "displayName": "Maintain Warm Grey (dark stock)",
+        "canonical": "#aaa69e",
+        "cssVar": "--tone-grey",
+        "oklch": "oklch(72.6% 0.012 84.6)",
+        "tonalRamp": [
+          "#0e0b06",
+          "#27241d",
+          "#433f39",
+          "#615d56",
+          "#817d75",
+          "#a29e96",
+          "#c8c4bb",
+          "#f2eee5"
+        ],
+        "mode": "dark (default)"
+      },
+      "tone-grey-light": {
+        "role": "secondary",
+        "displayName": "Maintain Warm Grey (white stock)",
+        "canonical": "#67635c",
+        "cssVar": "--tone-grey",
+        "oklch": "oklch(50.1% 0.012 81.8)",
+        "tonalRamp": [
+          "#0e0b06",
+          "#27241e",
+          "#433f39",
+          "#615d56",
+          "#817d75",
+          "#a29e96",
+          "#c8c3bc",
+          "#f3eee6"
+        ],
+        "mode": "light"
+      },
+      "good-dark": {
+        "role": "tertiary",
+        "displayName": "Done Green (dark stock)",
+        "canonical": "#63c98a",
+        "cssVar": "--good",
+        "oklch": "oklch(75.8% 0.133 154.5)",
+        "tonalRamp": [
+          "#001005",
+          "#002d15",
+          "#004d28",
+          "#00703d",
+          "#269458",
+          "#4fb678",
+          "#78dd9d",
+          "#c5ffd7"
+        ],
+        "mode": "dark (default)"
+      },
+      "good-light": {
+        "role": "tertiary",
+        "displayName": "Done Green (white stock)",
+        "canonical": "#1c7c3c",
+        "cssVar": "--good",
+        "oklch": "oklch(51.7% 0.131 149.7)",
+        "tonalRamp": [
+          "#001003",
+          "#002d0f",
+          "#004e1f",
+          "#067131",
+          "#389251",
+          "#5cb571",
+          "#83dc96",
+          "#c7ffd1"
+        ],
+        "mode": "light"
+      },
+      "warn-dark": {
+        "role": "tertiary",
+        "displayName": "Caution Amber (dark stock)",
+        "canonical": "#d9a441",
+        "cssVar": "--warn",
+        "oklch": "oklch(75.1% 0.130 79.8)",
+        "tonalRamp": [
+          "#120900",
+          "#322000",
+          "#553a00",
+          "#7b5600",
+          "#a37300",
+          "#c8942e",
+          "#f0ba59",
+          "#ffeccd"
+        ],
+        "mode": "dark (default)"
+      },
+      "warn-light": {
+        "role": "tertiary",
+        "displayName": "Caution Amber (white stock)",
+        "canonical": "#9a6b00",
+        "cssVar": "--warn",
+        "oklch": "oklch(56.2% 0.117 78.3)",
+        "tonalRamp": [
+          "#120900",
+          "#322000",
+          "#563a00",
+          "#7c5500",
+          "#a37314",
+          "#c69540",
+          "#edbb67",
+          "#ffecce"
+        ],
+        "mode": "light"
+      },
+      "bad-dark": {
+        "role": "tertiary",
+        "displayName": "Irreversible Red (dark stock)",
+        "canonical": "#ef6d63",
+        "cssVar": "--bad",
+        "oklch": "oklch(69.0% 0.163 26.6)",
+        "tonalRamp": [
+          "#1f0000",
+          "#4b0003",
+          "#7d000a",
+          "#a62826",
+          "#cc4d46",
+          "#f37066",
+          "#ffaba1",
+          "#ffe9e6"
+        ],
+        "mode": "dark (default)"
+      },
+      "bad-light": {
+        "role": "tertiary",
+        "displayName": "Irreversible Red (white stock)",
+        "canonical": "#b3261e",
+        "cssVar": "--bad",
+        "oklch": "oklch(50.1% 0.178 28.7)",
+        "tonalRamp": [
+          "#1f0000",
+          "#4b0001",
+          "#7d0002",
+          "#ac1d17",
+          "#d2463a",
+          "#f96a5b",
+          "#ffab9f",
+          "#ffe9e5"
+        ],
+        "mode": "light"
+      },
+      "label-red": {
+        "role": "tertiary",
+        "displayName": "Colour label: red",
+        "canonical": "#e5484d",
+        "cssVar": "--label-red",
+        "oklch": "oklch(62.6% 0.193 23.0)",
+        "tonalRamp": [
+          "#1f0001",
+          "#4b0008",
+          "#7c0015",
+          "#b10122",
+          "#d83b43",
+          "#ff6364",
+          "#ffaaa5",
+          "#ffe8e7"
+        ],
+        "mode": "both"
+      },
+      "label-yellow": {
+        "role": "tertiary",
+        "displayName": "Colour label: yellow",
+        "canonical": "#f5c518",
+        "cssVar": "--label-yellow",
+        "oklch": "oklch(84.2% 0.168 90.4)",
+        "tonalRamp": [
+          "#100a00",
+          "#2e2200",
+          "#4f3d00",
+          "#735a00",
+          "#997900",
+          "#c09900",
+          "#edbe00",
+          "#ffeebe"
+        ],
+        "mode": "both"
+      },
+      "label-green": {
+        "role": "tertiary",
+        "displayName": "Colour label: green",
+        "canonical": "#30a46c",
+        "cssVar": "--label-green",
+        "oklch": "oklch(64.1% 0.133 157.7)",
+        "tonalRamp": [
+          "#001006",
+          "#002d18",
+          "#004d2d",
+          "#007044",
+          "#16945d",
+          "#47b77e",
+          "#71dea2",
+          "#c4ffdb"
+        ],
+        "mode": "both"
+      },
+      "label-blue": {
+        "role": "tertiary",
+        "displayName": "Colour label: blue",
+        "canonical": "#3e63dd",
+        "cssVar": "--label-blue",
+        "oklch": "oklch(54.4% 0.191 267.0)",
+        "tonalRamp": [
+          "#020035",
+          "#080077",
+          "#162aa2",
+          "#2e4fc7",
+          "#4a72ed",
+          "#7399ff",
+          "#aac3ff",
+          "#e7eeff"
+        ],
+        "mode": "both"
+      },
+      "label-purple": {
+        "role": "tertiary",
+        "displayName": "Colour label: purple",
+        "canonical": "#8e4ec6",
+        "cssVar": "--label-purple",
+        "oklch": "oklch(55.6% 0.183 305.9)",
+        "tonalRamp": [
+          "#140025",
+          "#350056",
+          "#580a89",
+          "#7836ad",
+          "#9859d2",
+          "#bb7bf7",
+          "#d6b1ff",
+          "#f3eaff"
+        ],
+        "mode": "both"
+      },
+      "bg-dark": {
+        "role": "neutral",
+        "displayName": "Black Stock",
+        "canonical": "#0f0f0e",
+        "cssVar": "--bg",
+        "oklch": "oklch(16.8% 0.002 106.6)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242423",
+          "#40403f",
+          "#5e5e5c",
+          "#7d7d7c",
+          "#9e9e9d",
+          "#c4c4c3",
+          "#eeeeed"
+        ],
+        "mode": "dark (default)"
+      },
+      "card-dark": {
+        "role": "neutral",
+        "displayName": "Black Sheet",
+        "canonical": "#181817",
+        "cssVar": "--card",
+        "oklch": "oklch(20.9% 0.002 106.6)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242423",
+          "#40403f",
+          "#5e5e5c",
+          "#7d7d7c",
+          "#9e9e9d",
+          "#c4c4c3",
+          "#eeeeed"
+        ],
+        "mode": "dark (default)"
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Bone Ink",
+        "canonical": "#f1efe9",
+        "cssVar": "--ink",
+        "oklch": "oklch(95.2% 0.008 91.5)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#252420",
+          "#41403b",
+          "#5f5d58",
+          "#7f7d78",
+          "#a09e99",
+          "#c6c4be",
+          "#f0eee8"
+        ],
+        "mode": "dark (default)"
+      },
+      "dim-dark": {
+        "role": "neutral",
+        "displayName": "Warm Grey Ink",
+        "canonical": "#a8a49c",
+        "cssVar": "--dim",
+        "oklch": "oklch(72.0% 0.012 84.6)",
+        "tonalRamp": [
+          "#0e0b06",
+          "#27241d",
+          "#433f38",
+          "#615d56",
+          "#817d75",
+          "#a29e96",
+          "#c8c4bb",
+          "#f2eee5"
+        ],
+        "mode": "dark (default)"
+      },
+      "line-dark": {
+        "role": "neutral",
+        "displayName": "Dark Hairline",
+        "canonical": "#2e2d2a",
+        "cssVar": "--line",
+        "oklch": "oklch(29.7% 0.006 91.6)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#41403c",
+          "#5f5d5a",
+          "#7e7d7a",
+          "#9f9e9b",
+          "#c5c4c0",
+          "#f0eeea"
+        ],
+        "mode": "dark (default)"
+      },
+      "wash-dark": {
+        "role": "neutral",
+        "displayName": "Dark Wash",
+        "canonical": "color-mix(in srgb, var(--ink) 5%, var(--card))",
+        "cssVar": "--wash",
+        "oklch": "oklch(25.5% 0.004 106.7)",
+        "tonalRamp": [
+          "#0b0b09",
+          "#242422",
+          "#40403e",
+          "#5e5e5b",
+          "#7d7d7b",
+          "#9e9e9c",
+          "#c4c4c1",
+          "#efefec"
+        ],
+        "mode": "dark (default)"
+      },
+      "accent-soft-dark": {
+        "role": "neutral",
+        "displayName": "Dark Ink Panel",
+        "canonical": "#2b2a27",
+        "cssVar": "--accent-soft",
+        "oklch": "oklch(28.5% 0.006 91.6)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#41403c",
+          "#5f5d5a",
+          "#7e7d7a",
+          "#9f9e9b",
+          "#c5c4c0",
+          "#f0eeea"
+        ],
+        "mode": "dark (default)"
+      },
+      "bg-light": {
+        "role": "neutral",
+        "displayName": "White Stock",
+        "canonical": "#ffffff",
+        "cssVar": "--bg",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ],
+        "mode": "light"
+      },
+      "card-light": {
+        "role": "neutral",
+        "displayName": "White Stock (card)",
+        "canonical": "#ffffff",
+        "cssVar": "--card",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ],
+        "mode": "light"
+      },
+      "ink-light": {
+        "role": "neutral",
+        "displayName": "Black Ink",
+        "canonical": "#151514",
+        "cssVar": "--ink",
+        "oklch": "oklch(19.5% 0.002 106.6)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242423",
+          "#40403f",
+          "#5e5e5c",
+          "#7d7d7c",
+          "#9e9e9d",
+          "#c4c4c3",
+          "#eeeeed"
+        ],
+        "mode": "light"
+      },
+      "dim-light": {
+        "role": "neutral",
+        "displayName": "Warm Grey",
+        "canonical": "#5d5a54",
+        "cssVar": "--dim",
+        "oklch": "oklch(46.8% 0.010 84.6)",
+        "tonalRamp": [
+          "#0d0b07",
+          "#26241e",
+          "#423f3a",
+          "#605d57",
+          "#807d76",
+          "#a19e97",
+          "#c7c4bd",
+          "#f2eee7"
+        ],
+        "mode": "light"
+      },
+      "line-light": {
+        "role": "neutral",
+        "displayName": "Light Hairline",
+        "canonical": "#dddad3",
+        "cssVar": "--line",
+        "oklch": "oklch(88.9% 0.010 87.5)",
+        "tonalRamp": [
+          "#0d0b07",
+          "#26241f",
+          "#423f3a",
+          "#605d57",
+          "#807d77",
+          "#a19e97",
+          "#c7c4bd",
+          "#f1eee7"
+        ],
+        "mode": "light"
+      },
+      "wash-light": {
+        "role": "neutral",
+        "displayName": "Light Wash",
+        "canonical": "color-mix(in srgb, var(--ink) 5%, var(--card))",
+        "cssVar": "--wash",
+        "oklch": "oklch(96.4% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ],
+        "mode": "light"
+      },
+      "accent-soft-light": {
+        "role": "neutral",
+        "displayName": "Light Ink Panel",
+        "canonical": "#ebeae6",
+        "cssVar": "--accent-soft",
+        "oklch": "oklch(93.7% 0.005 95.1)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#40403d",
+          "#5e5e5a",
+          "#7e7d7a",
+          "#9f9e9b",
+          "#c5c4c0",
+          "#efeeea"
+        ],
+        "mode": "light"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "cssVar": "--t-4xl",
+        "purpose": "The count on Check the list, and nothing else. 40px on a phone."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "cssVar": "--t-3xl",
+        "purpose": "A screen's title (Home, Photos, Tools). 28px on a phone."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "cssVar": "--t-3xl",
+        "purpose": "Home's four facts, in tabular numerals. 28px on a phone."
+      },
+      "title": {
+        "displayName": "Title",
+        "cssVar": "--t-2xl",
+        "purpose": "A tool's name over its form, a group's name on the Tools page; the counters under What happened at 700."
+      },
+      "section": {
+        "displayName": "Section",
+        "cssVar": "--t-xl",
+        "purpose": "Home's section heads, Latest, a month on Photos; the verb and unit beside the count."
+      },
+      "masthead": {
+        "displayName": "Masthead",
+        "cssVar": "--t-l",
+        "purpose": "The app's name in the header: wide, heavy, small."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "cssVar": "--t-l",
+        "purpose": "A card's heading and the group's name over the list beside a tool; a tool's name in a list at 650."
+      },
+      "body": {
+        "displayName": "Body",
+        "cssVar": "--t-m",
+        "purpose": "Everything that is read. Lines under titles stop at 62ch."
+      },
+      "small": {
+        "displayName": "Small",
+        "cssVar": "--t-s",
+        "purpose": "Secondary lines, chips, steps, tables, header controls."
+      },
+      "label": {
+        "displayName": "Label",
+        "cssVar": "--t-xs",
+        "purpose": "Running heads in the rail and the list beside a tool, in sentence case."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "cssVar": "--t-xs",
+        "purpose": "A plate's file name and date; table headers at 600."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "cssVar": null,
+        "purpose": "Paths and file names only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-card",
+        "value": "none",
+        "purpose": "Every flat surface. A card sits on the page by its hairline alone."
+      },
+      {
+        "name": "shadow-pop (light)",
+        "value": "0 18px 40px -12px rgba(20,18,14,.28), 0 0 0 1px rgba(20,18,14,.06)",
+        "purpose": "Menus, the selection bar, anything that floats over the page."
+      },
+      {
+        "name": "shadow-pop (dark)",
+        "value": "0 18px 44px -10px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.07)",
+        "purpose": "The same, on black stock."
+      },
+      {
+        "name": "running-head (light)",
+        "value": "0 8px 24px -14px rgba(16,24,40,.35)",
+        "purpose": "The header, only once the page has scrolled under it."
+      },
+      {
+        "name": "running-head (dark)",
+        "value": "0 8px 24px -12px rgba(0,0,0,.7)",
+        "purpose": "The same, on black stock."
+      },
+      {
+        "name": "bubble",
+        "value": "0 8px 26px rgba(0,0,0,.3)",
+        "purpose": "The help bubble."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Every catalogue movement: arrives quickly, settles slowly, never bounces."
+      },
+      {
+        "name": "t-fast",
+        "value": ".16s",
+        "purpose": "Colour, border and fill changes on controls; the skip link dropping in."
+      },
+      {
+        "name": "t-mid",
+        "value": ".28s",
+        "purpose": "The turn between screens; photo tiles fading in; colour of a step."
+      },
+      {
+        "name": "t-slow",
+        "value": ".48s",
+        "purpose": "The lit step filling in, plates rising, the count settling."
+      },
+      {
+        "name": "turn",
+        "value": "pm-turn: opacity 0 to 1, translateX(18px) to none, var(--t-mid) var(--ease); back from -18px; later parts 40ms apart up to 120ms",
+        "purpose": "Arriving on a screen or a tool. Not on a redraw in place."
+      },
+      {
+        "name": "plates",
+        "value": "pm-plate: opacity 0 to 1, translateY(10px) to none, var(--t-slow) var(--ease); 30ms apart",
+        "purpose": "Home plates laid out one after another."
+      },
+      {
+        "name": "settle",
+        "value": "pm-settle: opacity 0 to 1, translateY(14px) and letter-spacing .02em to none, var(--t-slow) var(--ease)",
+        "purpose": "The count on Check the list."
+      },
+      {
+        "name": "lit-step",
+        "value": "transform: scaleX(0) to scaleX(1), origin left, var(--t-slow) var(--ease)",
+        "purpose": "The rule under the step you are on."
+      },
+      {
+        "name": "tiles",
+        "value": "pm-fade: opacity 0 to 1, var(--t-mid) ease-out; 30ms steps",
+        "purpose": "The photo grid, quicker than the plates because there are hundreds."
+      },
+      {
+        "name": "press",
+        "value": "transform: translateY(1px), .08s",
+        "purpose": "A button being pressed."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } }",
+        "purpose": "None at all for anybody who asked the machine for less. The last rule in page/style.css."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "max-width: 860px",
+        "purpose": "Rail becomes a drawer, tabs at the foot, 16px gutters, 44px targets, plates swiped."
+      },
+      {
+        "name": "narrow",
+        "value": "max-width: 1060px",
+        "purpose": "Plates go to three columns; the list beside a tool moves under the form."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one thing a screen is for, printed in ink and named by its verb and count.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Move 412 files</button>",
+      "css": ".ds-btn-primary{background:var(--accent,#f1efe9);color:var(--on-accent,#121211);border:0;border-radius:var(--r-ctl,2px);padding:10px 18px;font:650 14px/1.55 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);letter-spacing:.005em;cursor:pointer;transition:background-color var(--t-fast,.16s),color var(--t-fast,.16s),transform .08s}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A real action that is not the main one: Cancel, Check again, Browse.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Check again</button>",
+      "css": ".ds-btn-secondary{background:transparent;color:var(--accent,#f1efe9);border:1px solid var(--accent,#f1efe9);border-radius:var(--r-ctl,2px);padding:10px 18px;font:650 14px/1.55 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);cursor:pointer;transition:color var(--t-fast,.16s),border-color var(--t-fast,.16s),transform .08s}.ds-btn-secondary:active{transform:translateY(1px)}.ds-btn-secondary:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Text with no box, for something you may never press.",
+      "html": "<button class=\"ds-btn-quiet\" type=\"button\">Show the ones it skipped</button>",
+      "css": ".ds-btn-quiet{background:transparent;color:var(--dim,#a8a49c);border:0;padding:7px 9px;font:600 14px/1.55 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);text-decoration:underline;text-underline-offset:3px;cursor:pointer;transition:color var(--t-fast,.16s)}.ds-btn-quiet:hover{color:var(--accent,#f1efe9)}.ds-btn-quiet:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}"
+    },
+    {
+      "name": "Filter Chips",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Square chips that narrow what is on screen and fill with ink when on; a chevron says one opens a list.",
+      "html": "<div class=\"ds-fchips\"><button class=\"ds-fchip ds-on\" type=\"button\" aria-pressed=\"true\">All</button><button class=\"ds-fchip\" type=\"button\" aria-pressed=\"false\">Photos</button><button class=\"ds-fchip\" type=\"button\" aria-pressed=\"false\">No location</button><button class=\"ds-fchip ds-drop\" type=\"button\">Camera</button></div>",
+      "css": ".ds-fchips{display:flex;gap:7px;flex-wrap:wrap}.ds-fchip{display:inline-flex;align-items:center;gap:7px;min-height:var(--chip-h,36px);padding:0 14px;border:1px solid var(--line,#2e2d2a);border-radius:var(--r-pill,2px);background:var(--card,#181817);color:var(--ink,#f1efe9);font:500 13px/1 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);cursor:pointer;transition:background-color var(--t-fast,.16s),border-color var(--t-fast,.16s),color var(--t-fast,.16s)}.ds-fchip:hover{border-color:var(--accent,#f1efe9)}.ds-fchip:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}.ds-fchip.ds-on{background:var(--accent,#f1efe9);border-color:var(--accent,#f1efe9);color:var(--on-accent,#121211);font-weight:600}.ds-fchip.ds-drop::after{content:\"\";width:5px;height:5px;margin:-3px 0 0 2px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);opacity:.7}"
+    },
+    {
+      "name": "Number Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "A wash-filled square field as wide as the answer it takes, with its label as a name above it.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-lab\" for=\"ds-mins\">Give up after (minutes)</label><input id=\"ds-mins\" class=\"ds-input\" type=\"number\" value=\"60\"></div>",
+      "css": ".ds-field{font-family:var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif)}.ds-lab{display:block;margin:0 0 6px;font-size:14px;font-weight:600;color:var(--ink,#f1efe9)}.ds-input{width:100%;max-width:220px;min-height:40px;padding:9px 12px;border:1px solid var(--line,#2e2d2a);border-radius:var(--r-ctl,2px);background:var(--wash,#232321);color:var(--ink,#f1efe9);font:400 14px/1.55 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);transition:border-color var(--t-fast,.16s)}.ds-input:hover{border-color:color-mix(in srgb,var(--ink,#f1efe9) 35%,var(--line,#2e2d2a))}.ds-input:focus{outline:2px solid var(--accent,#f1efe9);outline-offset:-1px}"
+    },
+    {
+      "name": "Rail",
+      "kind": "nav",
+      "refersTo": "rail-row",
+      "description": "The left rail: where you are is an ink panel and weight, and each tool group carries its section ink in its mark.",
+      "html": "<nav class=\"ds-rail\" aria-label=\"Where to go\"><a class=\"ds-railrow\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19Z\"/><path d=\"M9.5 20.5v-6h5v6\"/></svg><span>Home</span></a><a class=\"ds-railrow ds-on\" href=\"#\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2.4\"/><circle cx=\"8.6\" cy=\"10\" r=\"1.7\"/><path d=\"M3.4 16.6 8.5 12l3.4 3 3-2.2 5.7 4.3\"/></svg><span>Photos</span><span class=\"ds-count\">1,204</span></a><div class=\"ds-railsec\">Tools</div><a class=\"ds-railrow\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.2 6.6a3.6 3.6 0 0 0 4.8 4.6l-8 8a2.3 2.3 0 0 1-3.3-3.3Z\"/><path d=\"M5.4 5.4 9 9\"/></svg><span>All tools</span><span class=\"ds-count\">38</span></a><a class=\"ds-railrow ds-blue\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 6.6A1.6 1.6 0 0 1 4.6 5h4l2 2.4h6.8A1.6 1.6 0 0 1 19 9v8.4a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 17.4z\"/></svg><span>Organize</span></a><a class=\"ds-railrow ds-teal\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3c2.6 2.6 3.9 5.7 3.9 9S14.6 18.4 12 21c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3z\"/></svg><span>Metadata</span></a></nav>",
+      "css": ".ds-rail{width:256px;background:var(--card,#181817);border-right:1px solid var(--line,#2e2d2a);padding:14px 0 4px;display:flex;flex-direction:column;gap:1px;font-family:var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif)}.ds-railsec{padding:20px 22px 8px;font-size:12px;font-weight:700;color:var(--dim,#a8a49c);letter-spacing:.04em}.ds-railrow{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:0 8px;min-height:40px;border-radius:var(--r-ctl,2px);color:var(--ink,#f1efe9);font-size:14px;font-weight:500;text-decoration:none;transition:background-color var(--t-fast,.16s)}.ds-railrow svg{width:19px;height:19px;flex:0 0 19px;color:var(--dim,#a8a49c)}.ds-railrow:hover{background:var(--wash,#232321)}.ds-railrow:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}.ds-railrow.ds-on{background:var(--accent-soft,#2b2a27);font-weight:700}.ds-railrow.ds-on svg{color:var(--ink,#f1efe9)}.ds-railrow .ds-count{margin-left:auto;font-size:12px;color:var(--dim,#a8a49c);font-weight:500;font-variant-numeric:tabular-nums}.ds-railrow.ds-on .ds-count{color:var(--ink,#f1efe9)}.ds-railrow.ds-blue svg{color:var(--tone-blue,#7a9bff)}.ds-railrow.ds-teal svg{color:var(--tone-teal,#45c79f)}"
+    },
+    {
+      "name": "Step Strip",
+      "kind": "custom",
+      "refersTo": "step-tab",
+      "description": "The four steps as running heads under one hairline; the current step is bold and lit in the section ink, a finished one carries a drawn tick.",
+      "html": "<ol class=\"ds-steps\"><li class=\"ds-done\"><b>1</b><span>Set it up</span></li><li class=\"ds-now\" aria-current=\"step\"><b>2</b><span>Check the list</span></li><li><b>3</b><span>Apply</span></li><li><b>4</b><span>What happened</span></li></ol>",
+      "css": ".ds-steps{display:flex;list-style:none;margin:0;padding:0;gap:4px;font-family:var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif)}.ds-steps li{flex:1 1 0;display:flex;align-items:baseline;gap:8px;padding:12px 2px 2px;font-size:13px;color:var(--dim,#a8a49c);min-width:0;position:relative;border-top:1px solid var(--line,#2e2d2a);transition:color var(--t-mid,.28s) var(--ease,cubic-bezier(.16,1,.3,1))}.ds-steps li::before{content:\"\";position:absolute;left:0;right:0;top:-2px;height:3px;background:var(--sec,var(--tone-teal,#45c79f));transform:scaleX(0);transform-origin:left center;transition:transform var(--t-slow,.48s) var(--ease,cubic-bezier(.16,1,.3,1))}.ds-steps li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ds-steps li b{font-size:13px;font-weight:700;color:var(--dim,#a8a49c);font-variant-numeric:tabular-nums}.ds-steps li.ds-now{color:var(--ink,#f1efe9);font-weight:650}.ds-steps li.ds-now b{color:var(--ink,#f1efe9)}.ds-steps li.ds-now::before{transform:scaleX(1)}.ds-steps li.ds-done{color:var(--ink,#f1efe9)}.ds-steps li.ds-done::before{transform:scaleX(1);background:color-mix(in srgb,var(--ink,#f1efe9) 30%,transparent)}.ds-steps li.ds-done b::after{content:\"\";display:inline-block;width:4px;height:8px;margin:0 0 1px 6px;border:solid var(--good,#63c98a);border-width:0 2px 2px 0;transform:rotate(45deg)}@media (prefers-reduced-motion:reduce){.ds-steps li,.ds-steps li::before{transition:none}}"
+    },
+    {
+      "name": "Catalogue Checklist",
+      "kind": "custom",
+      "refersTo": "checklist-count",
+      "description": "The end of Check the list: a headline, the count at 64px between its verb and unit, the facts in ruled columns, and the apply button in solid ink.",
+      "html": "<section class=\"ds-check\"><b class=\"ds-ckhead\">Nothing has been written yet.</b><div class=\"ds-ckcount\"><span class=\"ds-ckv\">Move</span><span class=\"ds-ckn\">412</span><span class=\"ds-cku\">files</span></div><div class=\"ds-cfacts\"><div>Out of</div><div class=\"ds-mono\">Photos</div><div>RAW tree</div><div class=\"ds-mono\">Photos Raw</div><div>Afterwards</div><div>Files are moved, not copied. Nothing is overwritten.</div></div><button class=\"ds-apply\" type=\"button\">Move 412 files</button></section>",
+      "css": ".ds-check{border-top:1px solid var(--ink,#f1efe9);padding:20px 0 8px;color:var(--ink,#f1efe9);font:400 14px/1.55 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif)}.ds-ckhead{display:block;font-size:16px;font-weight:700}.ds-ckcount{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:14px;margin:18px 0}.ds-ckv{font-size:20px;font-weight:700}.ds-cku{font-size:20px;font-weight:650;color:var(--dim,#a8a49c)}.ds-ckn{font-size:64px;font-weight:800;font-stretch:104%;letter-spacing:-.04em;line-height:.95;font-variant-numeric:tabular-nums;animation:ds-settle var(--t-slow,.48s) var(--ease,cubic-bezier(.16,1,.3,1)) both}@keyframes ds-settle{from{opacity:0;transform:translateY(14px);letter-spacing:.02em}to{opacity:1;transform:none}}.ds-cfacts{display:grid;grid-template-columns:minmax(112px,max-content) 1fr;border-top:1px solid var(--ink,#f1efe9)}.ds-cfacts>div{padding:11px 0;border-bottom:1px solid var(--line,#2e2d2a)}.ds-cfacts>div:nth-child(odd){padding-right:28px;color:var(--dim,#a8a49c)}.ds-mono{font:13px/1.5 ui-monospace,Consolas,monospace}.ds-apply{margin-top:16px;min-height:48px;padding:12px 28px;border:0;border-radius:var(--r-ctl,2px);background:var(--accent,#f1efe9);color:var(--on-accent,#121211);font:650 16px/1.2 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);cursor:pointer;transition:transform .08s}.ds-apply:active{transform:translateY(1px)}.ds-apply:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}@media (prefers-reduced-motion:reduce){.ds-ckn{animation:none}}"
+    },
+    {
+      "name": "Home Facts",
+      "kind": "custom",
+      "refersTo": "fact",
+      "description": "Home's four figures in one ruled row, each under an ink rule, figure first, in ink only.",
+      "html": "<div class=\"ds-facts4\"><div class=\"ds-fact\"><b class=\"ds-v\">1,204</b><span class=\"ds-k\">Photos</span><span class=\"ds-n\">87 videos as well</span></div><div class=\"ds-fact\"><b class=\"ds-v\">38.2 GB</b><span class=\"ds-k\">Everything weighs</span><span class=\"ds-n\">412 RAW files indexed</span></div><div class=\"ds-fact\"><b class=\"ds-v\">88%</b><span class=\"ds-k\">With a location</span><span class=\"ds-n\">1,060 of 1,204</span></div><div class=\"ds-fact\"><b class=\"ds-v\">63%</b><span class=\"ds-k\">Rated</span><span class=\"ds-n\">759 carry stars</span></div></div>",
+      "css": ".ds-facts4{display:grid;gap:0 28px;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));font-family:var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);color:var(--ink,#f1efe9)}.ds-fact{border-top:1px solid var(--ink,#f1efe9);padding:16px 0 18px;display:flex;flex-direction:column;gap:4px}.ds-v{font-size:40px;font-weight:750;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums;margin-bottom:6px}.ds-k{font-size:13px;font-weight:650}.ds-n{font-size:13px;color:var(--dim,#a8a49c)}"
+    },
+    {
+      "name": "Tools Group",
+      "kind": "card",
+      "description": "A section of the Tools contents page: a 4px band in its ink, its name and mark, and its tools as ruled entries.",
+      "html": "<section class=\"ds-cat\"><div class=\"ds-top\"><span class=\"ds-ring\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 6.6A1.6 1.6 0 0 1 4.6 5h4l2 2.4h6.8A1.6 1.6 0 0 1 19 9v8.4a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 17.4z\"/></svg></span><h3>Organize</h3><button class=\"ds-open\" type=\"button\">Open</button></div><p class=\"ds-why\">Get the files where they belong</p><div class=\"ds-list\"><button class=\"ds-feat\" type=\"button\"><span class=\"ds-fic\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3.6\" y=\"5.2\" width=\"16.8\" height=\"15.2\" rx=\"2\"/><path d=\"M3.6 10h16.8M8.4 3.4v3.6M15.6 3.4v3.6\"/></svg></span><span class=\"ds-ftext\"><b>Sort into folders</b><span>Break a folder up by date, or by the place it was taken.</span></span></button><button class=\"ds-feat\" type=\"button\"><span class=\"ds-fic\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"6\" cy=\"6\" r=\"2.6\"/><circle cx=\"6\" cy=\"18\" r=\"2.6\"/><path d=\"M8.1 7.6 20 18M8.1 16.4 20 6\"/></svg></span><span class=\"ds-ftext\"><b>Separate RAWs</b><span>Move the camera's RAW files into a tree of their own, each still paired with its JPEG.</span></span></button></div></section>",
+      "css": ".ds-cat{--tone:var(--tone-blue,#7a9bff);padding:20px 0 4px;box-shadow:inset 0 4px 0 var(--tone);border-radius:var(--r-card,2px);color:var(--ink,#f1efe9);font-family:var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);max-width:360px}.ds-top{display:flex;align-items:center;gap:10px;margin-bottom:4px}.ds-ring{display:flex;color:var(--tone)}.ds-ring svg{width:20px;height:20px}.ds-cat h3{margin:0;font-size:28px;font-weight:750;font-stretch:106%;letter-spacing:-.02em}.ds-open{margin-left:auto;min-height:var(--chip-h,36px);padding:0 14px;border:1px solid var(--line,#2e2d2a);border-radius:var(--r-pill,2px);background:var(--card,#181817);color:var(--ink,#f1efe9);font:500 13px/1 var(--font,\"Archivo\",system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif);cursor:pointer}.ds-open:hover{border-color:var(--accent,#f1efe9)}.ds-open:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}.ds-why{font-size:14px;color:var(--dim,#a8a49c);margin:0 0 14px}.ds-feat{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;margin:0;padding:12px 4px;background:transparent;border:0;border-bottom:1px solid var(--line,#2e2d2a);color:var(--ink,#f1efe9);font:inherit;cursor:pointer;transition:background-color var(--t-fast,.16s)}.ds-feat:hover{background:var(--wash,#232321)}.ds-feat:hover .ds-ftext b,.ds-feat:hover .ds-fic svg{color:var(--tone)}.ds-feat:focus-visible{outline:2px solid var(--accent,#f1efe9);outline-offset:2px}.ds-fic{flex:0 0 18px;width:18px;height:20px;display:flex;align-items:center;justify-content:center}.ds-fic svg{width:16px;height:16px;color:var(--dim,#a8a49c)}.ds-ftext{display:flex;flex-direction:column;gap:2px;min-width:0}.ds-ftext b{font-size:16px;font-weight:650}.ds-ftext span{font-size:13px;color:var(--dim,#a8a49c);line-height:1.45}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Exhibition Catalogue",
+    "overview": "Photo Manager is set like a museum photography catalogue. The photographs are the plates, and everything else is set around them in one typeface, on one type scale, divided by hairline rules, with each section of tools opened by a band of its own ink. The default stock is black: a near-black ground, a sheet a half step lighter, bone ink, and a warm grey for the quieter line. In light mode the same page is printed on white stock in black ink.\n\nDensity follows the job. Home and Photos give the plates the room, tool pages and Settings are a column of ruled rows with space between them, and the list a run is about to apply reads as a catalogue checklist with its count at plate size. Colour is rationed. Apart from the photographs, the only colour in the chrome is the ink of the section you are in, one of five, one per group of tools. The primary action is printed in the page's own ink.\n\nThe system refuses the category default of grey cards nested in cards, pastel figure tiles, rounded everything and one blue accent. Motion is a page being turned and laid flat: quick to arrive, slow to settle, never a bounce, and nothing at all for anybody who has asked the machine for less.",
+    "keyCharacteristics": [
+      "Black catalogue stock by default and white stock in light mode, in one warm neutral family.",
+      "One variable typeface, Archivo, served by the app itself, on eight sizes and nothing between.",
+      "Every surface, control and chip cut square at 2px.",
+      "Hairlines and ink rules instead of boxes and shadows.",
+      "Five section inks, used only to say which group of tools something belongs to.",
+      "Every count in tabular numerals, and the count you approve set at 64px.",
+      "Screens turn like spreads in 280ms, and stand still under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The Printed Ink Rule",
+        "body": "The primary action is printed in the page's own ink, bone on black and black on white. There is no brand colour; the blue-grey look before 4.0 is the Original theme with the Blue accent under Appearance, and the other palettes, accents and frames there are the viewer's choices, not this system.",
+        "section": "colors"
+      },
+      {
+        "name": "The Section Ink Rule",
+        "body": "A section ink says which group of tools something belongs to, and nothing else. Home, Photos, Places, Albums and People are in no section, so their own chrome is ink only.",
+        "section": "colors"
+      },
+      {
+        "name": "The 4.5 Rule",
+        "body": "Every section ink reads at 4.5:1 or better as text on the ground and on the card, in both modes. `tests/test_design.py` holds it, so a new ink is checked before it ships.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never By Colour Alone Rule",
+        "body": "A state is said in shape and word as well as hue: the step you are on is bold and lit, a finished step has a drawn tick, a status dot is a hollow ring when off and filled when on with its word beside it, and a run that cannot be undone is banded, headed with a warning mark and counted in red.",
+        "section": "colors"
+      },
+      {
+        "name": "The Eight Sizes Rule",
+        "body": "Every size is one of 12, 13, 14, 16, 20, 28, 40 and 64px (`--t-xs` to `--t-4xl`). A size off the scale is a size somebody guessed, and `tests/test_design.py` fails it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Columned Numbers Rule",
+        "body": "Every count is set in tabular numerals, so a column of 1,204 and 87 reads as numbers and not as a ragged edge.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "Headings, legends, fold rows and running heads are in sentence case. A running head is small and spaced, never capitals, and nothing sits above a heading: the line about a screen goes under its title.",
+        "section": "typography"
+      },
+      {
+        "name": "The Plates First Rule",
+        "body": "On Home the newest photos come before any figure: the newest at twice the size, a wall label under every plate, and the four facts after them.",
+        "section": "layout"
+      },
+      {
+        "name": "The Answer Width Rule",
+        "body": "A field is as wide as what goes in it. A box for \"60\" stretched across a wide column reads as a mistake.",
+        "section": "layout"
+      },
+      {
+        "name": "The Hairline Rule",
+        "body": "A card sits on the page by its hairline alone. Nothing flat casts a shadow; only a menu, a bar or a bubble that floats over the page does.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Band, Not Stripe Rule",
+        "body": "A section or a state is banded across the top: a 4px band, a 3px lit step, a 2px band on a phone tab. Nothing carries a coloured stripe down one side; a 1px hairline between two columns is a divider, not a stripe, and `tests/test_design.py` fails any left border of 2px or more.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Cut Rule",
+        "body": "2px on every card, control and chip. What sets a control apart is its fill, its weight or its rule, never its roundness.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Six Roles Rule",
+        "body": "Every button is one of primary, secondary, quiet, destructive, filter or contextual. A seventh kind is a feature that has not said which of these it means, and `tests/test_design.py` fails a new one.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** print the one primary action on a screen in ink (`accent` with `on-accent`), and name it with its verb and count (\"Move 412 files\").",
+      "**Do** take every size from the scale (`--t-xs` 12px to `--t-4xl` 64px) and set every count in tabular numerals.",
+      "**Do** divide with 1px hairlines (`line`), open a printed section with a 1px ink rule, and open a section of the catalogue with a 4px band of its ink.",
+      "**Do** reach a section ink only through `--sec` (from `body[data-tone]`) or a group's own `--tone`, and only on something that belongs to a group of tools.",
+      "**Do** keep every corner at 2px (`--r-card`, `--r-ctl`, `--r-pill`) and keep round for dots.",
+      "**Do** keep everything a thumb presses at 44px or more on a phone (`--chip-h` is 44px under 860px).",
+      "**Do** say a state in shape and word as well as colour: bold and lit for the current step, a drawn tick for a finished one, a ring or a filled dot with its word for a status.",
+      "**Do** draw every mark (close, arrow, fold, chevron) from the icon sprite or in CSS, at 14px beside text.",
+      "**Do** time motion with `--ease` and `--t-fast` (160ms), `--t-mid` (280ms) or `--t-slow` (480ms), and stop all of it under `prefers-reduced-motion`.",
+      "**Do** set headings in sentence case, with any line about them underneath."
+    ],
+    "donts": [
+      "**Don't** build the category default: grey cards nested in cards, pastel figure tiles, rounded everything, one blue accent.",
+      "**Don't** box a group of settings inside a card; a group is a heading and a rule.",
+      "**Don't** run a coloured stripe down the side of anything; a left border of 2px or more fails `tests/test_design.py`.",
+      "**Don't** colour the chrome of a screen that is in no section (Home, Photos, Places, Albums, People) with a section ink, or use a section ink as decoration.",
+      "**Don't** cast a shadow from a flat surface, or let the header turn see-through.",
+      "**Don't** add a seventh button role, or a second primary button on a screen.",
+      "**Don't** add a type size off the scale, a second typeface, or a font or script fetched from the internet.",
+      "**Don't** put a kicker or an eyebrow above a heading, or set a heading in capitals.",
+      "**Don't** type a mark as a character (× ‹ › ▾ ▸ ↑ ↓).",
+      "**Don't** bounce, and don't loop anything but the pulse of a running status dot or a progress bar that cannot measure."
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+/* Setup > Wording (library/js/21-wording.js) */
+.wdbar{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap;margin:0 0 8px}
+.wdbar .wdpick{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--dim)}
+.wdbar select{min-width:min(260px,70vw)}
+.wdbar input[type=search]{flex:1;min-width:160px;padding:8px 10px;border-radius:var(--r-ctl);
+  border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.wdbar input[type=search]::placeholder{color:var(--dim)}
+.wdbar .ghost{margin:0}
+.wdcounts{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--dim);
+  margin:0 0 10px}
+/* An edited string is banded across its top, never striped down its side. */
+.wdcard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--line);
+  padding:10px 12px;margin:0 0 8px}
+.wdcard.edited{border-top-color:var(--accent)}
+.wdcard .wdhead{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
+  color:var(--dim)}
+.wdcard .wdwhere{font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.wdcard .wdship{color:var(--dim);font-size:13px;margin:4px 0;white-space:pre-wrap}
+.wdcard input[type=text],.wdcard textarea{width:100%;max-width:none;box-sizing:border-box;
+  margin:4px 0 0;font:inherit}
+.wdcard textarea{padding:8px 10px;border-radius:var(--r-ctl);border:1px solid var(--line);
+  background:var(--bg);color:var(--ink)}
+.wdcard textarea{resize:vertical;min-height:3.6em}
+.wdinfo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;
+  color:var(--dim);margin-top:4px}
+.wdinfo .bad,.wdcounts .bad{color:var(--bad)}
+.wdwarn{display:inline-flex;align-items:center;gap:3px;color:var(--warn)}
+.wdwarn .ic{width:13px;height:13px}
+.wdinfo .quiet{margin:0;padding:2px 6px}
+.wdfoot{flex-wrap:wrap;align-items:center}
+.wdfoot .wdup{display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  padding:8px 12px;border:1px solid var(--line);border-radius:var(--r-card)}
+.wdfoot .wdrep{display:inline-flex;align-items:center;gap:5px;font-size:13px}

@@ -1,0 +1,29 @@
+# DevStore: every push to main builds both parts. A bumped version in
+# devstore.json releases the Windows app (tag windows-v...) and the NAS image
+# (tag docker-v..., ghcr.io/qawalah/photo-manager).
+name: Release
+
+on:
+  push:
+    branches: [main]
+  # Test builds: every pull request from a branch in this repo gets a Windows
+  # pre-release you can install before merging; closing the PR deletes it.
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    uses: qawalah/devstore/.github/workflows/windows-release.yml@main
+
+  docker:
+    # The image is only built from main, never from a pull request.
+    if: github.event_name != 'pull_request'
+    uses: qawalah/devstore/.github/workflows/docker-release.yml@main
+    permissions:
+      contents: write      # tag and release docker-v...
+      packages: write      # push to ghcr.io and delete old versions
+    secrets: inherit

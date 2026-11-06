@@ -1,0 +1,18 @@
+
+/* an album you made yourself: a card with two small buttons on it */
+.albumwrap{position:relative}
+.albumwrap .albumcard{width:100%}
+.albumx,.albumedit{position:absolute;top:8px;width:26px;height:26px;margin:0;
+  padding:0;border-radius:var(--r-ctl);border:1px solid var(--line);background:var(--card);
+  color:var(--dim);font-size:16px;line-height:1;opacity:0;transition:opacity .12s}
+.albumx{right:8px}
+.albumedit{right:40px}
+.albumedit svg{width:14px;height:14px}
+.albumwrap:hover .albumx,.albumwrap:hover .albumedit,
+.albumx:focus,.albumedit:focus{opacity:1}
+.albumx:hover{border-color:var(--bad);color:var(--bad)}
+.albumedit:hover{border-color:var(--accent);color:var(--accent)}
+.albumname{display:flex;flex-direction:column;gap:4px;margin:12px 0 4px;
+  font-size:13px;color:var(--dim);max-width:420px}
+.albumname input{font-size:14px}
+@media (hover:none){ .albumx,.albumedit{opacity:1} }

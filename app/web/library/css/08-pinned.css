@@ -1,0 +1,13 @@
+
+/* a pinned feature, sitting with the screens; its cross is a sibling button so
+   a keyboard reaches it, and it shows whenever the row is hovered or focused */
+.pinwrap{position:relative}
+.pinwrap .railrow.pinned{padding-right:44px}
+.pinwrap .unpin{position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  opacity:0;font-size:16px;line-height:1;padding:3px 6px;border-radius:var(--r-ctl);
+  color:var(--dim);background:transparent;border:0;margin:0;cursor:pointer}
+.pinwrap:hover .unpin,.pinwrap:focus-within .unpin{opacity:1}
+.pinwrap .unpin:hover,.pinwrap .unpin:focus-visible{color:var(--bad);background:var(--line)}
+header .pinbtn svg{width:13px;height:13px}
+.pinbtn.on{color:var(--accent);border-color:var(--accent)}
+@media (hover:none){ .pinwrap .unpin{opacity:.6} }

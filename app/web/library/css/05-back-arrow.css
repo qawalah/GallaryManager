@@ -1,0 +1,4 @@
+
+/* the back arrow sits with the menu button, on the left where it belongs */
+header #back{padding:6px 9px}
+header #back svg{width:17px;height:17px}

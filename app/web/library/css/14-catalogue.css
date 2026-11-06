@@ -1,0 +1,195 @@
+/* ===============================================================   4.0 - the catalogue
+   ===============================================================
+   What the catalogue adds rather than changes: the section inks wired to the
+   page you are on, the plates on Home, the count on the list you are asked to
+   approve, the turn of a page between screens, and the parts of the page that
+   only a keyboard or a screen reader meets. The palette, the type scale and
+   the shapes are tokens at the top of page/style.css; this file only uses
+   them. library/js/23-catalogue.js puts `data-tone` on the body. */
+
+/* ------------------------------------------------------------ section inks */
+/* The group a page belongs to sets one ink, `--sec`, and everything that
+   says "you are in Metadata" reads it: the band over a tool's page, the rule
+   under the step you are on, the mark beside the tool in the list. */
+body[data-tone="blue"]{--sec:var(--tone-blue)}
+body[data-tone="teal"]{--sec:var(--tone-teal)}
+body[data-tone="orange"]{--sec:var(--tone-orange)}
+body[data-tone="purple"]{--sec:var(--tone-purple)}
+body[data-tone="grey"]{--sec:var(--tone-grey)}
+
+/* A tool's page opens under a band of its group's ink, the way each section
+   of a catalogue opens on its own colour. */
+body.shell main > section > #form{border-top:4px solid var(--sec,var(--line));
+  padding-top:24px}
+
+/* ------------------------------------------------------- Home: the plates */
+.homelatest{margin:0 0 12px}
+.homelatest .cardhead{margin-bottom:12px}
+.homelatest .cardhead b{font-size:var(--t-xl);font-weight:750;letter-spacing:-.015em}
+/* The newest photo hangs at twice the size of the rest, and the rest fill in
+   round it, so the band reads as a wall of prints rather than a strip of
+   stamps. Plates are cut square, with a hairline of the page round each, and
+   each carries a wall label: the folder it hangs in, its name, its day.
+   Five columns and seven plates: the lead and six round it fill two whole
+   rows, so the wall never ends on a gap or one print alone. */
+.strip.plates{gap:20px 14px;grid-auto-flow:dense;grid-template-columns:repeat(5,minmax(0,1fr))}
+.plate:nth-child(n+8){display:none}
+.plate{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.plate .shot{box-shadow:0 0 0 1px var(--line)}
+/* The six round the lead are cut landscape, 4:3, the shape most photos are
+   taken in. Square, the two rows pushed Home's four figures down past the
+   bottom of a laptop's first screen, cut through their labels. */
+.plate:not(:first-child) .shot{aspect-ratio:4/3}
+.plate:first-child{grid-column:span 2;grid-row:span 2}
+.plate:first-child .shot{aspect-ratio:auto;flex:1;min-height:0}
+.plate figcaption{display:flex;flex-direction:column;gap:1px;min-width:0}
+.plate figcaption b,.plate figcaption span{overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.plate figcaption b{font-size:var(--t-m);font-weight:650}
+.plate figcaption span{font-size:var(--t-xs);color:var(--dim)}
+.plate figcaption time{font-size:var(--t-xs);color:var(--dim);font-variant-numeric:tabular-nums}
+.plate:first-child figcaption b{font-size:var(--t-l)}
+/* Narrower than a wide window, three columns: the lead and two beside it,
+   then a row of three. */
+@media (max-width:1060px){
+  .strip.plates{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .plate:nth-child(n+7){display:none}
+}
+/* Arriving one after another, a beat apart, like prints being laid out. */
+.plate{animation:pm-plate var(--t-slow) var(--ease) both}
+.plate:nth-child(2){animation-delay:.03s}
+.plate:nth-child(3){animation-delay:.06s}
+.plate:nth-child(4){animation-delay:.09s}
+.plate:nth-child(5){animation-delay:.12s}
+.plate:nth-child(6){animation-delay:.15s}
+.plate:nth-child(7){animation-delay:.18s}
+.plate:nth-child(n+8){animation-delay:.21s}
+@keyframes pm-plate{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* The photo grid lays its tiles in the same way, more quickly: there are
+   hundreds of them, and a wall that takes a second to arrive is a wait. */
+.shots .shot{animation:pm-fade var(--t-mid) ease-out both}
+.shots .shot:nth-child(n+6){animation-delay:.03s}
+.shots .shot:nth-child(n+12){animation-delay:.06s}
+
+/* ------------------------------------------------- the list you approve */
+/* What a run found and what it would do are printed on the page, not boxed:
+   each part opens under a line of ink, the way a catalogue's sections do,
+   and its rows are ruled. A table keeps a hairline above and below so its
+   header row still sticks while it scrolls. */
+#out > .card{background:transparent;border:0;border-top:1px solid var(--ink);
+  border-radius:0;box-shadow:none;padding:20px 0 8px;margin-bottom:28px}
+#out > .card.risky{border-top:4px solid var(--bad);box-shadow:none}
+#out .scroll{border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  border-radius:0}
+#out table.tree thead,#out table.tree th{background:var(--bg)}
+/* The decision, printed at the size it deserves: one line, "Move 412 files",
+   the count in 64px numerals on the same baseline as its verb and its unit,
+   then the facts in ruled columns. The button under them is solid ink and
+   names the operation. */
+#apply .ckhead{font-size:var(--t-l);font-weight:700;display:flex;align-items:center;gap:8px}
+.ckcount{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:14px;margin:18px 0 18px}
+.ckv,.cku{font-size:var(--t-xl);font-weight:700}
+.cku{color:var(--dim);font-weight:650}
+.ckn{font-size:var(--t-4xl);font-weight:800;font-stretch:104%;letter-spacing:-.04em;
+  line-height:.95;font-variant-numeric:tabular-nums;
+  animation:pm-settle var(--t-slow) var(--ease) both}
+@keyframes pm-settle{from{opacity:0;transform:translateY(14px);letter-spacing:.02em}
+  to{opacity:1;transform:none}}
+/* A label and its value share one rule: the cells stretch to the taller of
+   the two, and the gap between the columns is padding, so the rule runs on
+   unbroken. */
+#apply .changing{grid-template-columns:minmax(112px,max-content) 1fr;gap:0;
+  align-items:stretch;border-top:1px solid var(--ink)}
+#apply .changing>div{padding:11px 0;border-bottom:1px solid var(--line)}
+#apply .changing>div:nth-child(odd){padding-right:28px}
+#doit{min-height:48px;padding:12px 28px;font-size:var(--t-l)}
+/* The irreversible keeps its red: banded, headed with a warning mark, and the
+   count in red as well, so nobody mistakes it for an ordinary run. */
+#apply.risky .ckn,#apply.risky .ckv{color:var(--bad)}
+
+/* ---------------------------------------------------------- the turn */
+/* Moving between screens is a page turned: what arrives slides in a short way
+   from the side you are going towards and settles. Going back slides the
+   other way. It lasts long enough to be felt and is over before anybody
+   could be waiting for it; none of it happens for anybody who asked the
+   machine for less motion (page/style.css, the last rule). */
+@keyframes pm-turn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes pm-turnback{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+#stage.turn > *,main.turn #form,main.turn #toolside{animation:pm-turn var(--t-mid) var(--ease) both}
+#stage.turn.back > *,main.turn.back #form,main.turn.back #toolside{animation-name:pm-turnback}
+#stage.turn > :nth-child(2),main.turn #toolside{animation-delay:.04s}
+#stage.turn > :nth-child(3){animation-delay:.08s}
+#stage.turn > :nth-child(n+4){animation-delay:.12s}
+/* What slides in from the right must not, for that moment, make the whole
+   page wider than the window. Clipped rather than hidden, so nothing sticky
+   inside stops sticking. */
+#stage.turn,main.turn{overflow-x:clip}
+
+/* ------------------------------------------- keyboard and screen readers */
+/* Present for a screen reader, absent for the eye. */
+.sronly{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* The first thing a keyboard reaches, and invisible until it does: past the
+   header and the rail, straight to the page. */
+.skiplink{position:fixed;left:12px;top:-80px;z-index:200;background:var(--ink);color:var(--bg);
+  padding:12px 18px;font-weight:700;text-decoration:none;border-radius:var(--r-ctl);
+  transition:top var(--t-fast) var(--ease)}
+.skiplink:focus{top:12px;outline:2px solid var(--sec,var(--accent));outline-offset:2px}
+#stage:focus,#form:focus{outline:none}
+
+/* The rail's group twist, drawn rather than typed. */
+.railrow.fam .twist{font-size:0;width:12px;height:12px;display:inline-flex;
+  align-items:center;justify-content:center}
+.railrow.fam .twist::before{content:"";width:6px;height:6px;
+  border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(-45deg)}
+
+/* ---------------------------------------------- the small marks, drawn */
+/* A close, an arrow, a fold: drawn from the sprite like every other icon, not
+   typed as × ‹ › ▾ ▸, which each font draws at its own size and weight. */
+.chip button svg.ic,.patx svg.ic,.vchip svg.ic,.fchip svg.ic,.albumx svg.ic,.unpin svg.ic,
+#gclose svg.ic,.ghost.fold svg.ic,.arrtop button svg.ic{width:14px;height:14px;flex:0 0 14px;
+  vertical-align:-2px}
+.vchip svg.ic{opacity:.75;margin-left:2px}
+.vnav svg.ic{width:30px;height:30px;flex:0 0 30px;vertical-align:middle}
+.vcaret{display:inline-flex}
+.vcaret svg.ic{width:14px;height:14px;flex:0 0 14px}
+tr.ghead .gtwist svg.ic{width:13px;height:13px;vertical-align:-2px}
+th.sortable svg.ic{width:12px;height:12px;flex:0 0 12px;vertical-align:-1px;margin-left:3px}
+
+/* ------------------------------------------------- the viewer's panel */
+/* The picture sits on black whatever the page is, so the panel beside it is
+   black stock too: a white slab next to a dark stage read as a second app. */
+.vinfo{color-scheme:dark;--bg:#0f0f0e;--card:#181817;--ink:#f1efe9;--dim:#a8a49c;
+  --line:#2e2d2a;--accent:#f1efe9;--on-accent:#121211;--accent-soft:#2b2a27;--wash:#232321;
+  --warn:#d9a441;--bad:#ef6d63;--good:#63c98a}
+
+/* ----------------------------------------------------------- the phone */
+@media (max-width:860px){
+  /* Everything a thumb presses is 44px at least. */
+  :root{--chip-h:44px}
+  .ckn{font-size:var(--t-3xl)}
+  .ckv,.cku{font-size:var(--t-l)}
+  #apply .changing{grid-template-columns:minmax(96px,max-content) 1fr}
+  #apply .changing>div:nth-child(odd){padding-right:16px}
+  #doit{width:100%}
+  /* One row of plates you swipe along, so Home on a phone is the newest
+     photos and then the facts, not a whole screen of thumbnails first. */
+  .strip.plates{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin:0 -16px;padding:0 16px 4px;scroll-padding-inline:16px;scrollbar-width:none}
+  .strip.plates::-webkit-scrollbar{display:none}
+  .plate,.plate:nth-child(n+7){display:flex;flex:0 0 42%;scroll-snap-align:start}
+  .plate:first-child{flex-basis:68%}
+  .plate:first-child .shot,.plate:not(:first-child) .shot{aspect-ratio:1}
+  /* The four facts two by two, so they fit under the plates on one screen. */
+  .bigtiles{grid-template-columns:1fr 1fr;gap:0 18px}
+  .bigtile .v{font-size:var(--t-2xl)}
+  /* A screen's tools wrap under its title and start at its left edge. */
+  .phead .spacer{display:none}
+  .phead .vtools{width:100%}
+  .chip button{min-width:36px;min-height:36px;margin:-6px -6px -6px 0}
+  .patchip button{min-height:44px;padding:4px 12px}
+  .railrow{min-height:44px}
+  .siderow{min-height:44px}
+  #bottom button.on{color:var(--ink);font-weight:750;box-shadow:inset 0 2px 0 var(--sec,var(--ink))}
+}

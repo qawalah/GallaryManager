@@ -1,0 +1,11 @@
+.git
+.github
+tests
+docs
+tools
+windows
+scripts
+.impeccable
+store
+*.md
+**/__pycache__

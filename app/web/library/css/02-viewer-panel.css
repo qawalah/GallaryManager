@@ -1,0 +1,46 @@
+
+/* ---------------------------------------------- the detail panel in the viewer */
+.vinfo{position:absolute;top:0;right:0;bottom:0;width:372px;background:var(--card);
+  color:var(--ink);border-left:1px solid var(--line);overflow-y:auto;z-index:4;
+  padding:16px 18px 40px;display:none;-webkit-user-select:text;user-select:text}
+.viewer.withinfo .vinfo{display:block}
+.viewer.withinfo .vstage{right:372px}
+.viewer.withinfo .vtop,.viewer.withinfo .vbottom{right:372px}
+.viewer.withinfo .vnext{right:382px}
+/* The histogram floats at the right edge of the VIEWER, which with the panel
+   open is behind the panel. It belongs at the right edge of the PICTURE. */
+.viewer.withinfo .vhist{right:384px}
+.vinfo h3{margin:0 0 2px;font-size:16px;font-weight:650;word-break:break-all}
+.vinfo .when{font-size:13px;color:var(--dim);margin-bottom:8px}
+.vinfo .note{color:var(--dim);font-size:13px;line-height:1.5}
+.vinfo .act button{margin:0}
+@media (max-width:860px){
+  .vinfo{position:absolute;top:auto;left:0;right:0;bottom:0;width:auto;height:52vh;
+    border-left:0;border-top:1px solid var(--line);border-radius:var(--r-card) var(--r-card) 0 0}
+  .viewer.withinfo .vstage{right:0;bottom:52vh}
+  .viewer.withinfo .vtop{right:0}
+  .viewer.withinfo .vbottom{right:0;bottom:52vh}
+  .viewer.withinfo .vnav{display:none}
+  /* On a phone the panel is a sheet across the bottom, so the histogram does
+     not move sideways - it moves up, out from under it. */
+  .viewer.withinfo .vhist{right:8px}
+}
+
+/* --------------------------------------------- the feature half, inside the shell */
+body.shell main{flex:1;min-width:0;display:none;padding:0}
+body.shell.onfeature main{display:flex}
+body.shell.onfeature #stage{display:none}
+/* `min-width:0` and a real width, both of them deliberate. The phone
+   stylesheet gives a section `flex:none;width:auto`, which inside the shell's
+   flex row means "as wide as your widest child" - and the widest child is a
+   tab strip that is supposed to scroll inside it. The whole app then scrolled
+   sideways for ever, 200px wider than the phone.
+   No max-width: a feature's page takes the window's width, so its results -
+   plans of hundreds of rows, tables of folders - use a wide screen. The form
+   itself stops at a width a line of options can still be read across. */
+body.shell main > section{padding:32px 40px 72px;max-width:none;min-width:0}
+body.shell main > section > #form{max-width:1180px}
+@media (max-width:860px){
+  body.shell main > section{padding:16px 16px 92px;flex:1 1 auto;width:100%;
+    min-width:0;max-width:none}
+}

@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# The app's own settings and caches when run from the code folder
+# (PM_DATA unset). Never commit them: they hold your paths and password hash.
+config/
+
+# Claude Code worktrees live inside the project folder so they stay inside
+# the one folder Claude is allowed to touch. They are separate checkouts.
+.claude/worktrees/
+.claude/settings.local.json
+
+# Left behind if tools/mutate.sh is interrupted
+*.mutbak
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Screenshots taken for a design review (/impeccable). They are evidence for
+# one pass and are taken again for the next, so they stay out of the history.
+.impeccable/review/
+.impeccable/config.local.json
+
+# DevStore build outputs
+build/
+dist/
+*.spec
+.env

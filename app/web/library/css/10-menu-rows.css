@@ -1,0 +1,9 @@
+
+/* A menu row that explains itself: the feature's name, and the one line it
+   carries everywhere else in the app. */
+.vopt2{display:flex;align-items:flex-start;gap:9px;text-align:left;
+  padding:8px 10px;line-height:1.35}
+.vopt2 svg{width:16px;height:16px;flex:none;margin-top:1px;opacity:.75}
+.vopt2 > span{display:flex;flex-direction:column;min-width:0}
+.vopt2 b{font-size:14px;font-weight:600}
+.vopt2 span span{font-size:12px;color:var(--dim);white-space:normal}
